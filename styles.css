@@ -46,6 +46,7 @@ body {
   z-index: 0;
 }
 
+
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -179,6 +180,16 @@ body {
   gap: clamp(26px, 4vh, 48px);
 }
 
+.hero-kicker {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(11px, 0.72vw, 14px);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(244, 245, 247, 0.92);
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+}
 .hero-title {
   margin: 0;
   max-width: 1120px;
@@ -364,14 +375,6 @@ body {
     font-size: clamp(14px, 3.4vw, 20px);
   }
 }
-
-
-
-
-
-
-
-
 
 
 
