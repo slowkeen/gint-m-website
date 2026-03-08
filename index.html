@@ -730,12 +730,15 @@
         ".service-card",
         ".direction-card",
         ".award-card",
-        ".project-photo-card",
         ".news-card"
       ].forEach((selector) => {
         document.querySelectorAll(selector).forEach((element) => {
           element.classList.add("micro-float", "micro-sheen");
         });
+      });
+
+      document.querySelectorAll(".project-photo-card").forEach((element) => {
+        element.classList.add("micro-float");
       });
 
       [

@@ -967,8 +967,8 @@ body {
   border-radius: 6px;
   overflow: hidden;
   background-color: #d8dbe2;
-  box-shadow: 0 18px 50px rgba(7, 9, 14, 0.22);
-  transition: transform 360ms var(--ease-out-soft), box-shadow 360ms var(--ease-out-soft), filter 360ms var(--ease-out-soft);
+  box-shadow: none;
+  transition: transform 360ms var(--ease-out-soft), filter 360ms var(--ease-out-soft);
 }
 
 .project-photo-media {
@@ -984,13 +984,12 @@ body {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0.14) 100%);
+  background: none;
   pointer-events: none;
 }
 
 .project-photo-link:hover .project-photo {
   transform: translateY(-8px);
-  box-shadow: 0 28px 70px rgba(7, 9, 14, 0.28);
   filter: saturate(1.08);
 }
 
