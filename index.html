@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <section class="hero-block">
+  <section class="hero-block" id="top">
     <video class="hero-video" autoplay muted loop playsinline preload="auto" src="./showreel/merge.mp4"></video>
 
     <div class="hero-overlay"></div>
@@ -19,16 +19,16 @@
       </a>
 
       <nav class="hero-top-nav" aria-label="Главная навигация">
-        <a href="#">О компании</a>
-        <a href="#">Новости</a>
-        <a href="#">Услуги</a>
+        <a href="#company">О компании</a>
+        <a href="#news">Новости</a>
+        <a href="#services">Услуги</a>
         <a href="#projects">Проекты</a>
         <a href="#awards">Награды</a>
-        <a href="#">Контакты</a>
+        <a href="#contact-cta">Контакты</a>
       </nav>
 
       <div class="hero-top-controls">
-        <a class="hero-top-cta" href="#">Оставить заявку</a>
+        <a class="hero-top-cta" href="#contact-cta">Оставить заявку</a>
         <a class="hero-lang-toggle" href="#" lang="en">En</a>
       </div>
     </header>
@@ -39,7 +39,7 @@
         <h1 class="hero-title">строим пространства для бизнеса</h1>
 
         <div class="hero-actions">
-          <a class="hero-btn hero-btn-primary" href="#">Обсудить проект</a>
+          <a class="hero-btn hero-btn-primary" href="#contact-cta">Обсудить проект</a>
           <a class="hero-portfolio-link" href="#projects">Смотреть портфолио</a>
         </div>
       </div>
@@ -68,7 +68,7 @@
   </section>
 
   <div class="content-surface">
-    <section class="company-block" aria-labelledby="company-title">
+    <section class="company-block" id="company" aria-labelledby="company-title">
       <div class="company-shell">
         <div class="company-head">
           <p class="company-eyebrow">О компании</p>
@@ -138,7 +138,7 @@
       </div>
     </section>
 
-    <section class="services-block" aria-labelledby="services-title">
+    <section class="services-block" id="services" aria-labelledby="services-title">
       <div class="services-shell">
         <div class="services-head">
           <p class="services-eyebrow">Направления</p>
@@ -237,7 +237,7 @@
             </a>
           </article>
 
-          <article class="project-photo-card">
+          <article class="project-photo-card project-photo-card-avito">
             <a class="project-photo-link" href="#">
               <div class="project-photo project-photo-mr">
                 <img
@@ -256,7 +256,7 @@
             </a>
           </article>
 
-          <article class="project-photo-card">
+          <article class="project-photo-card project-photo-card-winline">
             <a class="project-photo-link" href="#">
               <div class="project-photo project-photo-lamoda">
                 <img
@@ -403,6 +403,399 @@
         </div>
       </div>
     </section>
+
+    <section class="contact-cta-block" id="contact-cta" aria-labelledby="contact-cta-title">
+      <div class="contact-cta-shell">
+        <div class="contact-cta-copy">
+          <p class="contact-cta-eyebrow">Связь без лишних шагов</p>
+          <h2 class="contact-cta-title" id="contact-cta-title">Обсудим ваш проект</h2>
+          <p class="contact-cta-text">
+            Подключаемся к проектам, где важны сроки, качество реализации и единая ответственность за результат.
+          </p>
+        </div>
+
+        <div class="contact-cta-side">
+          <form class="contact-cta-form" action="#" method="post">
+            <p class="contact-cta-form-kicker">Получить консультацию</p>
+            <div class="contact-cta-form-grid">
+              <label class="contact-field">
+                <span>Телефон</span>
+                <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" />
+              </label>
+
+              <label class="contact-messenger-toggle contact-field-wide">
+                <input type="checkbox" name="prefer_messenger" />
+                <span>Предпочитаю связаться через мессенджер</span>
+              </label>
+
+              <label class="contact-field contact-field-wide">
+                <span>Telegram</span>
+                <input type="text" name="telegram" placeholder="@username" />
+              </label>
+            </div>
+
+            <div class="contact-cta-form-footer">
+              <button class="contact-cta-submit" type="submit">Отправить заявку</button>
+              <p class="contact-cta-disclaimer">
+                Оставьте номер или Telegram для связи.
+              </p>
+            </div>
+          </form>
+        </div>
+
+        <div class="contact-cta-frame-channels" aria-label="Основные каналы связи">
+          <a class="contact-form-channel" href="tel:+70000000000">
+            <span class="contact-form-channel-label">Позвонить</span>
+            <span class="contact-form-channel-value">+7 (000) 000-00-00</span>
+          </a>
+
+          <a class="contact-form-channel" href="https://t.me/gintm_sales" target="_blank" rel="noreferrer">
+            <span class="contact-form-channel-label">Telegram</span>
+            <span class="contact-form-channel-value">@gintm_sales</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="directions-block" aria-labelledby="directions-title">
+      <div class="directions-shell">
+        <div class="directions-head">
+          <div class="directions-head-copy">
+            <p class="directions-eyebrow">Типы объектов</p>
+            <h2 class="directions-title" id="directions-title">Ключевые типы объектов</h2>
+          </div>
+          <p class="directions-intro">
+            Выделили основные типы объектов, с которыми команда работает на этапе проектирования, строительства и
+            комплексной реализации.
+          </p>
+        </div>
+
+        <div class="directions-grid" aria-label="Направления проектов">
+          <a class="direction-card" href="#projects">
+            <div class="direction-card-copy">
+              <span class="direction-card-index">01</span>
+              <h3 class="direction-card-title">Офисные</h3>
+              <span class="direction-card-link">Смотреть проекты</span>
+            </div>
+            <div class="direction-card-media">
+              <img
+                class="direction-card-image"
+                src="./Направления/Офисы 1.png"
+                alt="Офисные объекты"
+                width="960"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </a>
+
+          <a class="direction-card" href="#projects">
+            <div class="direction-card-copy">
+              <span class="direction-card-index">02</span>
+              <h3 class="direction-card-title">Спортивные</h3>
+              <span class="direction-card-link">Смотреть проекты</span>
+            </div>
+            <div class="direction-card-media">
+              <img
+                class="direction-card-image"
+                src="./Направления/Спортивные.png"
+                alt="Спортивные объекты"
+                width="960"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </a>
+
+          <a class="direction-card" href="#projects">
+            <div class="direction-card-copy">
+              <span class="direction-card-index">03</span>
+              <h3 class="direction-card-title">Капитальное строительство</h3>
+              <span class="direction-card-link">Смотреть проекты</span>
+            </div>
+            <div class="direction-card-media">
+              <img
+                class="direction-card-image"
+                src="./Направления/Капитальное строительство.png"
+                alt="Капитальное строительство"
+                width="960"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </a>
+
+          <a class="direction-card" href="#projects">
+            <div class="direction-card-copy">
+              <span class="direction-card-index">04</span>
+              <h3 class="direction-card-title">Торговая недвижимость</h3>
+              <span class="direction-card-link">Смотреть проекты</span>
+            </div>
+            <div class="direction-card-media">
+              <img
+                class="direction-card-image"
+                src="./Направления/Торговая недвижимость.png"
+                alt="Торговая недвижимость"
+                width="960"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </a>
+
+          <a class="direction-card" href="#projects">
+            <div class="direction-card-copy">
+              <span class="direction-card-index">05</span>
+              <h3 class="direction-card-title">Жилая недвижимость</h3>
+              <span class="direction-card-link">Смотреть проекты</span>
+            </div>
+            <div class="direction-card-media">
+              <img
+                class="direction-card-image"
+                src="./Направления/Жилая недвижимость.png"
+                alt="Жилая недвижимость"
+                width="960"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="news-block" id="news" aria-labelledby="news-title">
+      <div class="news-shell">
+        <div class="news-head">
+          <p class="news-eyebrow">Новости</p>
+          <h2 class="news-title" id="news-title">Следим за рынком и делимся важными изменениями</h2>
+        </div>
+
+        <div class="news-grid" aria-label="Последние новости">
+          <article class="news-card">
+            <a class="news-card-link" href="#">
+              <div class="news-card-media">
+                <img
+                  class="news-card-image"
+                  src="./Фотографии для проектов/Skolkovo Vet/part4859.jpg"
+                  alt="Графика аналитического материала"
+                  width="1920"
+                  height="1280"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="news-card-body">
+                <p class="news-card-date">16.02.2026</p>
+                <h3 class="news-card-title">Доля европейских материалов в офисной отделке снизилась до исторического минимума</h3>
+              </div>
+            </a>
+          </article>
+
+          <article class="news-card">
+            <a class="news-card-link" href="#">
+              <div class="news-card-media">
+                <img
+                  class="news-card-image"
+                  src="./Фотографии для проектов/Samsung/part1987.jpg"
+                  alt="Исследование по рынку строительных материалов"
+                  width="1920"
+                  height="1280"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="news-card-body">
+                <p class="news-card-date">21.01.2026</p>
+                <h3 class="news-card-title">Рост цен на материалы для офисного строительства замедлился до минимума с 2022 года</h3>
+              </div>
+            </a>
+          </article>
+
+          <article class="news-card">
+            <a class="news-card-link" href="#">
+              <div class="news-card-media">
+                <img
+                  class="news-card-image"
+                  src="./Фотографии для проектов/Авито Санкт-Петербург/glavnoe_foto.jpg"
+                  alt="Интервью о fit-out и офисной недвижимости"
+                  width="1600"
+                  height="1067"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="news-card-body">
+                <p class="news-card-date">11.01.2026</p>
+                <h3 class="news-card-title">Почему fit-out становится системным вопросом для бизнес-центров и арендаторов</h3>
+              </div>
+            </a>
+          </article>
+        </div>
+
+        <div class="news-actions">
+          <a class="news-button" href="#">Все новости</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer" aria-labelledby="footer-company-name">
+      <div class="site-footer-shell">
+        <div class="site-footer-brand">
+          <a class="site-footer-logo" href="#top" aria-label="ГИНТ-М">
+            <img
+              src="./logo/footer-color/color.svg"
+              alt="ГИНТ-М"
+              onerror="this.onerror=null;this.src='./logo/Frame 109.svg';"
+            />
+          </a>
+          <p class="site-footer-founded">Основана в 1999 году</p>
+          <h2 class="site-footer-title" id="footer-company-name">Строим пространства для бизнеса с точной реализацией и инженерной дисциплиной.</h2>
+          <nav class="site-footer-menu" aria-label="Навигация в подвале">
+            <a href="#company">О компании</a>
+            <a href="#news">Новости</a>
+            <a href="#services">Услуги</a>
+            <a href="#projects">Проекты</a>
+            <a href="#awards">Награды</a>
+            <a href="#contact-cta">Контакты</a>
+          </nav>
+        </div>
+
+        <div class="site-footer-contacts" aria-label="Контакты компании">
+          <a class="site-footer-contact site-footer-contact-primary" href="tel:+70000000000">
+            <span class="site-footer-contact-label">Телефон</span>
+            <span class="site-footer-contact-value">+7 (000) 000-00-00</span>
+          </a>
+
+          <a class="site-footer-contact site-footer-contact-primary" href="https://t.me/gintm_sales" target="_blank" rel="noreferrer">
+            <span class="site-footer-contact-label">Telegram</span>
+            <span class="site-footer-contact-value">@gintm_sales</span>
+          </a>
+
+          <a class="site-footer-contact site-footer-contact-primary" href="mailto:info@gint-m.ru">
+            <span class="site-footer-contact-label">Почта</span>
+            <span class="site-footer-contact-value">info@gint-m.ru</span>
+          </a>
+        </div>
+
+        <div class="site-footer-bottom">
+          <p class="site-footer-copy">© 1999-2026 ГИНТ-М. Все права защищены.</p>
+          <a class="site-footer-policy" href="#">Политика конфиденциальности</a>
+        </div>
+      </div>
+    </footer>
   </div>
+
+  <script>
+    (() => {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const revealGroups = [
+        [".company-head", 0],
+        [".company-lead", 90],
+        [".company-logos", 150],
+        [".company-footer", 210],
+        [".services-head", 0],
+        [".service-card", 80],
+        [".projects-head", 0],
+        [".project-photo-card", 80],
+        [".contact-cta-copy", 0],
+        [".contact-cta-side", 90],
+        [".contact-cta-form", 150],
+        [".directions-head", 0],
+        [".direction-card", 80],
+        [".awards-head", 0],
+        [".award-card", 90],
+        [".news-head", 0],
+        [".news-card", 80],
+        [".news-actions", 160],
+        [".site-footer-brand", 0],
+        [".site-footer-contacts", 90],
+        [".site-footer-bottom", 150]
+      ];
+
+      revealGroups.forEach(([selector, baseDelay]) => {
+        document.querySelectorAll(selector).forEach((element, index) => {
+          element.classList.add("reveal");
+          element.style.setProperty("--reveal-delay", `${baseDelay + index * 70}ms`);
+        });
+      });
+
+      [
+        ".service-card",
+        ".direction-card",
+        ".award-card",
+        ".project-photo-card",
+        ".news-card"
+      ].forEach((selector) => {
+        document.querySelectorAll(selector).forEach((element) => {
+          element.classList.add("micro-float", "micro-sheen");
+        });
+      });
+
+      [
+        ".hero-btn-primary",
+        ".hero-top-cta",
+        ".hero-portfolio-link",
+        ".company-link",
+        ".company-link-text",
+        ".projects-link",
+        ".awards-link",
+        ".news-button",
+        ".contact-cta-submit",
+        ".contact-form-channel",
+        ".site-footer-contact"
+      ].forEach((selector) => {
+        document.querySelectorAll(selector).forEach((element) => {
+          element.classList.add("micro-button");
+        });
+      });
+
+      [
+        ".service-card-icon",
+        ".direction-card-image",
+        ".project-photo",
+        ".news-card-image",
+        ".award-card-trophy"
+      ].forEach((selector) => {
+        document.querySelectorAll(selector).forEach((element) => {
+          element.classList.add("micro-media");
+        });
+      });
+
+      if (prefersReducedMotion) {
+        document.querySelectorAll(".reveal").forEach((element) => {
+          element.classList.add("is-visible");
+        });
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.16,
+          rootMargin: "0px 0px -8% 0px"
+        }
+      );
+
+      document.querySelectorAll(".reveal").forEach((element) => {
+        observer.observe(element);
+      });
+    })();
+  </script>
 </body>
 </html>
