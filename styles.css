@@ -2008,6 +2008,53 @@ body {
   gap: 20px;
   width: min(100%, 1200px);
   margin-inline: auto;
+  transition:
+    transform 260ms var(--ease-out-soft),
+    opacity 260ms var(--ease-out-soft),
+    background-color 260ms ease,
+    box-shadow 260ms ease,
+    border-color 260ms ease;
+}
+
+.hero-top.is-sticky {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  width: min(calc(100% - 24px), 1200px);
+  padding: 14px clamp(16px, 2vw, 24px);
+  margin-inline: 0;
+  border: 1px solid rgba(17, 19, 26, 0.08);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 14px 34px rgba(17, 19, 26, 0.08);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  transform: translateX(-50%);
+  z-index: 40;
+  animation: sticky-header-in 320ms var(--ease-out-soft) both;
+}
+
+.hero-top.is-sticky .hero-top-nav a {
+  color: rgba(17, 19, 26, 0.76);
+  text-shadow: none;
+}
+
+.hero-top.is-sticky .hero-top-nav a:hover {
+  color: #172E6E;
+  background: rgba(30, 58, 138, 0.08);
+  border-color: rgba(30, 58, 138, 0.14);
+}
+
+.hero-top.is-sticky .hero-top-cta {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--light-bg);
+}
+
+.hero-top.is-sticky .hero-lang-toggle {
+  color: rgba(17, 19, 26, 0.72);
+  border-color: transparent;
+  background: transparent;
 }
 
 .hero-logo {
@@ -2024,13 +2071,12 @@ body {
   display: block;
   width: clamp(83px, 7.64vw, 137px);
   height: auto;
-  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.45));
-  transition: transform 260ms ease, filter 260ms ease;
+  filter: none;
+  transition: transform 260ms ease;
 }
 
 .hero-logo:hover img {
   transform: translateY(-1px) scale(1.015);
-  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.5));
 }
 
 .hero-top-nav {
@@ -2067,6 +2113,18 @@ body {
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   transform: translateY(-1px);
+}
+
+@keyframes sticky-header-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 
 .hero-top-controls {
@@ -2106,6 +2164,10 @@ body {
 
 .hero-lang-toggle:hover {
   color: #9fb4f5;
+}
+
+.hero-top.is-sticky .hero-lang-toggle:hover {
+  color: #172E6E;
 }
 
 .hero-content {
@@ -2222,6 +2284,13 @@ body {
 
 .hero-btn-primary:hover,
 .hero-top-cta:hover {
+  background: #172E6E;
+  color: var(--light-bg);
+  border-color: #172E6E;
+  transform: translateY(-2px);
+}
+
+.hero-btn-primary:hover {
   background: var(--hover);
   color: var(--light-bg);
   border-color: var(--hover);

@@ -15,7 +15,12 @@
 
     <header class="hero-top">
       <a class="hero-logo" href="#" aria-label="Логотип компании">
-        <img src="./logo/Frame 109.svg" alt="ГИНТ-М" />
+        <img
+          src="./logo/Frame 109.svg"
+          alt="ГИНТ-М"
+          data-default-logo="./logo/Frame 109.svg"
+          data-sticky-logo="./logo/footer-color/color.svg"
+        />
       </a>
 
       <nav class="hero-top-nav" aria-label="Главная навигация">
@@ -694,6 +699,9 @@
   <script>
     (() => {
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const heroHeader = document.querySelector(".hero-top");
+      const heroBlock = document.querySelector(".hero-block");
+      const heroLogoImage = document.querySelector(".hero-logo img");
 
       const revealGroups = [
         [".company-head", 0],
@@ -798,6 +806,27 @@
       document.querySelectorAll(".reveal").forEach((element) => {
         observer.observe(element);
       });
+
+      if (!heroHeader || !heroBlock) {
+        return;
+      }
+
+      const updateStickyHeader = () => {
+        const triggerPoint = Math.max(heroBlock.offsetHeight - 120, 180);
+        const isSticky = window.scrollY > triggerPoint;
+
+        heroHeader.classList.toggle("is-sticky", isSticky);
+
+        if (heroLogoImage) {
+          heroLogoImage.src = isSticky
+            ? heroLogoImage.dataset.stickyLogo
+            : heroLogoImage.dataset.defaultLogo;
+        }
+      };
+
+      updateStickyHeader();
+      window.addEventListener("scroll", updateStickyHeader, { passive: true });
+      window.addEventListener("resize", updateStickyHeader);
     })();
   </script>
 </body>
