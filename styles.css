@@ -6470,3 +6470,65 @@ body.modal-open {
   }
 }
 
+
+/* Testimonials header controls override */
+.testimonials-head {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "eyebrow ."
+    "title actions";
+  column-gap: clamp(24px, 4vw, 54px);
+  row-gap: 12px;
+  align-items: center;
+}
+
+.testimonials-head-copy {
+  display: contents;
+}
+
+.testimonials-eyebrow {
+  grid-area: eyebrow;
+}
+
+.testimonials-title {
+  grid-area: title;
+}
+
+.testimonials-head-aside {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  align-self: center;
+}
+
+.testimonials-footer-actions {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .testimonials-head {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "eyebrow"
+      "title"
+      "actions";
+  }
+
+  .testimonials-head-aside {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .testimonials-head {
+    gap: 16px;
+  }
+
+  .testimonials-head-aside {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+}
