@@ -549,7 +549,7 @@ body.modal-open {
 .news-eyebrow {
   font-weight: 700;
   letter-spacing: 0.18em;
-  color: rgba(17, 19, 26, 0.46);
+  color: #e9ac68;
 }
 
 .news-title {
@@ -849,7 +849,7 @@ body.modal-open {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.56);
+  color: #e9ac68;
 }
 
 .projects-title {
@@ -1059,7 +1059,7 @@ body.modal-open {
 .awards-eyebrow {
   font-weight: 600;
   letter-spacing: 0.14em;
-  color: rgba(26, 26, 26, 0.56);
+  color: #e9ac68;
 }
 
 .company-title,
@@ -1307,7 +1307,7 @@ body.modal-open {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(17, 19, 26, 0.46);
+  color: #e9ac68;
 }
 
 .award-card-title {
@@ -1356,7 +1356,7 @@ body.modal-open {
 .directions-eyebrow {
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: rgba(17, 19, 26, 0.46);
+  color: #e9ac68;
 }
 
 .directions-title {
@@ -2712,7 +2712,7 @@ body.modal-open {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.56);
+  color: #e9ac68;
 }
 
 .testimonials-title {
@@ -4091,7 +4091,7 @@ body.modal-open {
 .news-eyebrow {
   font-weight: 700;
   letter-spacing: 0.18em;
-  color: rgba(17, 19, 26, 0.46);
+  color: #e9ac68;
 }
 
 .news-title {
@@ -4391,7 +4391,7 @@ body.modal-open {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.56);
+  color: #e9ac68;
 }
 
 .projects-title {
@@ -4601,7 +4601,7 @@ body.modal-open {
 .awards-eyebrow {
   font-weight: 600;
   letter-spacing: 0.14em;
-  color: rgba(26, 26, 26, 0.56);
+  color: #e9ac68;
 }
 
 .company-title,
@@ -4849,7 +4849,7 @@ body.modal-open {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(17, 19, 26, 0.46);
+  color: #e9ac68;
 }
 
 .award-card-title {
@@ -4898,7 +4898,7 @@ body.modal-open {
 .directions-eyebrow {
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: rgba(17, 19, 26, 0.46);
+  color: #e9ac68;
 }
 
 .directions-title {
@@ -6314,7 +6314,7 @@ body.modal-open {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.18em;
-  color: rgba(17, 19, 26, 0.34);
+  color: #e9ac68;
 }
 .testimonials-title {
   max-width: none;
@@ -6639,3 +6639,4 @@ body.modal-open {
     gap: 12px;
   }
 }
+
