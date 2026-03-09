@@ -6298,7 +6298,7 @@ body.modal-open {
   background: #ffffff;
 }
 .testimonials-shell {
-  width: min(100%, 1248px);
+  width: min(100%, 1200px);
   gap: clamp(28px, 3vw, 40px);
 }
 .testimonials-head {
