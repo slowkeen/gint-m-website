@@ -1713,7 +1713,7 @@ body.modal-open {
   border-color: rgba(17, 19, 26, 0.09);
 }
 
-.company-logo-card img[src*="microsoft-logo-svgrepo-com.svg"] {
+.company-logo-card img[src*="microsoft-logo.svg"] {
   height: 98px;
   max-width: 96%;
   max-height: 98px;
@@ -1721,7 +1721,7 @@ body.modal-open {
   transform-origin: center;
 }
 
-.company-logo-card img[src*="samsung-logo-svgrepo-com.svg"] {
+.company-logo-card img[src*="samsung-logo.svg"] {
   height: 98px;
   max-width: 96%;
   max-height: 98px;
@@ -2604,14 +2604,14 @@ body.modal-open {
     max-height: 54px;
   }
 
-  .company-logo-card img[src*="microsoft-logo-svgrepo-com.svg"] {
+  .company-logo-card img[src*="microsoft-logo.svg"] {
     height: 72px;
     max-width: 94%;
     max-height: 72px;
     transform: scale(1.58);
   }
 
-  .company-logo-card img[src*="samsung-logo-svgrepo-com.svg"] {
+  .company-logo-card img[src*="samsung-logo.svg"] {
     height: 72px;
     max-width: 94%;
     max-height: 72px;
@@ -5269,7 +5269,7 @@ body.modal-open {
   border-color: rgba(17, 19, 26, 0.09);
 }
 
-.company-logo-card img[src*="microsoft-logo-svgrepo-com.svg"] {
+.company-logo-card img[src*="microsoft-logo.svg"] {
   height: 98px;
   max-width: 96%;
   max-height: 98px;
@@ -5277,7 +5277,7 @@ body.modal-open {
   transform-origin: center;
 }
 
-.company-logo-card img[src*="samsung-logo-svgrepo-com.svg"] {
+.company-logo-card img[src*="samsung-logo.svg"] {
   height: 98px;
   max-width: 96%;
   max-height: 98px;
@@ -6142,14 +6142,14 @@ body.modal-open {
     max-height: 54px;
   }
 
-  .company-logo-card img[src*="microsoft-logo-svgrepo-com.svg"] {
+  .company-logo-card img[src*="microsoft-logo.svg"] {
     height: 72px;
     max-width: 94%;
     max-height: 72px;
     transform: scale(1.58);
   }
 
-  .company-logo-card img[src*="samsung-logo-svgrepo-com.svg"] {
+  .company-logo-card img[src*="samsung-logo.svg"] {
     height: 72px;
     max-width: 94%;
     max-height: 72px;
@@ -6687,3 +6687,4 @@ body.modal-open {
     gap: 12px;
   }
 }
+
