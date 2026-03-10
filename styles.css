@@ -149,8 +149,8 @@ body.modal-open {
   margin: 0 auto;
   padding: clamp(40px, 5vw, 58px);
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
-  gap: clamp(28px, 4vw, 54px);
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 32px);
   border-radius: clamp(32px, 4vw, 44px);
   overflow: hidden;
   background:
@@ -176,19 +176,19 @@ body.modal-open {
 .contact-cta-shell::after {
   content: "";
   position: absolute;
-  inset: -12% -8% -18% 46%;
-  height: auto;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 52% 48%, rgba(30, 58, 138, 0.18) 0%, rgba(30, 58, 138, 0.08) 28%, rgba(30, 58, 138, 0) 68%);
-  filter: blur(42px);
-  opacity: 0.9;
+  right: -6%;
+  bottom: -24%;
+  height: 176%;
+  aspect-ratio: 2328 / 2000;
+  background: url("./contact-frame.png") no-repeat center / contain;
+  opacity: 0.94;
   pointer-events: none;
 }
 
 .contact-cta-copy,
 .contact-cta-side,
-.contact-cta-form {
+.contact-cta-form,
+.contact-cta-frame-channels {
   position: relative;
   z-index: 1;
 }
@@ -197,6 +197,7 @@ body.modal-open {
   display: grid;
   gap: 24px;
   align-content: start;
+  width: min(100%, 580px);
   color: #f3f4f6;
 }
 
@@ -230,12 +231,6 @@ body.modal-open {
   font-size: clamp(16px, 1.05vw, 20px);
   line-height: 1.62;
   color: rgba(243, 244, 246, 0.78);
-}
-
-.contact-cta-side {
-  display: grid;
-  gap: 16px;
-  align-content: start;
 }
 
 .contact-cta-form {
@@ -434,9 +429,10 @@ body.modal-open {
 
 .contact-cta-frame-channels {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
   width: 100%;
+  margin-top: 8px;
 }
 
 .contact-modal {
@@ -2334,6 +2330,13 @@ body.modal-open {
     grid-template-columns: 1fr;
   }
 
+  .contact-cta-shell::after {
+    right: -18%;
+    bottom: -18%;
+    height: 146%;
+    opacity: 0.82;
+  }
+
   .contact-cta-form-grid {
     grid-template-columns: 1fr;
   }
@@ -2485,6 +2488,13 @@ body.modal-open {
     border-radius: 28px;
   }
 
+  .contact-cta-shell::after {
+    right: -34%;
+    bottom: -12%;
+    height: 110%;
+    opacity: 0.64;
+  }
+
   .news-shell {
     padding: var(--section-space-y-mobile) 0;
     gap: 24px;
@@ -2521,6 +2531,10 @@ body.modal-open {
   .contact-cta-side,
   .contact-cta-form {
     gap: 16px;
+  }
+
+  .contact-cta-copy {
+    width: 100%;
   }
 
   .contact-cta-form {
@@ -3691,8 +3705,8 @@ body.modal-open {
   margin: 0 auto;
   padding: clamp(40px, 5vw, 58px);
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
-  gap: clamp(28px, 4vw, 54px);
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 32px);
   border-radius: clamp(32px, 4vw, 44px);
   overflow: hidden;
   background:
@@ -3718,19 +3732,19 @@ body.modal-open {
 .contact-cta-shell::after {
   content: "";
   position: absolute;
-  inset: -12% -8% -18% 46%;
-  height: auto;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 52% 48%, rgba(30, 58, 138, 0.18) 0%, rgba(30, 58, 138, 0.08) 28%, rgba(30, 58, 138, 0) 68%);
-  filter: blur(42px);
-  opacity: 0.9;
+  right: -25%;
+  bottom: -10%;
+  height: 130%;
+  aspect-ratio: 2328 / 2000;
+  background: url("./contact-frame.png") no-repeat center / contain;
+  opacity: 0.94;
   pointer-events: none;
 }
 
 .contact-cta-copy,
 .contact-cta-side,
-.contact-cta-form {
+.contact-cta-form,
+.contact-cta-frame-channels {
   position: relative;
   z-index: 1;
 }
@@ -3739,6 +3753,7 @@ body.modal-open {
   display: grid;
   gap: 24px;
   align-content: start;
+  width: min(100%, 580px);
   color: #f3f4f6;
 }
 
@@ -3772,12 +3787,6 @@ body.modal-open {
   font-size: clamp(16px, 1.05vw, 20px);
   line-height: 1.62;
   color: rgba(243, 244, 246, 0.78);
-}
-
-.contact-cta-side {
-  display: grid;
-  gap: 16px;
-  align-content: start;
 }
 
 .contact-cta-form {
@@ -3976,9 +3985,10 @@ body.modal-open {
 
 .contact-cta-frame-channels {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
   width: 100%;
+  margin-top: 8px;
 }
 
 .contact-modal {
@@ -6639,4 +6649,3 @@ body.modal-open {
     gap: 12px;
   }
 }
-
