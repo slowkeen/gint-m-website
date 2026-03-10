@@ -104,7 +104,8 @@
     }
 
     const useAnimation = animate && !prefersReducedMotion;
-    testimonialsSlider.style.transitionDuration = useAnimation ? "520ms" : "0ms";
+    testimonialsSlider.style.transitionDuration = useAnimation ? "760ms" : "0ms";
+    testimonialsSlider.style.transitionTimingFunction = useAnimation ? "var(--ease-out-soft)" : "linear";
     testimonialsSlider.style.transform = `translate3d(-${testimonialSlideIndex * 100}%, 0, 0)`;
 
     testimonialSlides.forEach((slide, index) => {
@@ -240,6 +241,8 @@
     [".service-card", 80],
     [".projects-head", 0],
     [".project-photo-card", 80],
+    [".testimonials-head", 0],
+    [".testimonial-card", 80],
     [".contact-cta-copy", 0],
     [".contact-cta-side", 90],
     [".directions-head", 0],

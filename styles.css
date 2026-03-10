@@ -2489,9 +2489,9 @@ body.modal-open {
   }
 
   .contact-cta-shell::after {
-    right: -34%;
-    bottom: -12%;
-    height: 110%;
+    right: -40%;
+    bottom: -47%;
+    height: 151.8%;
     opacity: 0.64;
   }
 
@@ -3732,9 +3732,9 @@ body.modal-open {
 .contact-cta-shell::after {
   content: "";
   position: absolute;
-  right: -25%;
-  bottom: -10%;
-  height: 130%;
+  right: -31%;
+  bottom: -45%;
+  height: 179.4%;
   aspect-ratio: 2328 / 2000;
   background: url("./contact-frame.png") no-repeat center / contain;
   opacity: 0.94;
@@ -6341,7 +6341,7 @@ body.modal-open {
 .testimonials-slider {
   display: flex;
   width: 100%;
-  transition: transform 520ms ease;
+  transition: transform 760ms var(--ease-out-soft);
   will-change: transform;
 }
 
@@ -6353,6 +6353,8 @@ body.modal-open {
   grid-auto-flow: row;
   grid-auto-columns: auto;
   gap: clamp(18px, 1.8vw, 26px);
+  padding-inline: 10px;
+  box-sizing: border-box;
   overflow: visible;
   padding-bottom: 8px;
 }
@@ -6361,6 +6363,7 @@ body.modal-open {
   min-height: 610px;
   padding: clamp(28px, 2.3vw, 34px);
   border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.04),
     0 0 0 rgba(12, 15, 20, 0);
@@ -6371,6 +6374,19 @@ body.modal-open {
     radial-gradient(circle at 75% 50%, rgba(30, 58, 138, 0.2) 0%, rgba(30, 58, 138, 0) 70%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.015) 0%, rgba(255, 255, 255, 0) 100%),
     #0f172a;
+  transition:
+    transform 320ms var(--ease-out-soft),
+    border-color 320ms var(--ease-out-soft),
+    background-color 320ms var(--ease-out-soft),
+    box-shadow 320ms var(--ease-out-soft);
+}
+
+.testimonials-grid .testimonial-card:hover,
+.testimonials-grid .testimonial-card:focus-within {
+  border-color: rgba(147, 168, 238, 0.22);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 24px 60px rgba(17, 19, 26, 0.12);
 }
 
 .testimonial-card-topline {
@@ -6426,6 +6442,17 @@ body.modal-open {
   border: 1px solid rgba(147, 168, 238, 0.18);
   background: rgba(128, 149, 222, 0.16);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition:
+    background-color 320ms var(--ease-out-soft),
+    border-color 320ms var(--ease-out-soft),
+    transform 320ms var(--ease-out-soft);
+}
+
+.testimonial-card:hover .testimonial-card-brand,
+.testimonial-card:focus-within .testimonial-card-brand {
+  transform: translateY(-3px);
+  border-color: rgba(174, 192, 255, 0.28);
+  background: rgba(144, 168, 255, 0.18);
 }
 
 .testimonial-card-content {
@@ -6449,7 +6476,7 @@ body.modal-open {
 
 .testimonial-card-quote {
   max-width: 16ch;
-  font-size: clamp(22px, 1.95vw, 36px);
+  font-size: clamp(19px, 1.65vw, 30px);
   font-weight: 500;
   line-height: 0.96;
   letter-spacing: -0.025em;
@@ -6497,6 +6524,17 @@ body.modal-open {
 
 .testimonials-nav-button {
   background: rgba(255, 255, 255, 0.72);
+  transition:
+    transform 240ms ease,
+    background-color 240ms ease,
+    border-color 240ms ease,
+    color 240ms ease;
+}
+
+.testimonials-nav-button:hover,
+.testimonials-nav-button:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.96);
 }
 .testimonial-letter-layout {
   flex: 1 1 auto;
