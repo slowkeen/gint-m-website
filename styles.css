@@ -1884,6 +1884,7 @@ body.modal-open {
 }
 
 .hero-top {
+  /* Initial hero header is hidden for now; remove these lines to restore it. */
   animation: hero-fade-up 800ms var(--ease-out-soft) both;
   display: grid;
   grid-template-columns: auto minmax(0, max-content) auto;
@@ -1892,12 +1893,16 @@ body.modal-open {
   gap: 20px;
   width: min(100%, 1200px);
   margin-inline: auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
   transition:
     transform 260ms var(--ease-out-soft),
     opacity 260ms var(--ease-out-soft),
     background-color 260ms ease,
     box-shadow 260ms ease,
-    border-color 260ms ease;
+    border-color 260ms ease,
+    visibility 0s linear 260ms;
 }
 
 .hero-top.is-sticky {
@@ -1914,8 +1919,12 @@ body.modal-open {
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   transform: translateX(-50%);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
   z-index: 40;
   animation: sticky-header-in 320ms var(--ease-out-soft) both;
+  transition-delay: 0s;
 }
 
 .hero-top.is-sticky .hero-top-nav a {
@@ -5440,6 +5449,7 @@ body.modal-open {
 }
 
 .hero-top {
+  /* Initial hero header is hidden for now; remove these lines to restore it. */
   animation: hero-fade-up 800ms var(--ease-out-soft) both;
   display: grid;
   grid-template-columns: auto minmax(0, max-content) auto;
@@ -5448,12 +5458,16 @@ body.modal-open {
   gap: 20px;
   width: min(100%, 1200px);
   margin-inline: auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
   transition:
     transform 260ms var(--ease-out-soft),
     opacity 260ms var(--ease-out-soft),
     background-color 260ms ease,
     box-shadow 260ms ease,
-    border-color 260ms ease;
+    border-color 260ms ease,
+    visibility 0s linear 260ms;
 }
 
 .hero-top.is-sticky {
@@ -5470,8 +5484,12 @@ body.modal-open {
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   transform: translateX(-50%);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
   z-index: 40;
   animation: sticky-header-in 320ms var(--ease-out-soft) both;
+  transition-delay: 0s;
 }
 
 .hero-top.is-sticky .hero-top-nav a {

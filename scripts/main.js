@@ -348,7 +348,7 @@
     let wasStickyState = null;
 
     const updateStickyHeader = () => {
-      const triggerPoint = Math.max(heroBlock.offsetHeight - 120, 180);
+      const triggerPoint = 56;
       const isSticky = window.scrollY > triggerPoint;
 
       if (isSticky === wasStickyState) {
