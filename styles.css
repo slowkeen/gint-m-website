@@ -6817,7 +6817,7 @@ body.modal-open {
   margin: 0;
   padding: 0 0 clamp(30px, 3vw, 42px);
   color: rgba(17, 24, 39, 0.84);
-  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  border-bottom: 0;
 }
 
 .company-lead > .company-intro:nth-of-type(n + 2) {
@@ -7181,3 +7181,9 @@ body.modal-open {
 
 
 
+
+.content-surface::before,
+.projects-shell::before {
+  content: none;
+  display: none;
+}
