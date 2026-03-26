@@ -270,7 +270,208 @@
   }
 
   syncTestimonialsSlider(false);
+  const companyLogosSlider = document.querySelector("[data-company-logos]");
+  const companyLogosTrack = companyLogosSlider ? companyLogosSlider.querySelector("[data-company-logos-track]") : null;
+  const companyLogoPages = companyLogosTrack ? Array.from(companyLogosTrack.querySelectorAll("[data-company-logos-page]")) : [];
+  const companyLogoPrevButton = companyLogosSlider ? companyLogosSlider.querySelector('[data-company-logos-nav="prev"]') : null;
+  const companyLogoNextButton = companyLogosSlider ? companyLogosSlider.querySelector('[data-company-logos-nav="next"]') : null;
+  const companyLogoPageCount = companyLogoPages.length;
+  let companyLogoSlides = companyLogoPages;
+  let companyLogoSlideIndex = companyLogoPageCount > 1 ? 1 : 0;
+  let companyLogoIsAnimating = false;
+  let companyLogoAutoplayId = 0;
 
+  if (companyLogosTrack && companyLogoPageCount > 1) {
+    const firstClone = companyLogoPages[0].cloneNode(true);
+    const lastClone = companyLogoPages[companyLogoPageCount - 1].cloneNode(true);
+
+    firstClone.dataset.companyLogosClone = "first";
+    lastClone.dataset.companyLogosClone = "last";
+    firstClone.setAttribute("aria-hidden", "true");
+    lastClone.setAttribute("aria-hidden", "true");
+
+    companyLogosTrack.prepend(lastClone);
+    companyLogosTrack.append(firstClone);
+    companyLogoSlides = Array.from(companyLogosTrack.children);
+  }
+
+  const syncCompanyLogoButtons = () => {
+    if (companyLogoPrevButton) {
+      companyLogoPrevButton.disabled = companyLogoPageCount < 2;
+    }
+
+    if (companyLogoNextButton) {
+      companyLogoNextButton.disabled = companyLogoPageCount < 2;
+    }
+  };
+
+  const getActiveCompanyLogoPageIndex = () => {
+    if (companyLogoPageCount < 2) {
+      return 0;
+    }
+
+    if (companyLogoSlideIndex === 0) {
+      return companyLogoPageCount - 1;
+    }
+
+    if (companyLogoSlideIndex === companyLogoSlides.length - 1) {
+      return 0;
+    }
+
+    return companyLogoSlideIndex - 1;
+  };
+
+  const syncCompanyLogosSlider = (animate = true) => {
+    if (!companyLogosTrack || companyLogoSlides.length === 0) {
+      return;
+    }
+
+    const useAnimation = animate && !prefersReducedMotion;
+    const activePageIndex = getActiveCompanyLogoPageIndex();
+
+    companyLogosTrack.style.transitionDuration = useAnimation ? "820ms" : "0ms";
+    companyLogosTrack.style.transitionTimingFunction = useAnimation ? "var(--ease-out-soft)" : "linear";
+    companyLogosTrack.style.transform = `translate3d(-${companyLogoSlideIndex * 100}%, 0, 0)`;
+
+    companyLogoPages.forEach((page, index) => {
+      const isActive = index === activePageIndex;
+
+      page.classList.toggle("is-active", isActive);
+      page.hidden = false;
+      page.setAttribute("aria-hidden", String(!isActive));
+
+      if ("inert" in page) {
+        page.inert = !isActive;
+      }
+    });
+
+    companyLogoSlides.forEach((page, index) => {
+      const isClone = page.hasAttribute("data-company-logos-clone");
+      const isActive = index === companyLogoSlideIndex;
+
+      page.setAttribute("aria-hidden", String(!isActive || isClone));
+
+      if ("inert" in page) {
+        page.inert = !isActive || isClone;
+      }
+    });
+  };
+
+  const normalizeCompanyLogosLoop = () => {
+    if (companyLogoPageCount < 2) {
+      companyLogoIsAnimating = false;
+      return;
+    }
+
+    if (companyLogoSlideIndex === 0) {
+      companyLogoSlideIndex = companyLogoPageCount;
+      syncCompanyLogosSlider(false);
+    } else if (companyLogoSlideIndex === companyLogoSlides.length - 1) {
+      companyLogoSlideIndex = 1;
+      syncCompanyLogosSlider(false);
+    }
+
+    companyLogoIsAnimating = false;
+  };
+
+  const showCompanyLogoPage = (direction) => {
+    if (!companyLogosTrack || companyLogoPageCount < 2 || companyLogoIsAnimating) {
+      return;
+    }
+
+    companyLogoSlideIndex += direction;
+
+    if (prefersReducedMotion) {
+      if (companyLogoSlideIndex === 0) {
+        companyLogoSlideIndex = companyLogoPageCount;
+      } else if (companyLogoSlideIndex === companyLogoSlides.length - 1) {
+        companyLogoSlideIndex = 1;
+      }
+
+      syncCompanyLogosSlider(false);
+      return;
+    }
+
+    companyLogoIsAnimating = true;
+    syncCompanyLogosSlider(true);
+  };
+
+  const stopCompanyLogosAutoplay = () => {
+    if (companyLogoAutoplayId === 0) {
+      return;
+    }
+
+    window.clearInterval(companyLogoAutoplayId);
+    companyLogoAutoplayId = 0;
+  };
+
+  const startCompanyLogosAutoplay = () => {
+    stopCompanyLogosAutoplay();
+
+    if (companyLogoPageCount < 2 || prefersReducedMotion) {
+      return;
+    }
+
+    companyLogoAutoplayId = window.setInterval(() => {
+      showCompanyLogoPage(1);
+    }, 3000);
+  };
+
+  const shiftCompanyLogoPage = (direction) => {
+    if (companyLogoPageCount < 2) {
+      return;
+    }
+
+    showCompanyLogoPage(direction);
+    startCompanyLogosAutoplay();
+  };
+
+  syncCompanyLogoButtons();
+  syncCompanyLogosSlider(false);
+
+  if (companyLogoPrevButton) {
+    companyLogoPrevButton.addEventListener("click", () => {
+      shiftCompanyLogoPage(-1);
+    });
+  }
+
+  if (companyLogoNextButton) {
+    companyLogoNextButton.addEventListener("click", () => {
+      shiftCompanyLogoPage(1);
+    });
+  }
+
+  if (companyLogosTrack) {
+    companyLogosTrack.addEventListener("transitionend", (event) => {
+      if (event.propertyName !== "transform") {
+        return;
+      }
+
+      normalizeCompanyLogosLoop();
+    });
+  }
+
+  if (companyLogosSlider) {
+    companyLogosSlider.addEventListener("pointerenter", stopCompanyLogosAutoplay);
+    companyLogosSlider.addEventListener("pointerleave", startCompanyLogosAutoplay);
+    companyLogosSlider.addEventListener("focusin", stopCompanyLogosAutoplay);
+    companyLogosSlider.addEventListener("focusout", (event) => {
+      if (!companyLogosSlider.contains(event.relatedTarget)) {
+        startCompanyLogosAutoplay();
+      }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        stopCompanyLogosAutoplay();
+        return;
+      }
+
+      startCompanyLogosAutoplay();
+    });
+  }
+
+  startCompanyLogosAutoplay();
   const messengerToggles = document.querySelectorAll("[data-messenger-toggle]");
   const phoneInput = document.querySelector("[data-phone-input]");
   const phoneMethodToggle = document.querySelector('[data-contact-method="phone"]');

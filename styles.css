@@ -3003,15 +3003,16 @@ body.modal-open {
 }
 
 .testimonials-nav-icon {
+  display: block;
   width: 10px;
   height: 10px;
   border-top: 1.75px solid currentColor;
   border-right: 1.75px solid currentColor;
-  transform: rotate(45deg);
+  transform: translateX(-1px) rotate(45deg);
 }
 
 .testimonials-nav-button[data-testimonials-nav="prev"] .testimonials-nav-icon {
-  transform: rotate(-135deg);
+  transform: translateX(1px) rotate(-135deg);
 }
 
 .testimonials-track {
@@ -3203,15 +3204,16 @@ body.modal-open {
 }
 
 .testimonials-nav-icon {
+  display: block;
   width: 10px;
   height: 10px;
   border-top: 1.75px solid currentColor;
   border-right: 1.75px solid currentColor;
-  transform: rotate(45deg);
+  transform: translateX(-1px) rotate(45deg);
 }
 
 .testimonials-nav-button[data-testimonials-nav="prev"] .testimonials-nav-icon {
-  transform: rotate(-135deg);
+  transform: translateX(1px) rotate(-135deg);
 }
 
 .testimonials-track {
@@ -6829,65 +6831,84 @@ body.modal-open {
 }
 
 .company-logos {
-  position: static;
   display: grid;
   width: auto;
   margin: 0;
   margin-top: auto;
   padding: clamp(10px, 0.95vw, 16px) 0 0;
+  gap: clamp(16px, 1.7vw, 24px);
   overflow: visible;
   border-top: 0;
 }
 
-.company-partners-link {
-  position: absolute;
-  left: 0;
-  top: calc(100% + 42px);
-  align-self: flex-start;
-  margin-top: 0;
-  min-height: auto;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  font-family: var(--font-body);
-  cursor: pointer;
-}
-
 .company-logos::before,
 .company-logos::after {
+  content: none;
   display: none;
 }
 
+.company-logos-stage {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.company-logos-track {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+  flex-shrink: 1;
+  animation: none;
+  transform: translate3d(0, 0, 0);
+  transition: transform 820ms var(--ease-out-soft);
+  will-change: transform;
+}
+
+.company-logos-page {
+  display: grid;
+  flex: 0 0 100%;
+  min-width: 100%;
+}
+
+.company-logos-page.is-active {
+  display: grid;
+}
 .company-logos-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-auto-rows: minmax(60px, auto);
-  gap: 12px 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 90px;
+  gap: 14px 24px;
   align-items: center;
+  justify-items: stretch;
 }
 
 .company-logo-card {
+  width: 100%;
   min-width: 0;
-  min-height: 52px;
+  min-height: 90px;
   padding: 0;
   border: 0;
   border-radius: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   background: transparent;
   box-shadow: none;
 }
 
 .company-logo-card.logo-microsoft,
 .company-logo-card.logo-samsung {
-  min-height: 82px;
+  min-height: 90px;
 }
 
 .company-logo-card img {
-  height: 28px;
-  max-width: 78%;
-  max-height: 34px;
+  width: auto;
+  height: 30px;
+  max-width: 88%;
+  max-height: 40px;
+  object-fit: contain;
   filter: none;
   opacity: 1;
   transition: transform 220ms var(--ease-out-micro), opacity 220ms var(--ease-out-micro);
@@ -6908,9 +6929,9 @@ body.modal-open {
 
 .company-logo-card.logo-microsoft img,
 .company-logo-card.logo-samsung img {
-  height: 64px;
+  height: 66px;
   max-width: 100%;
-  max-height: 76px;
+  max-height: 78px;
   transform: none;
 }
 
@@ -6919,6 +6940,79 @@ body.modal-open {
 .company-logo-card.logo-samsung:hover img,
 .company-logo-card.logo-samsung:focus-within img {
   transform: translateY(-1px);
+}
+
+.company-logos-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.company-partners-link {
+  position: static;
+  align-self: center;
+  margin-top: 0;
+  min-height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.company-logos-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.company-logos-nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(17, 19, 26, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #11131a;
+  cursor: pointer;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease,
+    color 220ms ease,
+    opacity 220ms ease;
+}
+
+.company-logos-nav-button:hover,
+.company-logos-nav-button:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--hover);
+  background: var(--hover);
+  color: #f7f7f5;
+}
+
+.company-logos-nav-button:disabled {
+  opacity: 0.42;
+  cursor: default;
+  transform: none;
+}
+
+.company-logos-nav-icon {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-top: 1.75px solid currentColor;
+  border-right: 1.75px solid currentColor;
+  transform: translateX(-1px) rotate(45deg);
+}
+
+.company-logos-nav-button[data-company-logos-nav="prev"] .company-logos-nav-icon {
+  transform: translateX(1px) rotate(-135deg);
 }
 
 .company-footer {
@@ -6962,11 +7056,6 @@ body.modal-open {
     max-width: none;
   }
 
-  .company-partners-link {
-    position: static;
-    margin-top: 42px;
-  }
-
   .company-logos {
     padding: 0;
   }
@@ -6982,7 +7071,7 @@ body.modal-open {
   }
 
   .company-logos-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -7003,38 +7092,58 @@ body.modal-open {
 
   .company-stats .hero-adv-value {
     font-size: clamp(33px, 10.5vw, 51px);
-  }
+}
+
+  .company-logos {
+    gap: 18px;
+}
 
   .company-logos-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 98px;
     gap: 12px 16px;
-  }
+}
 
   .company-logo-card {
-    min-height: 56px;
-  }
+    min-height: 98px;
+}
 
   .company-logo-card.logo-microsoft,
   .company-logo-card.logo-samsung {
-    min-height: 112px;
-  }
+    min-height: 98px;
+}
 
   .company-logo-card img {
-    height: 30px;
+    height: 28px;
     max-height: 36px;
-  }
+}
 
   .company-logo-card img[src*="total-logo.svg"] {
     height: 45px;
     max-height: 54px;
-  }
+}
 
   .company-logo-card.logo-microsoft img,
   .company-logo-card.logo-samsung img {
-    height: 90px;
+    height: 76px;
     max-width: 100%;
-    max-height: 108px;
+    max-height: 92px;
     transform: none;
+}
+
+  .company-logos-footer {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .company-logos-nav {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .company-logos-nav-button {
+    width: 46px;
+    height: 46px;
   }
 }
 .hero-top {
@@ -7186,4 +7295,33 @@ body.modal-open {
 .projects-shell::before {
   content: none;
   display: none;
+}
+
+.company-intro,
+.company-note {
+  font-size: clamp(20px, 1.28vw, 24px);
+  line-height: 1.5;
+}
+
+.services-intro,
+.projects-intro,
+.contact-cta-text {
+  font-size: clamp(18px, 1.16vw, 22px);
+  line-height: 1.64;
+}
+
+.awards-intro,
+.directions-intro,
+.service-card-text {
+  font-size: clamp(17px, 1.08vw, 20px);
+  line-height: 1.64;
+}
+
+.award-card-text {
+  font-size: clamp(15px, 0.96vw, 17px);
+  line-height: 1.62;
+}
+
+.hero-top.is-sticky .hero-top-nav a {
+  font-size: clamp(14px, 0.96vw, 16px);
 }
