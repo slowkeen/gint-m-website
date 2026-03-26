@@ -6801,7 +6801,12 @@ body.modal-open {
   border-left: 0;
 }
 
-.company-intro,
+.company-intro {
+  max-width: 46ch;
+  font-size: clamp(18px, 1.18vw, 22px);
+  line-height: 1.46;
+}
+
 .company-note {
   max-width: 46ch;
   font-size: clamp(16px, 1.04vw, 20px);
