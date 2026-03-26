@@ -1929,6 +1929,7 @@ body.modal-open {
 
 .hero-top.is-sticky .hero-top-nav a {
   color: rgba(17, 19, 26, 0.76);
+  font-size: clamp(13px, 0.86vw, 14px);
   text-shadow: none;
 }
 
@@ -5493,6 +5494,7 @@ body.modal-open {
 
 .hero-top.is-sticky .hero-top-nav a {
   color: rgba(17, 19, 26, 0.76);
+  font-size: clamp(13px, 0.86vw, 14px);
   text-shadow: none;
 }
 
@@ -6737,14 +6739,10 @@ body.modal-open {
   align-self: end;
   color: var(--text-dark);
   font-family: "Oswald", "Arial Narrow", sans-serif;
-  font-size: clamp(54px, 5.2vw, 88px);
+  font-size: clamp(40px, 4vw, 66px);
   font-weight: 600;
   line-height: 0.86;
   letter-spacing: -0.04em;
-}
-
-.company-advantages li:nth-child(2) .hero-adv-value {
-  font-size: clamp(40px, 4vw, 66px);
 }
 
 .company-stats .hero-adv-label {
@@ -6756,12 +6754,13 @@ body.modal-open {
 }
 
 .company-shell {
-  grid-template-columns: minmax(0, 0.98fr) minmax(460px, 1.02fr);
+  grid-template-columns: minmax(0, 1.06fr) minmax(430px, 0.94fr);
   gap: clamp(20px, 2vw, 32px) clamp(24px, 2.6vw, 40px);
   align-items: start;
 }
 
 .company-head {
+  position: relative;
   grid-column: 1;
   display: flex;
   flex-direction: column;
@@ -6830,9 +6829,24 @@ body.modal-open {
   width: auto;
   margin: 0;
   margin-top: auto;
-  padding: clamp(14px, 1.3vw, 22px) 0 0;
+  padding: clamp(10px, 0.95vw, 16px) 0 0;
   overflow: visible;
   border-top: 0;
+}
+
+.company-partners-link {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 42px);
+  align-self: flex-start;
+  margin-top: 0;
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  cursor: pointer;
 }
 
 .company-logos::before,
@@ -6842,33 +6856,33 @@ body.modal-open {
 
 .company-logos-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: minmax(88px, auto);
-  gap: 18px 22px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-rows: minmax(60px, auto);
+  gap: 12px 18px;
   align-items: center;
 }
 
 .company-logo-card {
   min-width: 0;
-  min-height: 74px;
+  min-height: 52px;
   padding: 0;
   border: 0;
   border-radius: 0;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   background: transparent;
   box-shadow: none;
 }
 
 .company-logo-card.logo-microsoft,
 .company-logo-card.logo-samsung {
-  min-height: 148px;
+  min-height: 82px;
 }
 
 .company-logo-card img {
-  height: 38px;
-  max-width: 84%;
-  max-height: 46px;
+  height: 28px;
+  max-width: 78%;
+  max-height: 34px;
   filter: none;
   opacity: 1;
   transition: transform 220ms var(--ease-out-micro), opacity 220ms var(--ease-out-micro);
@@ -6882,16 +6896,16 @@ body.modal-open {
 }
 
 .company-logo-card img[src*="total-logo.svg"] {
-  height: 57px;
+  height: 42px;
   max-width: 100%;
-  max-height: 69px;
+  max-height: 50px;
 }
 
 .company-logo-card.logo-microsoft img,
 .company-logo-card.logo-samsung img {
-  height: 114px;
+  height: 64px;
   max-width: 100%;
-  max-height: 138px;
+  max-height: 76px;
   transform: none;
 }
 
@@ -6943,6 +6957,11 @@ body.modal-open {
     max-width: none;
   }
 
+  .company-partners-link {
+    position: static;
+    margin-top: 42px;
+  }
+
   .company-logos {
     padding: 0;
   }
@@ -6958,7 +6977,7 @@ body.modal-open {
   }
 
   .company-logos-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 
@@ -6978,10 +6997,6 @@ body.modal-open {
   }
 
   .company-stats .hero-adv-value {
-    font-size: clamp(45px, 13.5vw, 63px);
-  }
-
-  .company-advantages li:nth-child(2) .hero-adv-value {
     font-size: clamp(33px, 10.5vw, 51px);
   }
 
@@ -7024,6 +7039,8 @@ body.modal-open {
   grid-template-columns: 1fr;
   justify-items: start;
   gap: 0;
+  width: 100%;
+  margin-inline: 0;
   padding-top: clamp(18px, 3vh, 30px);
   padding-bottom: 0;
   transition:
