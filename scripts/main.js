@@ -7,6 +7,95 @@
   const modalClosers = document.querySelectorAll("[data-modal-close]");
   const contactModals = document.querySelectorAll(".contact-modal");
   const testimonialLetters = document.querySelectorAll(".testimonial-modal .testimonial-letter");
+  const statCounters = Array.from(document.querySelectorAll("[data-count-to]"));
+
+  const formatCountValue = (value) => {
+    return Math.round(value)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  };
+
+  const renderCountValue = (element, value) => {
+    const prefix = element.dataset.countPrefix || "";
+    const suffix = element.dataset.countSuffix || "";
+    element.textContent = `${prefix}${formatCountValue(value)}${suffix}`;
+  };
+
+  const animateStatCounters = () => {
+    if (statCounters.length === 0) {
+      return;
+    }
+
+    const duration = 1100;
+
+    statCounters.forEach((counter) => {
+      if (counter.dataset.countAnimated === "true") {
+        return;
+      }
+
+      const targetValue = Number(counter.dataset.countTo);
+
+      if (!Number.isFinite(targetValue)) {
+        return;
+      }
+
+      counter.dataset.countAnimated = "true";
+
+      if (prefersReducedMotion) {
+        renderCountValue(counter, targetValue);
+        return;
+      }
+
+      const startTime = performance.now();
+
+      const tick = (currentTime) => {
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        renderCountValue(counter, targetValue * easedProgress);
+
+        if (progress < 1) {
+          window.requestAnimationFrame(tick);
+          return;
+        }
+
+        renderCountValue(counter, targetValue);
+      };
+
+      renderCountValue(counter, 0);
+      window.requestAnimationFrame(tick);
+    });
+  };
+
+  const initStatCounters = () => {
+    if (statCounters.length === 0) {
+      return;
+    }
+
+    if (prefersReducedMotion) {
+      animateStatCounters();
+      return;
+    }
+
+    const counterObserver = new IntersectionObserver(
+      (entries) => {
+        const shouldAnimate = entries.some((entry) => entry.isIntersecting);
+
+        if (!shouldAnimate) {
+          return;
+        }
+
+        animateStatCounters();
+        counterObserver.disconnect();
+      },
+      {
+        threshold: 0.35
+      }
+    );
+
+    statCounters.forEach((counter) => {
+      counterObserver.observe(counter);
+    });
+  };
 
   const setTestimonialView = (letter, view) => {
     if (!letter) {
@@ -29,7 +118,7 @@
     }
 
     if (toggle) {
-      toggle.textContent = isTextView ? "Скан" : "Текстовый вариант";
+      toggle.textContent = isTextView ? "\u0421\u043a\u0430\u043d" : "\u0422\u0435\u043a\u0441\u0442\u043e\u0432\u044b\u0439 \u0432\u0430\u0440\u0438\u0430\u043d\u0442";
       toggle.setAttribute("aria-pressed", String(isTextView));
     }
   };
@@ -64,7 +153,7 @@
       toggle.className = "testimonial-letter-toggle testimonial-action testimonial-action-secondary micro-button";
       toggle.dataset.testimonialToggle = "";
       toggle.setAttribute("aria-pressed", "false");
-      toggle.textContent = "Текстовый вариант";
+      toggle.textContent = "\u0422\u0435\u043a\u0441\u0442\u043e\u0432\u044b\u0439 \u0432\u0430\u0440\u0438\u0430\u043d\u0442";
 
       toggle.addEventListener("click", () => {
         const nextView = letter.dataset.testimonialView === "text" ? "scan" : "text";
@@ -512,4 +601,5 @@
 
   syncPhoneMethodState();
   setMessengerFieldState();
+  initStatCounters();
 })();
