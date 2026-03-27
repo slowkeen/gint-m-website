@@ -7,8 +7,18 @@
   const testimonialLetters = document.querySelectorAll(".testimonial-modal .testimonial-letter");
   const testimonialsGrid = document.querySelector("[data-testimonials-grid]");
   const testimonialLoadButton = document.querySelector("[data-load-testimonials]");
-  const TESTIMONIALS_INITIAL_VISIBLE = 15;
-  const TESTIMONIALS_BATCH_SIZE = 15;
+  const parsePositiveInt = (value, fallback) => {
+    const parsed = Number.parseInt(value ?? "", 10);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+  };
+  const TESTIMONIALS_INITIAL_VISIBLE = parsePositiveInt(
+    testimonialsGrid?.dataset.testimonialsInitialVisible || testimonialLoadButton?.dataset.testimonialsInitialVisible,
+    15
+  );
+  const TESTIMONIALS_BATCH_SIZE = parsePositiveInt(
+    testimonialsGrid?.dataset.testimonialsBatchSize || testimonialLoadButton?.dataset.testimonialsBatchSize,
+    15
+  );
   const testimonialSources = [
     {
       brand: "align",

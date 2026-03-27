@@ -1,6 +1,8 @@
-backup-*/
+﻿backup-*/
 *.tmp
 project-audit/
 backups/
 server*.log
 server*.err
+.edge-profile-debug/
+.edge-profile-debug-cdp/
