@@ -1,7 +1,6 @@
 (() => {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const heroHeader = document.querySelector(".hero-top");
-  const heroBlock = document.querySelector(".hero-block");
   const heroLogoImage = document.querySelector(".hero-logo img");
   const modalTriggers = document.querySelectorAll("[data-modal-open]");
   const modalClosers = document.querySelectorAll("[data-modal-close]");
@@ -150,7 +149,7 @@
 
       const toggle = document.createElement("button");
       toggle.type = "button";
-      toggle.className = "testimonial-letter-toggle testimonial-action testimonial-action-secondary micro-button";
+      toggle.className = "testimonial-letter-toggle testimonial-action testimonial-action-secondary";
       toggle.dataset.testimonialToggle = "";
       toggle.setAttribute("aria-pressed", "false");
       toggle.textContent = "\u0422\u0435\u043a\u0441\u0442\u043e\u0432\u044b\u0439 \u0432\u0430\u0440\u0438\u0430\u043d\u0442";
@@ -473,11 +472,178 @@
 
   startCompanyLogosAutoplay();
   const messengerToggles = document.querySelectorAll("[data-messenger-toggle]");
+  const messengerFields = Array.from(document.querySelectorAll("[data-messenger-field]")).reduce((fields, field) => {
+    fields.set(field.dataset.messengerField, field);
+    return fields;
+  }, new Map());
   const phoneInput = document.querySelector("[data-phone-input]");
   const phoneMethodToggle = document.querySelector('[data-contact-method="phone"]');
   const projectLoadButton = document.querySelector("[data-load-projects]");
-  const hiddenProjectCards = Array.from(document.querySelectorAll("[data-project-hidden]"));
+  const projectsMasonry = document.querySelector(".projects-masonry");
+  const projectCards = projectsMasonry ? Array.from(projectsMasonry.querySelectorAll(".project-photo-card")) : [];
+  const PROJECTS_INITIAL_VISIBLE = 16;
+  let hiddenProjectCards = [];
   const revealElements = [];
+  let projectMasonryFrame = null;
+  let lastProjectMasonryWidth = 0;
+
+  const syncInitialProjectVisibility = () => {
+    hiddenProjectCards = [];
+
+    projectCards.forEach((card, index) => {
+      const shouldHide = index >= PROJECTS_INITIAL_VISIBLE;
+
+      card.hidden = shouldHide;
+
+      if (shouldHide) {
+        hiddenProjectCards.push(card);
+      }
+    });
+  };
+
+  const resetProjectMasonryCardStyles = (card) => {
+    card.style.removeProperty("width");
+    card.style.removeProperty("left");
+    card.style.removeProperty("top");
+  };
+
+  const disableProjectMasonry = () => {
+    if (!projectsMasonry) {
+      return;
+    }
+
+    projectsMasonry.classList.remove("is-enhanced");
+    projectsMasonry.style.removeProperty("height");
+    projectCards.forEach(resetProjectMasonryCardStyles);
+  };
+
+  const getProjectColumnCount = () => {
+    if (!projectsMasonry) {
+      return 1;
+    }
+
+    const styles = window.getComputedStyle(projectsMasonry);
+    const columnCount = Number.parseInt(styles.getPropertyValue("--projects-columns"), 10);
+
+    return Number.isFinite(columnCount) && columnCount > 0 ? columnCount : 1;
+  };
+
+  const resolveProjectLength = (value) => {
+    const normalizedValue = value.trim();
+
+    if (!normalizedValue) {
+      return Number.NaN;
+    }
+
+    const pixelValue = Number.parseFloat(normalizedValue);
+
+    if (/^-?\d+(?:\.\d+)?px$/.test(normalizedValue) && Number.isFinite(pixelValue)) {
+      return pixelValue;
+    }
+
+    const clampMatch = normalizedValue.match(/^clamp\(\s*(-?\d+(?:\.\d+)?)px\s*,\s*(-?\d+(?:\.\d+)?)vw\s*,\s*(-?\d+(?:\.\d+)?)px\s*\)$/);
+
+    if (clampMatch) {
+      const min = Number.parseFloat(clampMatch[1]);
+      const preferredViewportWidth = Number.parseFloat(clampMatch[2]);
+      const max = Number.parseFloat(clampMatch[3]);
+      const preferred = (window.innerWidth * preferredViewportWidth) / 100;
+
+      return Math.min(max, Math.max(min, preferred));
+    }
+
+    return pixelValue;
+  };
+
+  const getProjectColumnGap = () => {
+    if (!projectsMasonry) {
+      return 0;
+    }
+
+    const styles = window.getComputedStyle(projectsMasonry);
+    const explicitGap = resolveProjectLength(styles.getPropertyValue("--projects-gap"));
+    const columnGap = Number.parseFloat(styles.columnGap);
+
+    if (Number.isFinite(explicitGap)) {
+      return explicitGap;
+    }
+
+    return Number.isFinite(columnGap) ? columnGap : 0;
+  };
+
+  const layoutProjectMasonry = () => {
+    if (!projectsMasonry || projectCards.length === 0) {
+      return;
+    }
+
+    const visibleCards = projectCards.filter((card) => !card.hidden);
+    const columnCount = getProjectColumnCount();
+
+    if (visibleCards.length === 0 || columnCount < 2) {
+      disableProjectMasonry();
+      return;
+    }
+
+    const containerWidth = projectsMasonry.clientWidth;
+
+    if (!containerWidth) {
+      return;
+    }
+
+    const gap = getProjectColumnGap();
+    const columnWidth = (containerWidth - gap * (columnCount - 1)) / columnCount;
+
+    if (columnWidth <= 0) {
+      disableProjectMasonry();
+      return;
+    }
+
+    const columnHeights = Array.from({ length: columnCount }, () => 0);
+
+    projectsMasonry.classList.add("is-enhanced");
+
+    visibleCards.forEach((card) => {
+      card.style.width = `${columnWidth}px`;
+    });
+
+    // Place each card into the currently shortest column to avoid row gaps.
+    visibleCards.forEach((card) => {
+      let targetColumn = 0;
+
+      for (let index = 1; index < columnHeights.length; index += 1) {
+        if (columnHeights[index] < columnHeights[targetColumn]) {
+          targetColumn = index;
+        }
+      }
+
+      const x = targetColumn * (columnWidth + gap);
+      const y = columnHeights[targetColumn];
+      const cardHeight = card.offsetHeight;
+
+      card.style.left = `${x}px`;
+      card.style.top = `${y}px`;
+      columnHeights[targetColumn] = y + cardHeight + gap;
+    });
+
+    projectsMasonry.style.height = `${Math.max(0, Math.max(...columnHeights) - gap)}px`;
+  };
+
+  const requestProjectMasonryLayout = () => {
+    if (!projectsMasonry || projectCards.length === 0) {
+      return;
+    }
+
+    if (projectMasonryFrame) {
+      window.cancelAnimationFrame(projectMasonryFrame);
+    }
+
+    projectMasonryFrame = window.requestAnimationFrame(() => {
+      projectMasonryFrame = null;
+      layoutProjectMasonry();
+    });
+  };
+
+  syncInitialProjectVisibility();
 
   const applyClasses = (selectors, classes) => {
     selectors.forEach((selector) => {
@@ -526,17 +692,11 @@
     [".company-head", 0],
     [".company-lead", 90],
     [".company-logos", 150],
-    [".company-footer", 210],
-    [".services-head", 0],
-    [".service-card", 80],
     [".projects-head", 0],
     [".project-photo-card", 80],
     [".testimonials-head", 0],
     [".testimonial-card", 80],
     [".contact-cta-copy", 0],
-    [".contact-cta-side", 90],
-    [".directions-head", 0],
-    [".direction-card", 80],
     [".awards-head", 0],
     [".award-card", 90],
     [".news-head", 0],
@@ -555,8 +715,7 @@
   });
 
   applyClasses([
-    ".service-card",
-    ".direction-card",
+    ".testimonial-card",
     ".award-card",
     ".news-card"
   ], ["micro-float", "micro-sheen"]);
@@ -566,25 +725,70 @@
   applyClasses([
     ".hero-btn-primary",
     ".hero-top-cta",
-    ".hero-portfolio-link",
-    ".company-link",
     ".company-link-text",
     ".projects-link",
     ".projects-load-more",
     ".awards-link",
     ".news-button",
     ".contact-cta-submit",
+    ".testimonial-action",
     ".contact-form-channel",
     ".site-footer-contact"
   ], ["micro-button"]);
 
   applyClasses([
-    ".service-card-icon",
-    ".direction-card-image",
     ".project-photo",
     ".news-card-image",
     ".award-card-trophy"
   ], ["micro-media"]);
+
+  if (projectsMasonry && projectCards.length > 0) {
+    projectCards.forEach((card) => {
+      const media = card.querySelector(".project-photo-media");
+
+      if (media && !media.complete) {
+        media.addEventListener("load", requestProjectMasonryLayout);
+        media.addEventListener("error", requestProjectMasonryLayout);
+      }
+    });
+
+    if ("ResizeObserver" in window) {
+      const projectMasonryResizeObserver = new ResizeObserver((entries) => {
+        const [entry] = entries;
+
+        if (!entry) {
+          return;
+        }
+
+        const nextWidth = Math.round(entry.contentRect.width);
+
+        if (nextWidth === lastProjectMasonryWidth) {
+          return;
+        }
+
+        lastProjectMasonryWidth = nextWidth;
+        requestProjectMasonryLayout();
+      });
+
+      projectMasonryResizeObserver.observe(projectsMasonry);
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        requestProjectMasonryLayout();
+      });
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        requestProjectMasonryLayout();
+      }
+    });
+
+    window.addEventListener("load", requestProjectMasonryLayout, { once: true });
+    window.addEventListener("resize", requestProjectMasonryLayout);
+    requestProjectMasonryLayout();
+  }
 
   if (prefersReducedMotion) {
     revealElements.forEach((element) => {
@@ -622,6 +826,8 @@
         enhanceProjectCard(card, 80 + index * 70);
       });
 
+      requestProjectMasonryLayout();
+
       if (hiddenProjectCards.length === 0) {
         projectLoadButton.hidden = true;
       }
@@ -634,7 +840,7 @@
     }
   }
 
-  if (heroHeader && heroBlock) {
+  if (heroHeader) {
     let wasStickyState = null;
 
     const updateStickyHeader = () => {
@@ -689,7 +895,7 @@
 
   const setMessengerFieldState = () => {
     messengerToggles.forEach((toggle) => {
-      const target = document.querySelector(`[data-messenger-field="${toggle.dataset.messengerToggle}"]`);
+      const target = messengerFields.get(toggle.dataset.messengerToggle);
 
       if (!target) {
         return;
@@ -716,13 +922,19 @@
     });
   };
 
+  const syncModalOpenState = () => {
+    const hasVisibleModal = Array.from(contactModals).some((modal) => !modal.hidden);
+    document.body.classList.toggle("modal-open", hasVisibleModal);
+  };
+
   const openModal = (modal) => {
     if (!modal) {
       return;
     }
 
+    closeAllModals();
     modal.hidden = false;
-    document.body.classList.add("modal-open");
+    syncModalOpenState();
 
     if (modal.classList.contains("testimonial-modal")) {
       resetTestimonialViews(modal);
@@ -746,7 +958,7 @@
 
     modal.hidden = true;
     resetTestimonialViews(modal);
-    document.body.classList.remove("modal-open");
+    syncModalOpenState();
   };
 
   const closeAllModals = () => {
@@ -754,7 +966,7 @@
       modal.hidden = true;
       resetTestimonialViews(modal);
     });
-    document.body.classList.remove("modal-open");
+    syncModalOpenState();
   };
 
   modalTriggers.forEach((trigger) => {
