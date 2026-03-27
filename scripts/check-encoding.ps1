@@ -38,6 +38,7 @@ function Get-EncodingKind {
 Get-ChildItem -Path $root -Recurse -File |
   Where-Object {
     $_.FullName -notmatch '\\.git(\\|$)' -and
+    $_.FullName -notmatch '\\backups(\\|$)' -and
     $_.Name -notlike '.codex_*'
   } |
   Sort-Object FullName |

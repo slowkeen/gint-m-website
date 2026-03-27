@@ -1,4 +1,4 @@
-﻿backup-*/
+backup-*/
 *.tmp
 project-audit/
 backups/
