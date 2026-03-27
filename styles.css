@@ -3558,17 +3558,6 @@ body.modal-open {
     0 24px 50px rgba(17, 19, 26, 0.08);
 }
 
-.testimonial-review-card-align {
-  background: linear-gradient(180deg, #f5f5f3 0%, #efefee 100%);
-}
-
-.testimonial-review-card-dell {
-  background: linear-gradient(180deg, #f4f5f6 0%, #efeff1 100%);
-}
-
-.testimonial-review-card-winline {
-  background: linear-gradient(180deg, #f5f4f2 0%, #efefec 100%);
-}
 
 .testimonial-review-top {
   display: flex;
@@ -3783,4 +3772,5 @@ body.modal-open {
     font-size: 18px;
   }
 }
+
 
