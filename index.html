@@ -226,7 +226,7 @@
             </a>
           </article>
 
-          <article class="project-photo-card project-photo-card-winline">
+          <article class="project-photo-card project-photo-card-winline" id="project-winline">
             <a class="project-photo-link" href="#">
               <div class="project-photo project-photo-lamoda">
                 <img
@@ -359,7 +359,7 @@
             </a>
           </article>
 
-          <article class="project-photo-card project-photo-card-wide">
+          <article class="project-photo-card project-photo-card-wide" id="project-align">
             <a class="project-photo-link" href="#">
               <div class="project-photo project-photo-academy">
                 <img
@@ -510,7 +510,7 @@
             </a>
           </article>
 
-          <article class="project-photo-card project-photo-card-avito" hidden>
+          <article class="project-photo-card project-photo-card-avito" id="project-dell" hidden>
             <a class="project-photo-link" href="#">
               <div class="project-photo project-photo-worldclass">
                 <img
@@ -744,141 +744,21 @@
         <div class="testimonials-header">
           <div class="testimonials-copy">
             <p class="testimonials-kicker">Отзывы клиентов</p>
-            <h2 class="testimonials-heading" id="testimonials-title">Что говорят <span>клиенты</span></h2>
-          </div>
-
-          <div class="testimonials-actions" aria-label="Навигация по&nbsp;отзывам">
-            <button class="testimonials-control" type="button" data-testimonials-nav="prev" aria-label="Предыдущий отзыв">
-              <span class="testimonials-control-icon" aria-hidden="true"></span>
-            </button>
-            <button class="testimonials-control" type="button" data-testimonials-nav="next" aria-label="Следующий отзыв">
-              <span class="testimonials-control-icon" aria-hidden="true"></span>
-            </button>
+            <h2 class="testimonials-heading" id="testimonials-title">Что говорят клиенты</h2>
           </div>
         </div>
 
-        <div class="testimonials-carousel" data-testimonials-carousel>
-          <div class="testimonials-track" data-testimonials-track aria-label="Отзывы и рекомендательные письма">
-            <a class="testimonial-review-card testimonial-review-card-align" href="#testimonial-align-modal" data-modal-open="testimonial-align-modal" data-testimonial-card aria-label="Открыть полный отзыв Align Technology">
-              <div class="testimonial-review-top">
-                <span class="testimonial-review-avatar testimonial-review-avatar-align" aria-hidden="true">ВК</span>
-                <span class="testimonial-review-brand">
-                  <img class="testimonial-brand-logo testimonial-brand-logo-align" src="./logos/clients/color/align-logo.svg" alt="Align Technology" />
-                </span>
-              </div>
+        <div class="testimonials-grid" id="testimonials-list" data-testimonials-grid aria-label="Отзывы и рекомендательные письма"></div>
 
-              <div class="testimonial-review-body">
-                <span class="testimonial-review-mark" aria-hidden="true">&ldquo;</span>
-                <blockquote class="testimonial-review-quote">
-                  <p>Высокий уровень планирования и&nbsp;организации работ позволил сдать проект в&nbsp;срок, в&nbsp;ожидаемом качестве и&nbsp;без превышения бюджета.</p>
-                </blockquote>
-              </div>
-
-              <footer class="testimonial-review-footer">
-                <div class="testimonial-review-meta">
-                  <p class="testimonial-review-name">Виктория Клепацкая</p>
-                  <p class="testimonial-review-role">Руководитель административного департамента, Align Technology</p>
-                </div>
-              </footer>
-            </a>
-
-            <a class="testimonial-review-card testimonial-review-card-dell" href="#testimonial-dell-modal" data-modal-open="testimonial-dell-modal" data-testimonial-card aria-label="Открыть полный отзыв Dell Technologies">
-              <div class="testimonial-review-top">
-                <span class="testimonial-review-avatar testimonial-review-avatar-dell" aria-hidden="true">SB</span>
-                <span class="testimonial-review-brand">
-                  <img class="testimonial-brand-logo" src="./logos/clients/color/dell-logo.svg" alt="Dell Technologies" />
-                </span>
-              </div>
-
-              <div class="testimonial-review-body">
-                <span class="testimonial-review-mark" aria-hidden="true">&ldquo;</span>
-                <blockquote class="testimonial-review-quote">
-                  <p>Команда держала график и&nbsp;соблюдала все сроки без компромиссов по&nbsp;качеству работ.</p>
-                </blockquote>
-              </div>
-
-              <footer class="testimonial-review-footer">
-                <div class="testimonial-review-meta">
-                  <p class="testimonial-review-name">Shcherbakov B.I.</p>
-                  <p class="testimonial-review-role">General manager, Dell Technologies</p>
-                </div>
-              </footer>
-            </a>
-
-            <a class="testimonial-review-card testimonial-review-card-winline" href="#testimonial-winline-modal" data-modal-open="testimonial-winline-modal" data-testimonial-card aria-label="Открыть полный отзыв Winline">
-              <div class="testimonial-review-top">
-                <span class="testimonial-review-avatar testimonial-review-avatar-winline" aria-hidden="true">СО</span>
-                <span class="testimonial-review-brand">
-                  <img class="testimonial-brand-logo" src="./logos/clients/color/winline-logo.svg" alt="Winline" />
-                </span>
-              </div>
-
-              <div class="testimonial-review-body">
-                <span class="testimonial-review-mark" aria-hidden="true">&ldquo;</span>
-                <blockquote class="testimonial-review-quote">
-                  <p>Проект был сдан раньше согласованного срока и&nbsp;без компромиссов по&nbsp;качеству.</p>
-                </blockquote>
-              </div>
-
-              <footer class="testimonial-review-footer">
-                <div class="testimonial-review-meta">
-                  <p class="testimonial-review-name">Сергей Овчаров</p>
-                  <p class="testimonial-review-role">Технический директор, Winline</p>
-                </div>
-              </footer>
-            </a>
-
-            <a class="testimonial-review-card testimonial-review-card-align" href="#testimonial-align-modal" data-modal-open="testimonial-align-modal" data-testimonial-card aria-label="Открыть полный отзыв Align Technology">
-              <div class="testimonial-review-top">
-                <span class="testimonial-review-avatar testimonial-review-avatar-align" aria-hidden="true">ВК</span>
-                <span class="testimonial-review-brand">
-                  <img class="testimonial-brand-logo testimonial-brand-logo-align" src="./logos/clients/color/align-logo.svg" alt="Align Technology" />
-                </span>
-              </div>
-
-              <div class="testimonial-review-body">
-                <span class="testimonial-review-mark" aria-hidden="true">&ldquo;</span>
-                <blockquote class="testimonial-review-quote">
-                  <p>Профессионализм, четкость и&nbsp;индивидуальный подход команды заслуживают самой высокой оценки.</p>
-                </blockquote>
-              </div>
-
-              <footer class="testimonial-review-footer">
-                <div class="testimonial-review-meta">
-                  <p class="testimonial-review-name">Виктория Клепацкая</p>
-                  <p class="testimonial-review-role">Руководитель административного департамента, Align Technology</p>
-                </div>
-              </footer>
-            </a>
-
-            <a class="testimonial-review-card testimonial-review-card-winline" href="#testimonial-winline-modal" data-modal-open="testimonial-winline-modal" data-testimonial-card aria-label="Открыть полный отзыв Winline">
-              <div class="testimonial-review-top">
-                <span class="testimonial-review-avatar testimonial-review-avatar-winline" aria-hidden="true">СО</span>
-                <span class="testimonial-review-brand">
-                  <img class="testimonial-brand-logo" src="./logos/clients/color/winline-logo.svg" alt="Winline" />
-                </span>
-              </div>
-
-              <div class="testimonial-review-body">
-                <span class="testimonial-review-mark" aria-hidden="true">&ldquo;</span>
-                <blockquote class="testimonial-review-quote">
-                  <p>Подрядчик предлагал действительно эффективные решения, а&nbsp;не путь наименьшего сопротивления.</p>
-                </blockquote>
-              </div>
-
-              <footer class="testimonial-review-footer">
-                <div class="testimonial-review-meta">
-                  <p class="testimonial-review-name">Сергей Овчаров</p>
-                  <p class="testimonial-review-role">Технический директор, Winline</p>
-                </div>
-              </footer>
-            </a>
-          </div>
+        <div class="testimonials-more">
+          <button class="projects-load-more testimonial-load-more" type="button" data-load-testimonials aria-controls="testimonials-list">
+            Читать еще
+          </button>
         </div>
       </div>
     </section>
 
-    <section class="contact-cta-block" id="contact-cta" aria-labelledby="contact-cta-title">
+    <section class="contact-cta-block" id="contact-cta" aria-labelledby="contact-cta-title" hidden>
       <div class="contact-cta-shell">
         <div class="contact-cta-copy">
           <p class="contact-cta-eyebrow">Связь без лишних шагов</p>
@@ -1155,6 +1035,7 @@
   <script src="./scripts/main.js"></script>
 </body>
 </html>
+
 
 
 

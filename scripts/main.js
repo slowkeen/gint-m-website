@@ -2,16 +2,155 @@
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const heroHeader = document.querySelector(".hero-top");
   const heroLogoImage = document.querySelector(".hero-logo img");
-  const modalTriggers = document.querySelectorAll("[data-modal-open]");
   const modalClosers = document.querySelectorAll("[data-modal-close]");
   const contactModals = document.querySelectorAll(".contact-modal");
   const testimonialLetters = document.querySelectorAll(".testimonial-modal .testimonial-letter");
-  const testimonialsCarousel = document.querySelector("[data-testimonials-carousel]");
-  const testimonialsTrack = testimonialsCarousel ? testimonialsCarousel.querySelector("[data-testimonials-track]") : null;
-  const testimonialCards = testimonialsTrack ? Array.from(testimonialsTrack.querySelectorAll("[data-testimonial-card]")) : [];
-  const testimonialPrevButton = document.querySelector('[data-testimonials-nav="prev"]');
-  const testimonialNextButton = document.querySelector('[data-testimonials-nav="next"]');
+  const testimonialsGrid = document.querySelector("[data-testimonials-grid]");
+  const testimonialLoadButton = document.querySelector("[data-load-testimonials]");
+  const TESTIMONIALS_INITIAL_VISIBLE = 15;
+  const TESTIMONIALS_BATCH_SIZE = 15;
+  const testimonialSources = [
+    {
+      brand: "align",
+      modalId: "testimonial-align-modal",
+      projectId: "project-align",
+      logoSrc: "./logos/clients/color/align-logo.svg",
+      logoAlt: "Align Technology",
+      personName: "Виктория Клепацкая",
+      personRole: "Руководитель административного департамента, Align Technology",
+      quotes: [
+        "Высокий уровень планирования и организации работ позволил сдать проект в срок, в ожидаемом качестве и без превышения бюджета.",
+        "Проект был сдан в оговоренные сроки и полностью соответствовал ожиданиям по качеству.",
+        "Профессионализм команды заслуживает самой высокой оценки.",
+        "Высокий уровень ответственности руководителя и менеджера проекта ощущался на каждом этапе.",
+        "Четкость и оперативность в выполнении задач помогли пройти проект без сбоев.",
+        "Индивидуальный подход к реализации проекта стал отдельным преимуществом команды.",
+        "Команда создала современное технологичное пространство, соответствующее всем рабочим процессам.",
+        "Как генподрядчик, компания закрыла проектирование, демонтаж, общестроительные, инженерные и пусконаладочные работы.",
+        "Реализация офиса была организована на высоком уровне от старта до сдачи.",
+        "Компания зарекомендовала себя как надежный партнер в строительстве и генподряде."
+      ]
+    },
+    {
+      brand: "dell",
+      modalId: "testimonial-dell-modal",
+      projectId: "project-dell",
+      logoSrc: "./logos/clients/color/dell-logo.svg",
+      logoAlt: "Dell Technologies",
+      personName: "Shcherbakov B.I.",
+      personRole: "General manager, Dell Technologies",
+      quotes: [
+        "Команда держала график и соблюдала все сроки без компромиссов по качеству работ.",
+        "Gint-M уверенно управляет всеми инженерными и строительными компетенциями, нужными для качественной реализации проекта.",
+        "В роли генподрядчика команда выполнила весь комплекс общестроительных работ, включая механические и электрические системы.",
+        "Детальное проектирование и реализация были выполнены в одном контуре ответственности.",
+        "Сложный офисный проект площадью 2 400 кв. м команда реализовала всего за четыре месяца.",
+        "Строгое соблюдение графика подтверждалось на каждом этапе проекта.",
+        "Компания показала способность быстро реализовывать сложные офисные проекты без потери качества.",
+        "Проект корпоративного офиса был выполнен как единый управляемый процесс от design до construction.",
+        "Инженерная и строительная экспертиза команды обеспечила предсказуемый результат.",
+        "Сроки были выдержаны полностью, а качество работ осталось на высоком уровне."
+      ]
+    },
+    {
+      brand: "winline",
+      modalId: "testimonial-winline-modal",
+      projectId: "project-winline",
+      logoSrc: "./logos/clients/color/winline-logo.svg",
+      logoAlt: "Winline",
+      personName: "Сергей Овчаров",
+      personRole: "Технический директор, Winline",
+      quotes: [
+        "Проект был сдан раньше согласованного срока и без компромиссов по качеству.",
+        "Подрядчик предлагал действительно эффективные решения, а не путь наименьшего сопротивления.",
+        "Даже при объективных сложностях команда держала проект на высоком профессиональном уровне.",
+        "Частичное перепроектирование по ходу проекта не повлияло на темп и качество реализации.",
+        "Нестандартные потолочные конструкции и инженерные решения были реализованы аккуратно и точно.",
+        "Офис получился технически продуманным и по-настоящему комфортным.",
+        "Команда эффективно коммуницировала и с заказчиком, и со службами здания, и с субподрядчиками.",
+        "Все работы шли в четком соответствии с намеченным графиком, без организационных сбоев.",
+        "Полный комплекс общестроительных, отделочных, инженерных работ и рабочее проектирование был выполнен в одной связке.",
+        "Команду можно рекомендовать как профессионального и надежного партнера для сложных офисных проектов."
+      ]
+    }
+  ];
+  const testimonialItems = [];
+  let renderedTestimonialCount = 0;
   const statCounters = Array.from(document.querySelectorAll("[data-count-to]"));
+
+  testimonialSources[0].quotes.forEach((_, index) => {
+    testimonialSources.forEach((source) => {
+      testimonialItems.push({
+        brand: source.brand,
+        modalId: source.modalId,
+        projectId: source.projectId,
+        logoSrc: source.logoSrc,
+        logoAlt: source.logoAlt,
+        personName: source.personName,
+        personRole: source.personRole,
+        quote: source.quotes[index]
+      });
+    });
+  });
+
+  const createTestimonialCard = (item) => {
+    const card = document.createElement("article");
+    card.className = `testimonial-review-card testimonial-review-card-${item.brand} micro-float`;
+    card.innerHTML = `
+      <div class="testimonial-review-top">
+        <span class="testimonial-review-brand">
+          <img class="testimonial-brand-logo${item.brand === "align" ? " testimonial-brand-logo-align" : ""}" src="${item.logoSrc}" alt="${item.logoAlt}" />
+        </span>
+      </div>
+
+      <div class="testimonial-review-body">
+        <span class="testimonial-review-mark" aria-hidden="true">&ldquo;</span>
+        <blockquote class="testimonial-review-quote">
+          <p>${item.quote}</p>
+        </blockquote>
+        <button class="testimonial-read-more" type="button" data-modal-open="${item.modalId}">Читать полностью</button>
+      </div>
+
+      <footer class="testimonial-review-footer">
+        <div class="testimonial-review-meta">
+          <p class="testimonial-review-name">${item.personName}</p>
+          <p class="testimonial-review-role">${item.personRole}</p>
+        </div>
+        <a class="testimonial-action testimonial-project-link micro-button" href="#${item.projectId}" data-project-target="${item.projectId}">Смотреть проект</a>
+      </footer>
+    `;
+
+    return card;
+  };
+
+  const syncTestimonialLoadButton = () => {
+    if (!testimonialLoadButton) {
+      return;
+    }
+
+    testimonialLoadButton.hidden = renderedTestimonialCount >= testimonialItems.length;
+  };
+
+  const appendTestimonialBatch = (count = TESTIMONIALS_BATCH_SIZE) => {
+    if (!testimonialsGrid) {
+      syncTestimonialLoadButton();
+      return [];
+    }
+
+    const nextItems = testimonialItems.slice(renderedTestimonialCount, renderedTestimonialCount + count);
+    const nextCards = nextItems.map(createTestimonialCard);
+
+    nextCards.forEach((card) => {
+      testimonialsGrid.append(card);
+    });
+
+    renderedTestimonialCount += nextCards.length;
+    syncTestimonialLoadButton();
+
+    return nextCards;
+  };
+
+  appendTestimonialBatch(TESTIMONIALS_INITIAL_VISIBLE);
 
   const formatCountValue = (value) => {
     return Math.round(value)
@@ -168,128 +307,26 @@
       letter.append(actions);
     }
   });
-  let testimonialSlideIndex = 0;
-  let testimonialHasInteracted = false;
+  if (testimonialLoadButton) {
+    testimonialLoadButton.addEventListener("click", () => {
+      const nextCards = appendTestimonialBatch();
 
-  const getTestimonialStep = () => {
-    if (testimonialCards.length === 0) {
-      return 0;
-    }
+      nextCards.forEach((card, index) => {
+        card.classList.add("reveal");
+        card.style.setProperty("--reveal-delay", `${index * 70}ms`);
 
-    if (testimonialCards.length === 1) {
-      return testimonialCards[0].getBoundingClientRect().width;
-    }
+        if (prefersReducedMotion) {
+          card.classList.add("is-visible");
+          return;
+        }
 
-    return testimonialCards[1].offsetLeft - testimonialCards[0].offsetLeft;
-  };
-
-  const getTestimonialMaxIndex = () => {
-    if (!testimonialsCarousel || !testimonialsTrack || testimonialCards.length === 0) {
-      return 0;
-    }
-
-    const viewportWidth = testimonialsCarousel.clientWidth;
-    const trackWidth = testimonialsTrack.scrollWidth;
-    const step = getTestimonialStep();
-
-    if (viewportWidth === 0 || step === 0) {
-      return 0;
-    }
-
-    return Math.max(0, Math.ceil((trackWidth - viewportWidth) / step));
-  };
-
-  const getPreferredTestimonialIndex = () => {
-    if (testimonialCards.length < 4) {
-      return 0;
-    }
-
-    return window.matchMedia("(min-width: 1100px)").matches ? 1 : 0;
-  };
-
-  const syncTestimonialsNavigation = () => {
-    const maxIndex = getTestimonialMaxIndex();
-    const canNavigate = maxIndex > 0;
-
-    if (testimonialPrevButton) {
-      testimonialPrevButton.disabled = !canNavigate || testimonialSlideIndex === 0;
-    }
-
-    if (testimonialNextButton) {
-      testimonialNextButton.disabled = !canNavigate || testimonialSlideIndex >= maxIndex;
-    }
-  };
-
-  const renderTestimonials = (immediate = false) => {
-    if (!testimonialsTrack) {
-      return;
-    }
-
-    const maxIndex = getTestimonialMaxIndex();
-    const step = getTestimonialStep();
-    testimonialSlideIndex = Math.max(0, Math.min(testimonialSlideIndex, maxIndex));
-    testimonialsTrack.style.transitionDuration = immediate || prefersReducedMotion ? "1ms" : "680ms";
-    testimonialsTrack.style.transform = `translate3d(${-testimonialSlideIndex * step}px, 0, 0)`;
-    syncTestimonialsNavigation();
-  };
-
-  const resetTestimonialsPosition = (forcePreferred = false) => {
-    if (!testimonialsTrack) {
-      return;
-    }
-
-    if (forcePreferred || !testimonialHasInteracted) {
-      testimonialSlideIndex = Math.min(getPreferredTestimonialIndex(), getTestimonialMaxIndex());
-    }
-
-    renderTestimonials(true);
-  };
-
-  const moveTestimonials = (direction) => {
-    const maxIndex = getTestimonialMaxIndex();
-
-    if (maxIndex === 0) {
-      return;
-    }
-
-    const nextIndex = Math.max(0, Math.min(maxIndex, testimonialSlideIndex + direction));
-
-    if (nextIndex === testimonialSlideIndex) {
-      return;
-    }
-
-    testimonialHasInteracted = true;
-    testimonialSlideIndex = nextIndex;
-    renderTestimonials();
-  };
-
-  if (testimonialsTrack && testimonialCards.length > 0) {
-    resetTestimonialsPosition(true);
-
-    if ("ResizeObserver" in window) {
-      const testimonialsResizeObserver = new ResizeObserver(() => {
-        resetTestimonialsPosition(false);
+        window.requestAnimationFrame(() => {
+          card.classList.add("is-visible");
+        });
       });
-
-      testimonialsResizeObserver.observe(testimonialsCarousel);
-    } else {
-      window.addEventListener("resize", () => {
-        resetTestimonialsPosition(false);
-      });
-    }
-  }
-
-  if (testimonialPrevButton) {
-    testimonialPrevButton.addEventListener("click", () => {
-      moveTestimonials(-1);
     });
   }
 
-  if (testimonialNextButton) {
-    testimonialNextButton.addEventListener("click", () => {
-      moveTestimonials(1);
-    });
-  }
   const companyLogosSlider = document.querySelector("[data-company-logos]");
   const companyLogosTrack = companyLogosSlider ? companyLogosSlider.querySelector("[data-company-logos-track]") : null;
   const companyLogoPages = companyLogosTrack ? Array.from(companyLogosTrack.querySelectorAll("[data-company-logos-page]")) : [];
@@ -837,28 +874,69 @@
     });
   }
 
-  if (projectLoadButton) {
-    const revealProjectBatch = () => {
-      const nextProjects = hiddenProjectCards.splice(0, hiddenProjectCards.length);
-
-      nextProjects.forEach((card, index) => {
-        card.hidden = false;
-        enhanceProjectCard(card, 80 + index * 70);
-      });
-
-      requestProjectMasonryLayout();
-
-      if (hiddenProjectCards.length === 0) {
-        projectLoadButton.hidden = true;
-      }
-    };
-
-    if (hiddenProjectCards.length === 0) {
-      projectLoadButton.hidden = true;
-    } else {
-      projectLoadButton.addEventListener("click", revealProjectBatch);
+  const syncProjectLoadButtonState = () => {
+    if (!projectLoadButton) {
+      return;
     }
+
+    projectLoadButton.hidden = hiddenProjectCards.length === 0;
+  };
+
+  const revealProjectBatch = () => {
+    const nextProjects = hiddenProjectCards.splice(0, hiddenProjectCards.length);
+
+    nextProjects.forEach((card, index) => {
+      card.hidden = false;
+      enhanceProjectCard(card, 80 + index * 70);
+    });
+
+    if (nextProjects.length > 0) {
+      requestProjectMasonryLayout();
+    }
+
+    syncProjectLoadButtonState();
+    return nextProjects.length > 0;
+  };
+
+  syncProjectLoadButtonState();
+
+  if (projectLoadButton && !projectLoadButton.hidden) {
+    projectLoadButton.addEventListener("click", () => {
+      revealProjectBatch();
+    });
   }
+
+  document.addEventListener("click", (event) => {
+    const projectLink = event.target.closest("[data-project-target]");
+
+    if (!projectLink) {
+      return;
+    }
+
+    const targetId = projectLink.dataset.projectTarget;
+    const target = targetId ? document.getElementById(targetId) : null;
+
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (target.hidden) {
+      revealProjectBatch();
+    }
+
+    requestProjectMasonryLayout();
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        target.scrollIntoView({
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+          block: "center"
+        });
+      });
+    });
+  });
 
   if (heroHeader) {
     let wasStickyState = null;
@@ -989,11 +1067,15 @@
     syncModalOpenState();
   };
 
-  modalTriggers.forEach((trigger) => {
-    trigger.addEventListener("click", (event) => {
-      event.preventDefault();
-      openModal(document.getElementById(trigger.dataset.modalOpen));
-    });
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-modal-open]");
+
+    if (!trigger) {
+      return;
+    }
+
+    event.preventDefault();
+    openModal(document.getElementById(trigger.dataset.modalOpen));
   });
 
   modalClosers.forEach((closer) => {
