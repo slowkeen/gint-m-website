@@ -6,6 +6,11 @@
   const modalClosers = document.querySelectorAll("[data-modal-close]");
   const contactModals = document.querySelectorAll(".contact-modal");
   const testimonialLetters = document.querySelectorAll(".testimonial-modal .testimonial-letter");
+  const testimonialsCarousel = document.querySelector("[data-testimonials-carousel]");
+  const testimonialsTrack = testimonialsCarousel ? testimonialsCarousel.querySelector("[data-testimonials-track]") : null;
+  const testimonialCards = testimonialsTrack ? Array.from(testimonialsTrack.querySelectorAll("[data-testimonial-card]")) : [];
+  const testimonialPrevButton = document.querySelector('[data-testimonials-nav="prev"]');
+  const testimonialNextButton = document.querySelector('[data-testimonials-nav="next"]');
   const statCounters = Array.from(document.querySelectorAll("[data-count-to]"));
 
   const formatCountValue = (value) => {
@@ -163,112 +168,128 @@
       letter.append(actions);
     }
   });
-  const testimonialsSlider = document.querySelector("[data-testimonials-slider]");
-  const testimonialPages = testimonialsSlider ? Array.from(testimonialsSlider.querySelectorAll("[data-testimonials-page]")) : [];
-  const testimonialPrevButton = document.querySelector('[data-testimonials-nav="prev"]');
-  const testimonialNextButton = document.querySelector('[data-testimonials-nav="next"]');
-  const testimonialPageCount = testimonialPages.length;
-  let testimonialSlides = testimonialPages;
-  let testimonialSlideIndex = testimonialPageCount > 1 ? 1 : 0;
-  let testimonialIsAnimating = false;
+  let testimonialSlideIndex = 0;
+  let testimonialHasInteracted = false;
 
-  if (testimonialsSlider && testimonialPageCount > 1) {
-    const firstClone = testimonialPages[0].cloneNode(true);
-    const lastClone = testimonialPages[testimonialPageCount - 1].cloneNode(true);
+  const getTestimonialStep = () => {
+    if (testimonialCards.length === 0) {
+      return 0;
+    }
 
-    firstClone.dataset.testimonialsClone = "first";
-    lastClone.dataset.testimonialsClone = "last";
-    firstClone.setAttribute("aria-hidden", "true");
-    lastClone.setAttribute("aria-hidden", "true");
+    if (testimonialCards.length === 1) {
+      return testimonialCards[0].getBoundingClientRect().width;
+    }
 
-    testimonialsSlider.prepend(lastClone);
-    testimonialsSlider.append(firstClone);
-    testimonialSlides = Array.from(testimonialsSlider.children);
+    return testimonialCards[1].offsetLeft - testimonialCards[0].offsetLeft;
+  };
+
+  const getTestimonialMaxIndex = () => {
+    if (!testimonialsCarousel || !testimonialsTrack || testimonialCards.length === 0) {
+      return 0;
+    }
+
+    const viewportWidth = testimonialsCarousel.clientWidth;
+    const trackWidth = testimonialsTrack.scrollWidth;
+    const step = getTestimonialStep();
+
+    if (viewportWidth === 0 || step === 0) {
+      return 0;
+    }
+
+    return Math.max(0, Math.ceil((trackWidth - viewportWidth) / step));
+  };
+
+  const getPreferredTestimonialIndex = () => {
+    if (testimonialCards.length < 4) {
+      return 0;
+    }
+
+    return window.matchMedia("(min-width: 1100px)").matches ? 1 : 0;
+  };
+
+  const syncTestimonialsNavigation = () => {
+    const maxIndex = getTestimonialMaxIndex();
+    const canNavigate = maxIndex > 0;
+
+    if (testimonialPrevButton) {
+      testimonialPrevButton.disabled = !canNavigate || testimonialSlideIndex === 0;
+    }
+
+    if (testimonialNextButton) {
+      testimonialNextButton.disabled = !canNavigate || testimonialSlideIndex >= maxIndex;
+    }
+  };
+
+  const renderTestimonials = (immediate = false) => {
+    if (!testimonialsTrack) {
+      return;
+    }
+
+    const maxIndex = getTestimonialMaxIndex();
+    const step = getTestimonialStep();
+    testimonialSlideIndex = Math.max(0, Math.min(testimonialSlideIndex, maxIndex));
+    testimonialsTrack.style.transitionDuration = immediate || prefersReducedMotion ? "1ms" : "680ms";
+    testimonialsTrack.style.transform = `translate3d(${-testimonialSlideIndex * step}px, 0, 0)`;
+    syncTestimonialsNavigation();
+  };
+
+  const resetTestimonialsPosition = (forcePreferred = false) => {
+    if (!testimonialsTrack) {
+      return;
+    }
+
+    if (forcePreferred || !testimonialHasInteracted) {
+      testimonialSlideIndex = Math.min(getPreferredTestimonialIndex(), getTestimonialMaxIndex());
+    }
+
+    renderTestimonials(true);
+  };
+
+  const moveTestimonials = (direction) => {
+    const maxIndex = getTestimonialMaxIndex();
+
+    if (maxIndex === 0) {
+      return;
+    }
+
+    const nextIndex = Math.max(0, Math.min(maxIndex, testimonialSlideIndex + direction));
+
+    if (nextIndex === testimonialSlideIndex) {
+      return;
+    }
+
+    testimonialHasInteracted = true;
+    testimonialSlideIndex = nextIndex;
+    renderTestimonials();
+  };
+
+  if (testimonialsTrack && testimonialCards.length > 0) {
+    resetTestimonialsPosition(true);
+
+    if ("ResizeObserver" in window) {
+      const testimonialsResizeObserver = new ResizeObserver(() => {
+        resetTestimonialsPosition(false);
+      });
+
+      testimonialsResizeObserver.observe(testimonialsCarousel);
+    } else {
+      window.addEventListener("resize", () => {
+        resetTestimonialsPosition(false);
+      });
+    }
   }
-
-  const syncTestimonialsSlider = (animate = true) => {
-    if (!testimonialsSlider || testimonialSlides.length === 0) {
-      return;
-    }
-
-    const useAnimation = animate && !prefersReducedMotion;
-    testimonialsSlider.style.transitionDuration = useAnimation ? "760ms" : "0ms";
-    testimonialsSlider.style.transitionTimingFunction = useAnimation ? "var(--ease-out-soft)" : "linear";
-    testimonialsSlider.style.transform = `translate3d(-${testimonialSlideIndex * 100}%, 0, 0)`;
-
-    testimonialSlides.forEach((slide, index) => {
-      const isActive = index === testimonialSlideIndex;
-      const isClone = slide.hasAttribute("data-testimonials-clone");
-      slide.setAttribute("aria-hidden", String(!isActive || isClone));
-
-      if ("inert" in slide) {
-        slide.inert = !isActive || isClone;
-      }
-    });
-  };
-
-  const normalizeTestimonialsLoop = () => {
-    if (testimonialPageCount < 2) {
-      testimonialIsAnimating = false;
-      return;
-    }
-
-    if (testimonialSlideIndex === 0) {
-      testimonialSlideIndex = testimonialPageCount;
-      syncTestimonialsSlider(false);
-    } else if (testimonialSlideIndex === testimonialSlides.length - 1) {
-      testimonialSlideIndex = 1;
-      syncTestimonialsSlider(false);
-    }
-
-    testimonialIsAnimating = false;
-  };
-
-  const shiftTestimonialsPage = (direction) => {
-    if (!testimonialsSlider || testimonialPageCount < 2 || testimonialIsAnimating) {
-      return;
-    }
-
-    testimonialSlideIndex += direction;
-
-    if (prefersReducedMotion) {
-      if (testimonialSlideIndex === 0) {
-        testimonialSlideIndex = testimonialPageCount;
-      } else if (testimonialSlideIndex === testimonialSlides.length - 1) {
-        testimonialSlideIndex = 1;
-      }
-
-      syncTestimonialsSlider(false);
-      return;
-    }
-
-    testimonialIsAnimating = true;
-    syncTestimonialsSlider(true);
-  };
 
   if (testimonialPrevButton) {
     testimonialPrevButton.addEventListener("click", () => {
-      shiftTestimonialsPage(-1);
+      moveTestimonials(-1);
     });
   }
 
   if (testimonialNextButton) {
     testimonialNextButton.addEventListener("click", () => {
-      shiftTestimonialsPage(1);
+      moveTestimonials(1);
     });
   }
-
-  if (testimonialsSlider) {
-    testimonialsSlider.addEventListener("transitionend", (event) => {
-      if (event.propertyName !== "transform") {
-        return;
-      }
-
-      normalizeTestimonialsLoop();
-    });
-  }
-
-  syncTestimonialsSlider(false);
   const companyLogosSlider = document.querySelector("[data-company-logos]");
   const companyLogosTrack = companyLogosSlider ? companyLogosSlider.querySelector("[data-company-logos-track]") : null;
   const companyLogoPages = companyLogosTrack ? Array.from(companyLogosTrack.querySelectorAll("[data-company-logos-page]")) : [];
@@ -694,8 +715,8 @@
     [".company-logos", 150],
     [".projects-head", 0],
     [".project-photo-card", 80],
-    [".testimonials-head", 0],
-    [".testimonial-card", 80],
+    [".testimonials-header", 0],
+    [".testimonial-review-card", 80],
     [".contact-cta-copy", 0],
     [".awards-head", 0],
     [".award-card", 90],
@@ -715,7 +736,6 @@
   });
 
   applyClasses([
-    ".testimonial-card",
     ".award-card",
     ".news-card"
   ], ["micro-float", "micro-sheen"]);
