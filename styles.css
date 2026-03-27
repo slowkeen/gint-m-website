@@ -3310,7 +3310,8 @@ body.modal-open {
 }
 
 .hero-logo img {
-  width: clamp(154px, 12.35vw, 229px);
+  width: clamp(258px, 20.75vw, 385px);
+  max-width: calc(100vw - (var(--page-gutter) * 2));
   transition: transform 260ms ease, width 260ms ease, filter 260ms ease;
 }
 
@@ -3409,7 +3410,7 @@ body.modal-open {
   }
 
   .hero-logo img {
-    width: clamp(140px, 44vw, 187px);
+    width: clamp(235px, 73.92vw, 314px);
   }
 
   .hero-top.is-sticky .hero-top-nav,
