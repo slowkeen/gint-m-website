@@ -82,6 +82,10 @@ body.preview-page {
   outline: none;
 }
 
+.preview-page .hero-top.is-sticky {
+  z-index: 4000;
+}
+
 body.preview-page.preview-font-manrope-golos {
   --font-heading: "Manrope", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Golos Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif;

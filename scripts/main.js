@@ -19,71 +19,151 @@
     testimonialsGrid?.dataset.testimonialsBatchSize || testimonialLoadButton?.dataset.testimonialsBatchSize,
     15
   );
-  const testimonialSources = [
-    {
-      brand: "align",
-      modalId: "testimonial-align-modal",
-      projectId: "project-align",
-      logoSrc: "./logos/clients/color/align-logo.svg",
-      logoAlt: "Align Technology",
-      personName: "Виктория Клепацкая",
-      personRole: "Руководитель административного департамента, Align Technology",
-      quotes: [
-        "Высокий уровень планирования и организации работ позволил сдать проект в срок, в ожидаемом качестве и без превышения бюджета.",
-        "Проект был сдан в оговоренные сроки и полностью соответствовал ожиданиям по качеству.",
-        "Профессионализм команды заслуживает самой высокой оценки.",
-        "Высокий уровень ответственности руководителя и менеджера проекта ощущался на каждом этапе.",
-        "Четкость и оперативность в выполнении задач помогли пройти проект без сбоев.",
-        "Индивидуальный подход к реализации проекта стал отдельным преимуществом команды.",
-        "Команда создала современное технологичное пространство, соответствующее всем рабочим процессам.",
-        "Как генподрядчик, компания закрыла проектирование, демонтаж, общестроительные, инженерные и пусконаладочные работы.",
-        "Реализация офиса была организована на высоком уровне от старта до сдачи.",
-        "Компания зарекомендовала себя как надежный партнер в строительстве и генподряде."
+  const pageLanguage = document.documentElement.lang?.toLowerCase().startsWith("en") ? "en" : "ru";
+  const uiText = pageLanguage === "en"
+    ? {
+        testimonialReadMore: "Read full review",
+        testimonialViewProject: "View project",
+        testimonialScan: "Scan",
+        testimonialText: "Text version"
+      }
+    : {
+        testimonialReadMore: "Читать полностью",
+        testimonialViewProject: "Смотреть проект",
+        testimonialScan: "Скан",
+        testimonialText: "Текстовый вариант"
+      };
+  const testimonialSources = pageLanguage === "en"
+    ? [
+        {
+          brand: "align",
+          modalId: "testimonial-align-modal",
+          projectId: "project-align",
+          logoSrc: "./logos/clients/color/align-logo.svg",
+          logoAlt: "Align Technology",
+          personName: "Viktoriya Klepatskaya",
+          personRole: "Head of Administrative Department, Align Technology",
+          quotes: [
+            "A high level of planning and work organization allowed the project to be delivered on time, at the expected quality level, and without exceeding the budget.",
+            "The project was delivered within the agreed timeframe and fully met our quality expectations.",
+            "The professionalism of the team deserves the highest rating.",
+            "The project manager and leadership team showed a high level of responsibility at every stage.",
+            "Clear execution and quick response helped the project move forward without disruption.",
+            "An individual approach to delivery became a distinct advantage of the team.",
+            "The team created a modern, technology-driven workspace aligned with all business processes.",
+            "As general contractor, the company handled design, demolition, general construction, engineering, and commissioning.",
+            "Office delivery was organized at a high level from kickoff to handover.",
+            "The company has proven itself to be a reliable partner in construction and general contracting."
+          ]
+        },
+        {
+          brand: "dell",
+          modalId: "testimonial-dell-modal",
+          projectId: "project-dell",
+          logoSrc: "./logos/clients/color/dell-logo.svg",
+          logoAlt: "Dell Technologies",
+          personName: "Shcherbakov B.I.",
+          personRole: "General manager, Dell Technologies",
+          quotes: [
+            "The team kept to the schedule and met every deadline without compromising quality.",
+            "Gint-M confidently manages all engineering and construction capabilities required for high-quality project delivery.",
+            "As general contractor, the team delivered the full scope of general construction works, including mechanical and electrical systems.",
+            "Detailed design and implementation were completed within a single responsibility perimeter.",
+            "The team delivered a complex 2,400 sqm office project in just four months.",
+            "Strict compliance with the schedule was confirmed at every stage of the project.",
+            "The company demonstrated the ability to deliver complex office projects quickly without sacrificing quality.",
+            "The corporate office project was executed as one managed process from design to construction.",
+            "The engineering and construction expertise of the team ensured a predictable result.",
+            "All deadlines were fully met, while the quality of work remained high."
+          ]
+        },
+        {
+          brand: "winline",
+          modalId: "testimonial-winline-modal",
+          projectId: "project-winline",
+          logoSrc: "./logos/clients/color/winline-logo.svg",
+          logoAlt: "Winline",
+          personName: "Sergey Ovcharov",
+          personRole: "Technical Director, Winline",
+          quotes: [
+            "The project was delivered ahead of the agreed deadline and without compromises on quality.",
+            "The contractor proposed genuinely effective solutions rather than taking the path of least resistance.",
+            "Even amid objective challenges, the team kept the project at a high professional level.",
+            "Partial redesign during delivery did not affect the pace or quality of implementation.",
+            "Non-standard ceiling structures and engineering solutions were delivered carefully and precisely.",
+            "The office turned out technically well thought-out and genuinely comfortable.",
+            "The team communicated effectively with the client, building services, and subcontractors alike.",
+            "All works progressed in strict accordance with the planned schedule, without organizational disruptions.",
+            "The full package of general construction, fit-out, engineering works, and detailed design was delivered as one coordinated scope.",
+            "The team can be recommended as a professional and reliable partner for complex office projects."
+          ]
+        }
       ]
-    },
-    {
-      brand: "dell",
-      modalId: "testimonial-dell-modal",
-      projectId: "project-dell",
-      logoSrc: "./logos/clients/color/dell-logo.svg",
-      logoAlt: "Dell Technologies",
-      personName: "Shcherbakov B.I.",
-      personRole: "General manager, Dell Technologies",
-      quotes: [
-        "Команда держала график и соблюдала все сроки без компромиссов по качеству работ.",
-        "Gint-M уверенно управляет всеми инженерными и строительными компетенциями, нужными для качественной реализации проекта.",
-        "В роли генподрядчика команда выполнила весь комплекс общестроительных работ, включая механические и электрические системы.",
-        "Детальное проектирование и реализация были выполнены в одном контуре ответственности.",
-        "Сложный офисный проект площадью 2 400 кв. м команда реализовала всего за четыре месяца.",
-        "Строгое соблюдение графика подтверждалось на каждом этапе проекта.",
-        "Компания показала способность быстро реализовывать сложные офисные проекты без потери качества.",
-        "Проект корпоративного офиса был выполнен как единый управляемый процесс от design до construction.",
-        "Инженерная и строительная экспертиза команды обеспечила предсказуемый результат.",
-        "Сроки были выдержаны полностью, а качество работ осталось на высоком уровне."
-      ]
-    },
-    {
-      brand: "winline",
-      modalId: "testimonial-winline-modal",
-      projectId: "project-winline",
-      logoSrc: "./logos/clients/color/winline-logo.svg",
-      logoAlt: "Winline",
-      personName: "Сергей Овчаров",
-      personRole: "Технический директор, Winline",
-      quotes: [
-        "Проект был сдан раньше согласованного срока и без компромиссов по качеству.",
-        "Подрядчик предлагал действительно эффективные решения, а не путь наименьшего сопротивления.",
-        "Даже при объективных сложностях команда держала проект на высоком профессиональном уровне.",
-        "Частичное перепроектирование по ходу проекта не повлияло на темп и качество реализации.",
-        "Нестандартные потолочные конструкции и инженерные решения были реализованы аккуратно и точно.",
-        "Офис получился технически продуманным и по-настоящему комфортным.",
-        "Команда эффективно коммуницировала и с заказчиком, и со службами здания, и с субподрядчиками.",
-        "Все работы шли в четком соответствии с намеченным графиком, без организационных сбоев.",
-        "Полный комплекс общестроительных, отделочных, инженерных работ и рабочее проектирование был выполнен в одной связке.",
-        "Команду можно рекомендовать как профессионального и надежного партнера для сложных офисных проектов."
-      ]
-    }
-  ];
+    : [
+        {
+          brand: "align",
+          modalId: "testimonial-align-modal",
+          projectId: "project-align",
+          logoSrc: "./logos/clients/color/align-logo.svg",
+          logoAlt: "Align Technology",
+          personName: "Виктория Клепацкая",
+          personRole: "Руководитель административного департамента, Align Technology",
+          quotes: [
+            "Высокий уровень планирования и организации работ позволил сдать проект в срок, в ожидаемом качестве и без превышения бюджета.",
+            "Проект был сдан в оговоренные сроки и полностью соответствовал ожиданиям по качеству.",
+            "Профессионализм команды заслуживает самой высокой оценки.",
+            "Высокий уровень ответственности руководителя и менеджера проекта ощущался на каждом этапе.",
+            "Четкость и оперативность в выполнении задач помогли пройти проект без сбоев.",
+            "Индивидуальный подход к реализации проекта стал отдельным преимуществом команды.",
+            "Команда создала современное технологичное пространство, соответствующее всем рабочим процессам.",
+            "Как генподрядчик, компания закрыла проектирование, демонтаж, общестроительные, инженерные и пусконаладочные работы.",
+            "Реализация офиса была организована на высоком уровне от старта до сдачи.",
+            "Компания зарекомендовала себя как надежный партнер в строительстве и генподряде."
+          ]
+        },
+        {
+          brand: "dell",
+          modalId: "testimonial-dell-modal",
+          projectId: "project-dell",
+          logoSrc: "./logos/clients/color/dell-logo.svg",
+          logoAlt: "Dell Technologies",
+          personName: "Shcherbakov B.I.",
+          personRole: "General manager, Dell Technologies",
+          quotes: [
+            "Команда держала график и соблюдала все сроки без компромиссов по качеству работ.",
+            "Gint-M уверенно управляет всеми инженерными и строительными компетенциями, нужными для качественной реализации проекта.",
+            "В роли генподрядчика команда выполнила весь комплекс общестроительных работ, включая механические и электрические системы.",
+            "Детальное проектирование и реализация были выполнены в одном контуре ответственности.",
+            "Сложный офисный проект площадью 2 400 кв. м команда реализовала всего за четыре месяца.",
+            "Строгое соблюдение графика подтверждалось на каждом этапе проекта.",
+            "Компания показала способность быстро реализовывать сложные офисные проекты без потери качества.",
+            "Проект корпоративного офиса был выполнен как единый управляемый процесс от design до construction.",
+            "Инженерная и строительная экспертиза команды обеспечила предсказуемый результат.",
+            "Сроки были выдержаны полностью, а качество работ осталось на высоком уровне."
+          ]
+        },
+        {
+          brand: "winline",
+          modalId: "testimonial-winline-modal",
+          projectId: "project-winline",
+          logoSrc: "./logos/clients/color/winline-logo.svg",
+          logoAlt: "Winline",
+          personName: "Сергей Овчаров",
+          personRole: "Технический директор, Winline",
+          quotes: [
+            "Проект был сдан раньше согласованного срока и без компромиссов по качеству.",
+            "Подрядчик предлагал действительно эффективные решения, а не путь наименьшего сопротивления.",
+            "Даже при объективных сложностях команда держала проект на высоком профессиональном уровне.",
+            "Частичное перепроектирование по ходу проекта не повлияло на темп и качество реализации.",
+            "Нестандартные потолочные конструкции и инженерные решения были реализованы аккуратно и точно.",
+            "Офис получился технически продуманным и по-настоящему комфортным.",
+            "Команда эффективно коммуницировала и с заказчиком, и со службами здания, и с субподрядчиками.",
+            "Все работы шли в четком соответствии с намеченным графиком, без организационных сбоев.",
+            "Полный комплекс общестроительных, отделочных, инженерных работ и рабочее проектирование был выполнен в одной связке.",
+            "Команду можно рекомендовать как профессионального и надежного партнера для сложных офисных проектов."
+          ]
+        }
+      ];
   const testimonialItems = [];
   let renderedTestimonialCount = 0;
   const statCounters = Array.from(document.querySelectorAll("[data-count-to]"));
@@ -118,7 +198,7 @@
         <blockquote class="testimonial-review-quote">
           <p>${item.quote}</p>
         </blockquote>
-        <button class="testimonial-read-more" type="button" data-modal-open="${item.modalId}">Читать полностью</button>
+        <button class="testimonial-read-more" type="button" data-modal-open="${item.modalId}">${uiText.testimonialReadMore}</button>
       </div>
 
       <footer class="testimonial-review-footer">
@@ -126,7 +206,7 @@
           <p class="testimonial-review-name">${item.personName}</p>
           <p class="testimonial-review-role">${item.personRole}</p>
         </div>
-        <a class="testimonial-action testimonial-project-link micro-button" href="#${item.projectId}" data-project-target="${item.projectId}">Смотреть проект</a>
+        <a class="testimonial-action testimonial-project-link micro-button" href="#${item.projectId}" data-project-target="${item.projectId}">${uiText.testimonialViewProject}</a>
       </footer>
     `;
 
@@ -271,7 +351,7 @@
     }
 
     if (toggle) {
-      toggle.textContent = isTextView ? "\u0421\u043a\u0430\u043d" : "\u0422\u0435\u043a\u0441\u0442\u043e\u0432\u044b\u0439 \u0432\u0430\u0440\u0438\u0430\u043d\u0442";
+      toggle.textContent = isTextView ? uiText.testimonialScan : uiText.testimonialText;
       toggle.setAttribute("aria-pressed", String(isTextView));
     }
   };
@@ -306,7 +386,7 @@
       toggle.className = "testimonial-letter-toggle testimonial-action testimonial-action-secondary";
       toggle.dataset.testimonialToggle = "";
       toggle.setAttribute("aria-pressed", "false");
-      toggle.textContent = "\u0422\u0435\u043a\u0441\u0442\u043e\u0432\u044b\u0439 \u0432\u0430\u0440\u0438\u0430\u043d\u0442";
+      toggle.textContent = uiText.testimonialText;
 
       toggle.addEventListener("click", () => {
         const nextView = letter.dataset.testimonialView === "text" ? "scan" : "text";
