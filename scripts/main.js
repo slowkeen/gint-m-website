@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   const body = document.body;
   const stickyHeader = document.querySelector('[data-sticky-header]');
   const logoImage = stickyHeader ? stickyHeader.querySelector('[data-logo-default]') : null;

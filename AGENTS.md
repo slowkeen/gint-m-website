@@ -1,4 +1,4 @@
-﻿# AGENTS.md
+# AGENTS.md
 
 ## Purpose
 Lean static marketing site for Gint-M.
