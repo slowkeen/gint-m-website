@@ -167,21 +167,50 @@
   const testimonialItems = [];
   let renderedTestimonialCount = 0;
   const statCounters = Array.from(document.querySelectorAll("[data-count-to]"));
+  const testimonialSourceMap = new Map(testimonialSources.map((source) => [source.brand, source]));
+  const createTestimonialItem = (source, quoteIndex) => ({
+    brand: source.brand,
+    modalId: source.modalId,
+    projectId: source.projectId,
+    logoSrc: source.logoSrc,
+    logoAlt: source.logoAlt,
+    personName: source.personName,
+    personRole: source.personRole,
+    quoteIndex,
+    quote: source.quotes[quoteIndex]
+  });
+  const featuredTestimonialSpecs = [
+    { brand: "align", quoteIndex: 0 },
+    { brand: "dell", quoteIndex: 0 },
+    { brand: "winline", quoteIndex: 0 },
+    { brand: "align", quoteIndex: 2 },
+    { brand: "dell", quoteIndex: 4 },
+    { brand: "winline", quoteIndex: 1 },
+    { brand: "align", quoteIndex: 7 },
+    { brand: "winline", quoteIndex: 9 }
+  ];
+  const featuredTestimonialItems = featuredTestimonialSpecs
+    .map(({ brand, quoteIndex }) => {
+      const source = testimonialSourceMap.get(brand);
+
+      return source ? createTestimonialItem(source, quoteIndex) : null;
+    })
+    .filter(Boolean);
+  const featuredTestimonialKeys = new Set(
+    featuredTestimonialItems.map((item) => `${item.brand}:${item.quoteIndex}`)
+  );
 
   testimonialSources[0].quotes.forEach((_, index) => {
     testimonialSources.forEach((source) => {
-      testimonialItems.push({
-        brand: source.brand,
-        modalId: source.modalId,
-        projectId: source.projectId,
-        logoSrc: source.logoSrc,
-        logoAlt: source.logoAlt,
-        personName: source.personName,
-        personRole: source.personRole,
-        quote: source.quotes[index]
-      });
+      const item = createTestimonialItem(source, index);
+
+      if (!featuredTestimonialKeys.has(`${item.brand}:${item.quoteIndex}`)) {
+        testimonialItems.push(item);
+      }
     });
   });
+
+  testimonialItems.unshift(...featuredTestimonialItems);
 
   const createTestimonialCard = (item) => {
     const card = document.createElement("article");
@@ -194,11 +223,9 @@
       </div>
 
       <div class="testimonial-review-body">
-        <span class="testimonial-review-mark" aria-hidden="true">&ldquo;</span>
         <blockquote class="testimonial-review-quote">
           <p>${item.quote}</p>
         </blockquote>
-        <button class="testimonial-read-more" type="button" data-modal-open="${item.modalId}">${uiText.testimonialReadMore}</button>
       </div>
 
       <footer class="testimonial-review-footer">
@@ -206,13 +233,12 @@
           <p class="testimonial-review-name">${item.personName}</p>
           <p class="testimonial-review-role">${item.personRole}</p>
         </div>
-        <a class="testimonial-action testimonial-project-link micro-button" href="#${item.projectId}" data-project-target="${item.projectId}">${uiText.testimonialViewProject}</a>
+        <button class="testimonial-read-more" type="button" data-modal-open="${item.modalId}">${uiText.testimonialReadMore}</button>
       </footer>
     `;
 
     return card;
   };
-
   const syncTestimonialLoadButton = () => {
     if (!testimonialLoadButton) {
       return;
@@ -399,7 +425,7 @@
   });
   if (testimonialLoadButton) {
     testimonialLoadButton.addEventListener("click", () => {
-      const nextCards = appendTestimonialBatch();
+      const nextCards = appendTestimonialBatch(testimonialItems.length);
 
       nextCards.forEach((card, index) => {
         card.classList.add("reveal");
