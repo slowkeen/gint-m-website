@@ -5241,7 +5241,7 @@ tr:last-child td {
 }
 
 .hero-title {
-  max-width: 14ch;
+  max-width: 22ch;
   margin-bottom: clamp(28px, 4.4vh, 48px);
   font-size: clamp(40px, 5vw, 72px);
   line-height: 0.95;
