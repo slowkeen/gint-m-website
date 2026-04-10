@@ -2,6 +2,10 @@
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const heroHeader = document.querySelector(".hero-top");
   const heroLogoImage = document.querySelector(".hero-logo img");
+  const heroMenuToggle = document.querySelector(".hero-menu-toggle");
+  const heroTopNav = document.querySelector(".hero-top-nav");
+  const heroTopControls = document.querySelector(".hero-top-controls");
+  const heroMenuMediaQuery = window.matchMedia("(max-width: 980px)");
   const modalClosers = document.querySelectorAll("[data-modal-close]");
   const contactModals = document.querySelectorAll(".contact-modal");
   const testimonialLetters = document.querySelectorAll(".testimonial-modal .testimonial-letter");
@@ -33,6 +37,87 @@
         testimonialScan: "Скан",
         testimonialText: "Текстовый вариант"
       };
+  const menuText = pageLanguage === "en"
+    ? {
+        openMenu: "Open menu",
+        closeMenu: "Close menu"
+      }
+    : {
+        openMenu: "Открыть меню",
+        closeMenu: "Закрыть меню"
+      };
+  let isHeroMenuOpen = false;
+  const setHeroMenuAccessibility = (element, isHidden) => {
+    if (!element) {
+      return;
+    }
+
+    element.setAttribute("aria-hidden", String(isHidden));
+
+    if ("inert" in element) {
+      element.inert = isHidden;
+    }
+  };
+  const syncHeroLogo = (isStickyState = heroHeader?.classList.contains("is-sticky") ?? false) => {
+    if (!heroLogoImage) {
+      return;
+    }
+
+    heroLogoImage.src = (isStickyState || isHeroMenuOpen)
+      ? heroLogoImage.dataset.stickyLogo
+      : heroLogoImage.dataset.defaultLogo;
+  };
+  const syncHeroMenuState = ({ restoreFocus = false } = {}) => {
+    const isMobileMenu = heroMenuMediaQuery.matches;
+    const shouldOpenMenu = isMobileMenu && isHeroMenuOpen;
+
+    if (heroHeader) {
+      heroHeader.classList.toggle("is-menu-open", shouldOpenMenu);
+    }
+
+    if (heroMenuToggle) {
+      heroMenuToggle.setAttribute("aria-expanded", String(shouldOpenMenu));
+      heroMenuToggle.setAttribute("aria-label", shouldOpenMenu ? menuText.closeMenu : menuText.openMenu);
+    }
+
+    setHeroMenuAccessibility(heroTopNav, isMobileMenu && !shouldOpenMenu);
+    setHeroMenuAccessibility(heroTopControls, isMobileMenu && !shouldOpenMenu);
+    document.body.classList.toggle("menu-open", shouldOpenMenu);
+    syncHeroLogo();
+
+    if (!shouldOpenMenu && restoreFocus && heroMenuToggle) {
+      heroMenuToggle.focus();
+    }
+  };
+  const closeHeroMenu = (options = {}) => {
+    if (!isHeroMenuOpen) {
+      syncHeroMenuState(options);
+      return;
+    }
+
+    isHeroMenuOpen = false;
+    syncHeroMenuState(options);
+  };
+  const openHeroMenu = () => {
+    if (!heroMenuMediaQuery.matches) {
+      return;
+    }
+
+    isHeroMenuOpen = true;
+    syncHeroMenuState();
+    window.requestAnimationFrame(() => {
+      heroTopNav?.querySelector("a")?.focus();
+    });
+  };
+  const toggleHeroMenu = () => {
+    if (isHeroMenuOpen) {
+      closeHeroMenu({ restoreFocus: true });
+      return;
+    }
+
+    openHeroMenu();
+  };
+
   const testimonialSources = pageLanguage === "en"
     ? [
         {
@@ -1068,17 +1153,36 @@
       wasStickyState = isSticky;
       heroHeader.classList.toggle("is-sticky", isSticky);
 
-      if (heroLogoImage) {
-        heroLogoImage.src = isSticky
-          ? heroLogoImage.dataset.stickyLogo
-          : heroLogoImage.dataset.defaultLogo;
-      }
+      syncHeroLogo(isSticky);
     };
 
     updateStickyHeader();
     window.addEventListener("scroll", updateStickyHeader, { passive: true });
     window.addEventListener("resize", updateStickyHeader);
   }
+
+  if (heroMenuToggle) {
+    heroMenuToggle.addEventListener("click", toggleHeroMenu);
+  }
+
+  [heroTopNav, heroTopControls].forEach((group) => {
+    group?.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        closeHeroMenu();
+      });
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (heroMenuMediaQuery.matches) {
+      syncHeroMenuState();
+      return;
+    }
+
+    closeHeroMenu();
+  });
+
+  syncHeroMenuState();
 
   const formatPhoneValue = (rawValue) => {
     const digits = rawValue.replace(/\D/g, "");
@@ -1146,6 +1250,7 @@
       return;
     }
 
+    closeHeroMenu();
     closeAllModals();
     modal.hidden = false;
     syncModalOpenState();
@@ -1202,6 +1307,11 @@
 
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") {
+      return;
+    }
+
+    if (isHeroMenuOpen) {
+      closeHeroMenu({ restoreFocus: true });
       return;
     }
 
