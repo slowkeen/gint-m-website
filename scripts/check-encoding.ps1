@@ -63,7 +63,13 @@ Get-ChildItem -Path $root -Recurse -File |
       $issues.Add("${relativePath}: detected likely mojibake or replacement characters")
     }
 
-    if ($_.Extension -ieq '.html' -and $text -notmatch '(?i)<meta\s+charset\s*=\s*["'']?utf-8') {
+    $looksLikeFullHtmlDocument = $_.Extension -ieq '.html' -and (
+      $text -match '(?is)<!doctype\s+html' -or
+      $text -match '(?is)<html\b' -or
+      $text -match '(?is)<head\b'
+    )
+
+    if ($looksLikeFullHtmlDocument -and $text -notmatch '(?i)<meta\s+charset\s*=\s*["'']?utf-8') {
       $issues.Add("${relativePath}: missing explicit UTF-8 meta charset")
     }
   }
