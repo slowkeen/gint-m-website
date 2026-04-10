@@ -13,51 +13,7 @@
     <video class="hero-video" autoplay muted loop playsinline preload="auto" src="./showreel/merge.mp4" poster="./photos/skolkovo-park/1.jpg"></video>
 
     <div class="hero-overlay"></div>
-    <header class="hero-top">
-      <a class="hero-logo" href="#" aria-label="Логотип компании">
-        <img
-          src="./logo/hero-color-white-text.svg"
-          alt="ГИНТ-М"
-          data-default-logo="./logo/hero-color-white-text.svg"
-          data-sticky-logo="./logo/footer-color/color.svg"
-        />
-        <span class="hero-logo-caption">
-          <span class="hero-logo-caption-line">&#1089; 1998 &#1075;&#1086;&#1076;&#1072;</span>
-          <span class="hero-logo-caption-line">&#1075;&#1077;&#1085;&#1077;&#1088;&#1072;&#1083;&#1100;&#1085;&#1099;&#1081; &#1087;&#1086;&#1076;&#1088;&#1103;&#1076;&#1095;&#1080;&#1082; &#1087;&#1086;&#1083;&#1085;&#1086;&#1075;&#1086; &#1094;&#1080;&#1082;&#1083;&#1072;</span>
-        </span>
-      </a>
-
-      <button
-        class="hero-menu-toggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="hero-top-nav hero-top-controls"
-        aria-label="Открыть меню"
-      >
-        <span class="hero-menu-toggle-box" aria-hidden="true">
-          <span class="hero-menu-toggle-line"></span>
-          <span class="hero-menu-toggle-line"></span>
-          <span class="hero-menu-toggle-line"></span>
-        </span>
-      </button>
-
-      <nav class="hero-top-nav" id="hero-top-nav" aria-label="Главная навигация">
-        <a href="#company">О&nbsp;компании</a>
-        <a href="#news">Новости</a>
-        <a href="#projects">Проекты</a>
-        <a href="#awards">Награды</a>
-        <a href="#contact-cta">Контакты</a>
-      </nav>
-
-      <div class="hero-top-controls" id="hero-top-controls">
-        <a class="hero-top-cta" href="#contact-modal" data-modal-open="contact-modal">Связаться</a>
-        <div class="hero-lang-switch" role="group" aria-label="Переключение языка">
-          <a class="hero-lang-link is-active" href="./index.html" data-lang-option="ru" lang="ru" aria-current="page">Ru</a>
-          <span class="hero-lang-divider" aria-hidden="true">/</span>
-          <a class="hero-lang-link" href="./index-en.html" data-lang-option="en" lang="en">Eng</a>
-        </div>
-      </div>
-    </header>
+    <div data-site-partial="./partials/header.ru.html"></div>
 
     <div class="hero-content">
       <div class="hero-main">
@@ -1442,62 +1398,10 @@
         </div>
       </div>
     </section>
-        <footer class="site-footer" aria-labelledby="footer-company-name">
-      <div class="site-footer-shell">
-        <div class="site-footer-brand">
-          <a class="site-footer-logo" href="#top" aria-label="ГИНТ-М">
-            <img
-              src="./logo/footer-color/color.svg"
-              alt="ГИНТ-М"
-              onerror="this.onerror=null;this.src='./logo/Frame 109.svg';"
-            />
-          </a>
-          <p class="site-footer-founded">Основана в&nbsp;1998 году</p>
-        </div>
-
-        <div class="site-footer-main">
-          <h2 class="site-footer-title" id="footer-company-name">Строим пространства для&nbsp;бизнеса с&nbsp;точной реализацией и&nbsp;инженерной дисциплиной.</h2>
-          <nav class="site-footer-menu" aria-label="Навигация в&nbsp;подвале">
-            <div class="site-footer-menu-column">
-              <a href="#company">О&nbsp;компании</a>
-              <a href="#projects">Проекты</a>
-              <a href="#awards">Награды</a>
-            </div>
-            <div class="site-footer-menu-column">
-              <a href="#news">Новости</a>
-              <a href="#contact-cta">Контакты</a>
-            </div>
-          </nav>
-        </div>
-
-        <div class="site-footer-contacts" aria-label="Контакты компании">
-          <h3 class="site-footer-contact-title">Позвоните напрямую, если нужно быстро обсудить проект.</h3>
-          <a class="site-footer-phone-link" href="tel:+70000000000" aria-label="Позвонить в ГИНТ-М">
-            <span class="site-footer-phone-number">+7 (000) 000-00-00</span>
-          </a>
-          <p class="site-footer-phone-note">Быстро сориентируем по срокам, формату работ и следующим шагам без лишних форм.</p>
-
-          <div class="site-footer-contact-links">
-            <a class="site-footer-contact" href="https://t.me/gintm_sales" target="_blank" rel="noreferrer">
-              <span class="site-footer-contact-label">Telegram</span>
-              <span class="site-footer-contact-value">@gintm_sales</span>
-            </a>
-
-            <a class="site-footer-contact" href="mailto:info@gint-m.ru">
-              <span class="site-footer-contact-label">Почта</span>
-              <span class="site-footer-contact-value">info@gint-m.ru</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="footer-meta-row">
-          <p class="footer-meta-copy">&copy; 1998-2026 ГИНТ-М. Все права защищены.</p>
-          <a class="footer-meta-policy" href="#" onclick="return false;" aria-disabled="true">Политика конфиденциальности</a>
-        </div>
-      </div>
-    </footer>
+    <div data-site-partial="./partials/footer.ru.html"></div>
   </div>
 
+  <script src="./scripts/shared-partials.js"></script>
   <script src="./scripts/main.js"></script>
 </body>
 </html>

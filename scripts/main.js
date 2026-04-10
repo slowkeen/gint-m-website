@@ -1,4 +1,4 @@
-(() => {
+const initSite = () => {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const heroHeader = document.querySelector(".hero-top");
   const heroLogoImage = document.querySelector(".hero-logo img");
@@ -1343,4 +1343,14 @@
   syncPhoneMethodState();
   setMessengerFieldState();
   initStatCounters();
-})();
+};
+
+if (window.sharedPartialsReady && typeof window.sharedPartialsReady.then === "function") {
+  window.sharedPartialsReady
+    .then(initSite)
+    .catch(() => {
+      initSite();
+    });
+} else {
+  initSite();
+}
