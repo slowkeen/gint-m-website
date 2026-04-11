@@ -1191,6 +1191,23 @@ body.menu-open {
   color: rgba(26, 26, 26, 0.82);
 }
 
+.company-about-link-row {
+  display: flex;
+  padding-top: 8px;
+}
+
+.company-about-link {
+  border-color: rgba(17, 19, 26, 0.12);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 12px 28px rgba(17, 19, 26, 0.05);
+}
+
+.company-about-link:hover,
+.company-about-link:focus-visible {
+  border-color: rgba(17, 19, 26, 0.2);
+  background: rgba(255, 255, 255, 0.96);
+}
+
 .awards-intro {
   margin: 0;
   max-width: 680px;
@@ -7035,5 +7052,384 @@ img {
 
   .awards-timeline-year {
     font-size: clamp(18px, 7vw, 26px);
+  }
+}
+
+/* Airier page rhythm */
+@media (min-width: 768px) {
+  :root {
+    --section-space-y: clamp(64px, 6.8vw, 98px);
+    --body-copy-size: clamp(18px, 1.08vw, 21px);
+    --body-copy-line: 1.68;
+  }
+
+  .hero-block {
+    padding-top: 24px;
+    padding-bottom: 38px;
+  }
+
+  .hero-content {
+    gap: clamp(32px, 3.4vw, 46px);
+  }
+
+  .hero-title {
+    margin-bottom: clamp(36px, 5vh, 64px);
+    line-height: 1;
+  }
+
+  .company-shell,
+  .projects-shell,
+  .awards-shell,
+  .trust-journal-shell,
+  .testimonials-panel,
+  .awards-timeline-shell {
+    gap: clamp(30px, 3.2vw, 46px);
+  }
+
+  .company-head,
+  .company-lead,
+  .projects-head-copy,
+  .projects-head-aside,
+  .awards-head-copy,
+  .testimonials-copy,
+  .awards-timeline-copy {
+    gap: clamp(14px, 1.8vw, 24px);
+  }
+
+  :is(.company-title, .projects-title, .awards-title, .testimonials-heading, .awards-timeline-title, .contact-cta-title, .site-footer-title) {
+    line-height: 1.04;
+  }
+
+  .company-lead,
+  .projects-head-aside {
+    padding-top: clamp(32px, 2.6vw, 44px);
+  }
+
+  :is(.company-intro, .company-note, .projects-intro, .awards-intro, .awards-timeline-note, .awards-page-intro, .awards-page-card-text, .contact-cta-text, .site-footer-phone-note) {
+    line-height: 1.68;
+  }
+
+  .company-stats {
+    margin-top: clamp(36px, 3.2vw, 48px);
+  }
+
+  .company-advantages li {
+    gap: 22px;
+    min-height: clamp(192px, 18vw, 238px);
+    padding: 26px 28px 24px;
+  }
+
+  .company-logos {
+    gap: 24px;
+  }
+
+  .company-logos-grid {
+    gap: 16px;
+    grid-auto-rows: 94px;
+  }
+
+  .company-logo-card {
+    min-height: 94px;
+    padding-inline: 18px;
+  }
+
+  .company-logos-footer {
+    padding-top: 10px;
+  }
+
+  .projects-head {
+    gap: clamp(28px, 3.8vw, 52px);
+  }
+
+  .projects-intro {
+    max-width: 40ch;
+    line-height: 1.64;
+  }
+
+  .projects-masonry {
+    --projects-gap: clamp(44px, 3.4vw, 56px);
+  }
+
+  .project-photo-link {
+    gap: 18px;
+  }
+
+  .project-photo-name {
+    line-height: 1.12;
+  }
+
+  .projects-actions {
+    padding-top: clamp(36px, 4vw, 48px);
+  }
+
+  .trust-journal-head {
+    gap: 20px 28px;
+  }
+
+  .trust-journal-stage {
+    gap: clamp(24px, 2.4vw, 32px);
+  }
+
+  .trust-journal-metrics {
+    gap: 14px;
+  }
+
+  .trust-journal-metric {
+    gap: 8px;
+    padding: 18px 20px;
+  }
+
+  .trust-journal-grid {
+    gap: clamp(18px, 1.8vw, 24px);
+  }
+
+  .trust-journal-card-body {
+    gap: 12px;
+    padding: 20px 20px 22px;
+  }
+
+  .trust-journal-card-body-featured {
+    padding: 24px 24px 26px;
+  }
+
+  .awards-timeline {
+    gap: 28px;
+    padding: clamp(32px, 3vw, 40px) clamp(26px, 2.6vw, 34px) clamp(36px, 3.6vw, 46px);
+  }
+
+  .awards-timeline-head {
+    gap: 20px 28px;
+  }
+
+  .awards-timeline-track {
+    gap: clamp(18px, 1.8vw, 24px);
+    padding: 6px 2px 14px;
+  }
+
+  .awards-timeline-item {
+    gap: 14px;
+  }
+
+  .testimonials-panel {
+    padding: clamp(40px, 4.2vw, 60px) 0 clamp(28px, 3vw, 40px);
+    gap: clamp(18px, 2vw, 28px);
+  }
+
+  .testimonials-copy {
+    max-width: 660px;
+    gap: 12px;
+  }
+
+  .testimonials-grid {
+    gap: clamp(14px, 1.4vw, 20px);
+  }
+
+  .testimonial-review-card {
+    padding: clamp(18px, 1.5vw, 22px);
+    gap: 16px;
+  }
+
+  .testimonial-review-top,
+  .testimonial-review-brand {
+    min-height: 58px;
+  }
+
+  .testimonial-review-body {
+    padding-bottom: 18px;
+  }
+
+  .testimonial-review-quote {
+    font-size: clamp(16px, 0.96vw, 18px);
+    line-height: 1.28;
+  }
+
+  .testimonial-review-footer {
+    gap: 14px 20px;
+  }
+
+  .testimonial-review-name {
+    line-height: 1.1;
+  }
+
+  .site-footer-shell {
+    padding: clamp(40px, 4vw, 56px) 0 clamp(24px, 2.4vw, 32px);
+    gap: clamp(14px, 1.6vw, 22px) clamp(34px, 3.4vw, 54px);
+  }
+
+  .site-footer-brand {
+    gap: 16px;
+  }
+
+  .site-footer-main {
+    gap: 14px;
+  }
+
+  .site-footer-menu {
+    margin-top: 14px;
+    gap: 14px 28px;
+  }
+
+  .site-footer-contacts {
+    gap: 16px;
+    padding-left: clamp(22px, 2.4vw, 34px);
+  }
+
+  .site-footer-phone-link {
+    gap: 6px;
+  }
+
+  .site-footer-phone-note {
+    max-width: 38ch;
+  }
+
+  .site-footer-contact-links {
+    margin-top: 14px;
+    gap: 18px 28px;
+  }
+
+  .site-footer-contact {
+    padding-top: 18px;
+    gap: 10px;
+  }
+
+  .footer-meta-row {
+    margin-top: 8px;
+    padding-top: 20px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --section-space-y: clamp(78px, 7.6vw, 120px);
+    --body-copy-line: 1.72;
+  }
+
+  .hero-content {
+    gap: clamp(36px, 3.8vw, 52px);
+  }
+
+  .company-shell {
+    gap: clamp(40px, 4.2vw, 64px);
+  }
+
+  .company-advantages li {
+    min-height: clamp(208px, 19vw, 252px);
+    padding: 30px 32px 28px;
+  }
+
+  .projects-masonry {
+    --projects-gap: clamp(52px, 4vw, 68px);
+  }
+
+  .trust-journal-grid,
+  .testimonials-grid {
+    gap: clamp(16px, 1.5vw, 22px);
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-space-y: 36px;
+    --body-copy-line: 1.64;
+  }
+
+  .company-shell,
+  .projects-shell,
+  .awards-shell,
+  .testimonials-panel,
+  .awards-timeline-shell,
+  .trust-journal-shell {
+    gap: 24px;
+  }
+
+  :is(.company-title, .projects-title, .awards-title, .testimonials-heading, .awards-timeline-title, .contact-cta-title, .site-footer-title) {
+    line-height: 1.06;
+  }
+
+  :is(.company-intro, .company-note, .projects-intro, .awards-intro, .awards-timeline-note, .awards-page-intro, .awards-page-card-text, .contact-cta-text, .site-footer-phone-note) {
+    line-height: 1.64;
+  }
+
+  .projects-masonry {
+    --projects-gap: 24px;
+  }
+
+  .testimonials-panel {
+    padding-top: 40px;
+    padding-bottom: 30px;
+  }
+
+  .testimonials-copy {
+    gap: 10px;
+  }
+
+  .testimonials-grid {
+    gap: 14px;
+  }
+
+  .testimonial-review-card {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .site-footer-shell {
+    padding-top: 34px;
+    gap: 20px;
+  }
+
+  .site-footer-menu {
+    margin-top: 12px;
+    gap: 12px 20px;
+  }
+}
+
+/* Hero first-screen nav */
+.hero-block .hero-top:not(.is-sticky):not(.is-menu-open) {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  align-items: start;
+  width: 100%;
+  padding-top: clamp(8px, 1.8vh, 18px);
+  padding-bottom: 0;
+}
+
+.hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-logo img {
+  width: clamp(164px, 12vw, 236px);
+  max-width: none;
+}
+
+.hero-block .hero-content {
+  grid-template-columns: minmax(0, 1fr);
+  align-content: end;
+  gap: clamp(34px, 6.4vh, 96px);
+}
+
+.hero-block .hero-main {
+  max-width: min(760px, 58vw);
+}
+
+
+
+.hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-menu-toggle {
+  display: none;
+}
+
+@media (max-width: 767px) {
+.hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-menu-toggle {
+    display: inline-flex;
+  }
+
+  .hero-block .hero-content {
+    gap: 28px;
+  }
+
+  .hero-block .hero-main {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-logo img {
+    width: clamp(144px, 44vw, 182px);
   }
 }
