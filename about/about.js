@@ -4,7 +4,7 @@
       path: "/about/",
       sectionId: "company",
       title: 'ГИНТ-М — О компании',
-      description: 'ГИНТ-М — генеральный подрядчик полного цикла. О компании, структуре, системе качества, безопасности труда и экологической ответственности.',
+      description: 'История ГИНТ-М, структура управления, система качества, безопасность труда и экологическая ответственность компании.',
       label: 'О компании'
     },
     "organization-chart": {
@@ -430,13 +430,13 @@
       setActiveNavState(key);
       isProgrammaticScroll = true;
 
-      if (key === "company") {
+      const target = sectionElements.get(route.sectionId);
+
+      if (key === "company" && !target) {
         window.scrollTo({ top: 0, behavior });
         finishProgrammaticScroll();
         return;
       }
-
-      const target = sectionElements.get(route.sectionId);
       if (!target) {
         isProgrammaticScroll = false;
         return;
