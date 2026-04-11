@@ -7394,7 +7394,7 @@ img {
 }
 
 .hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-logo img {
-  width: clamp(164px, 12vw, 236px);
+  width: clamp(246px, 18vw, 354px);
   max-width: none;
 }
 
@@ -7430,6 +7430,6 @@ img {
 
 @media (max-width: 640px) {
   .hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-logo img {
-    width: clamp(144px, 44vw, 182px);
+    width: clamp(216px, 66vw, 273px);
   }
 }
