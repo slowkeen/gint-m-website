@@ -1,35 +1,38 @@
 (() => {
+  const resolveSitePath = typeof window.resolveSitePath === "function"
+    ? window.resolveSitePath
+    : (value) => value;
   const routes = {
     company: {
-      path: "/about/",
+      path: resolveSitePath("/about/"),
       sectionId: "company",
       title: 'ГИНТ-М — О компании',
       description: 'История ГИНТ-М, структура управления, система качества, безопасность труда и экологическая ответственность компании.',
       label: 'О компании'
     },
     "organization-chart": {
-      path: "/about/organization-chart/",
+      path: resolveSitePath("/about/organization-chart/"),
       sectionId: "organization-chart",
       title: 'ГИНТ-М — Структура компании',
       description: 'Организационная структура ГИНТ-М: управляющий партнер, департаменты и ключевые подразделения компании.',
       label: 'Структура'
     },
     "quality-control": {
-      path: "/about/quality-control/",
+      path: resolveSitePath("/about/quality-control/"),
       sectionId: "quality-control",
       title: 'ГИНТ-М — Система качества',
       description: 'Система качества ГИНТ-М: управление проектом, контроль этапов, гарантии и эксплуатационное сопровождение.',
       label: 'Качество'
     },
     "health-and-safety": {
-      path: "/about/health-and-safety/",
+      path: resolveSitePath("/about/health-and-safety/"),
       sectionId: "health-and-safety",
       title: 'ГИНТ-М — Охрана труда',
       description: 'Охрана труда в ГИНТ-М: безопасная среда, профилактика рисков и системное обучение сотрудников.',
       label: 'Безопасность'
     },
     "ecology-responsibilities": {
-      path: "/about/ecology-responsibilities/",
+      path: resolveSitePath("/about/ecology-responsibilities/"),
       sectionId: "ecology-responsibilities",
       title: 'ГИНТ-М — Экология и защита окружающей среды',
       description: 'Экологическая ответственность ГИНТ-М: соблюдение норм, международная сертификация и развитие зеленого строительства.',
@@ -99,8 +102,8 @@
     const heroTopNav = heroHeader.querySelector(".hero-top-nav");
     const heroTopControls = heroHeader.querySelector(".hero-top-controls");
     const contactTrigger = heroHeader.querySelector(".hero-top-cta");
-    const aboutNavLink = heroHeader.querySelector('.hero-top-nav a[href="/about/"]');
-    const footerAboutLink = document.querySelector('.site-footer-menu a[href="/about/"]');
+    const aboutNavLink = heroHeader.querySelector('.hero-top-nav a[href$="/about/"]');
+    const footerAboutLink = document.querySelector('.site-footer-menu a[href$="/about/"]');
     let isHeroMenuOpen = false;
     let wasStickyState = null;
 
