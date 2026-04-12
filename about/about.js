@@ -6,37 +6,37 @@
     company: {
       path: resolveSitePath("/about/"),
       sectionId: "company",
-      title: 'ГИНТ-М — О компании',
-      description: 'История ГИНТ-М, структура управления, система качества, безопасность труда и экологическая ответственность компании.',
-      label: 'О компании'
+      title: "ГИНТ-М — О компании",
+      description: "История ГИНТ-М, структура управления, система качества, безопасность труда и экологическая ответственность компании.",
+      label: "О компании"
     },
     "organization-chart": {
       path: resolveSitePath("/about/organization-chart/"),
       sectionId: "organization-chart",
-      title: 'ГИНТ-М — Структура компании',
-      description: 'Организационная структура ГИНТ-М: управляющий партнер, департаменты и ключевые подразделения компании.',
-      label: 'Структура'
+      title: "ГИНТ-М — Структура компании",
+      description: "Организационная структура ГИНТ-М: управляющий партнер, департаменты и ключевые подразделения компании.",
+      label: "Структура"
     },
     "quality-control": {
       path: resolveSitePath("/about/quality-control/"),
       sectionId: "quality-control",
-      title: 'ГИНТ-М — Система качества',
-      description: 'Система качества ГИНТ-М: управление проектом, контроль этапов, гарантии и эксплуатационное сопровождение.',
-      label: 'Качество'
+      title: "ГИНТ-М — Система качества",
+      description: "Система качества ГИНТ-М: управление проектом, контроль этапов, гарантии и эксплуатационное сопровождение.",
+      label: "Качество"
     },
     "health-and-safety": {
       path: resolveSitePath("/about/health-and-safety/"),
       sectionId: "health-and-safety",
-      title: 'ГИНТ-М — Охрана труда',
-      description: 'Охрана труда в ГИНТ-М: безопасная среда, профилактика рисков и системное обучение сотрудников.',
-      label: 'Безопасность'
+      title: "ГИНТ-М — Охрана труда",
+      description: "Охрана труда в ГИНТ-М: безопасная среда, профилактика рисков и системное обучение сотрудников.",
+      label: "Безопасность"
     },
     "ecology-responsibilities": {
       path: resolveSitePath("/about/ecology-responsibilities/"),
       sectionId: "ecology-responsibilities",
-      title: 'ГИНТ-М — Экология и защита окружающей среды',
-      description: 'Экологическая ответственность ГИНТ-М: соблюдение норм, международная сертификация и развитие зеленого строительства.',
-      label: 'Экология'
+      title: "ГИНТ-М — Экология и защита окружающей среды",
+      description: "Экологическая ответственность ГИНТ-М: соблюдение норм, международная сертификация и развитие зеленого строительства.",
+      label: "Экология"
     }
   };
 
@@ -124,7 +124,7 @@
 
       if (heroMenuToggle) {
         heroMenuToggle.setAttribute("aria-expanded", String(shouldOpenMenu));
-        heroMenuToggle.setAttribute("aria-label", shouldOpenMenu ? "Р—Р°РєСЂС‹С‚СЊ РјРµРЅСЋ" : "РћС‚РєСЂС‹С‚СЊ РјРµРЅСЋ");
+        heroMenuToggle.setAttribute("aria-label", shouldOpenMenu ? "Закрыть меню" : "Открыть меню");
       }
 
       setElementHiddenState(heroTopNav, heroMenuMediaQuery.matches && !shouldOpenMenu);
@@ -183,7 +183,7 @@
     };
 
     if (contactTrigger && !document.getElementById("contact-modal")) {
-      contactTrigger.href = "/#contact-cta";
+      contactTrigger.href = resolveSitePath("/#contact-cta");
       contactTrigger.removeAttribute("data-modal-open");
     }
 
@@ -355,7 +355,7 @@
       }
 
       breadcrumbCurrent.textContent = stateKey === "history"
-        ? 'История компании'
+        ? "История компании"
         : routes[stateKey]?.label || routes.company.label;
     };
 

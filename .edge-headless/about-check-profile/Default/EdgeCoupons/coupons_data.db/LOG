@@ -1,6 +1,0 @@
-2026/04/11-19:20:51.699 2b58 Reusing MANIFEST C:\Project\Gint-M-site\.edge-headless\about-check-profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
-2026/04/11-19:20:51.700 2b58 Recovering log #3
-2026/04/11-19:20:51.701 2b58 Reusing old log C:\Project\Gint-M-site\.edge-headless\about-check-profile\Default\EdgeCoupons/coupons_data.db/000003.log 
-2026/04/11-19:21:33.822 7a14 Level-0 table #5: started
-2026/04/11-19:21:33.826 7a14 Level-0 table #5: 682139 bytes OK
-2026/04/11-19:21:33.831 7a14 Delete type=0 #3

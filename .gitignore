@@ -6,3 +6,6 @@ server*.log
 server*.err
 .edge-profile-debug/
 .edge-profile-debug-cdp/
+.edge-headless/
+.edge-headless-test/
+.edge-shot/
