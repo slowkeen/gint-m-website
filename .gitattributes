@@ -1,5 +1,4 @@
 * text=auto
-
 *.html text eol=lf
 *.css text eol=lf
 *.js text eol=lf
@@ -20,10 +19,11 @@
 .gitattributes text eol=lf
 .gitignore text eol=lf
 .nojekyll text eol=lf
-
 *.png binary
 *.jpg binary
 *.jpeg binary
 *.gif binary
 *.webp binary
 *.mp4 binary
+.edge-headless/about-check-profile/ProvenanceData/2025.10.7.5/vti-b-p32-visual.quant.ort filter=lfs diff=lfs merge=lfs -text
+.edge-headless/about-check-profile/component_crx_cache/f081de18a604e95a175eaf4dd91b35b7f17ad4de24ee2f20eeb034c979bbcccb filter=lfs diff=lfs merge=lfs -text

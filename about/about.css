@@ -14,6 +14,11 @@
   content: none;
 }
 
+.about-page .page-shell {
+  width: calc(100% - (var(--page-gutter) * 2));
+  margin-inline: auto;
+}
+
 
 .about-page .hero-top:not(.is-sticky):not(.is-menu-open) .hero-logo,
 .about-page .hero-top:not(.is-sticky):not(.is-menu-open) .hero-logo-caption {
