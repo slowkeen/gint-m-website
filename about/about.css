@@ -1710,7 +1710,7 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
 
 .about-structure-story-title {
   margin: 0;
-  max-width: 10ch;
+  max-width: 15ch;
   color: var(--text-strong);
   font-family: var(--font-heading);
   font-size: clamp(30px, 3.8vw, 56px);
