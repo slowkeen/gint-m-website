@@ -48,7 +48,8 @@ const rewriteRootRelativeAttributes = (root = document) => {
     "src",
     "poster",
     "data-default-logo",
-    "data-sticky-logo"
+    "data-sticky-logo",
+    "data-fallback-src"
   ];
 
   attributeNames.forEach((attributeName) => {
@@ -60,6 +61,26 @@ const rewriteRootRelativeAttributes = (root = document) => {
       }
 
       element.setAttribute(attributeName, resolveSitePath(currentValue));
+    });
+  });
+};
+
+const bindImageFallbacks = (root = document) => {
+  root.querySelectorAll("img[data-fallback-src]").forEach((image) => {
+    if (image.dataset.fallbackBound === "true") {
+      return;
+    }
+
+    image.dataset.fallbackBound = "true";
+    image.addEventListener("error", () => {
+      const fallbackSrc = image.getAttribute("data-fallback-src");
+
+      if (!fallbackSrc || image.dataset.fallbackApplied === "true") {
+        return;
+      }
+
+      image.dataset.fallbackApplied = "true";
+      image.setAttribute("src", fallbackSrc);
     });
   });
 };
@@ -87,6 +108,8 @@ const loadPartials = async () => {
 
     const template = document.createElement("template");
     template.innerHTML = (await response.text()).trim();
+    rewriteRootRelativeAttributes(template.content);
+    bindImageFallbacks(template.content);
     placeholder.replaceWith(template.content);
   }));
 
@@ -97,6 +120,7 @@ window.siteRootPath = siteRootPath;
 window.resolveSitePath = resolveSitePath;
 window.sharedPartialsReady = loadPartials().then(() => {
   rewriteRootRelativeAttributes(document);
+  bindImageFallbacks(document);
   document.dispatchEvent(new CustomEvent("site:partials-ready"));
 });
 window.sharedPartialsReady.catch((error) => {

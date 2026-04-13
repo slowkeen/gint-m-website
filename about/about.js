@@ -288,6 +288,117 @@
     window.addEventListener("resize", syncProgress);
   };
 
+  const initOverviewReveal = () => {
+    const revealItems = Array.from(document.querySelectorAll("[data-about-reveal]"));
+
+    if (!revealItems.length) {
+      return;
+    }
+
+    if (prefersReducedMotion || typeof IntersectionObserver !== "function") {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting && entry.intersectionRatio < 0.24) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: [0.18, 0.35, 0.6],
+        rootMargin: "0px 0px -10% 0px"
+      }
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+  };
+
+  const initClientsSlider = () => {
+    const slider = document.querySelector("[data-about-clients]");
+    const track = slider ? slider.querySelector("[data-about-clients-track]") : null;
+    const pages = track ? Array.from(track.querySelectorAll("[data-about-clients-page]")) : [];
+    const prevButton = document.querySelector('[data-about-clients-nav="prev"]');
+    const nextButton = document.querySelector('[data-about-clients-nav="next"]');
+    let activeIndex = 0;
+
+    if (!slider || !track || !pages.length) {
+      return;
+    }
+
+    const syncButtons = () => {
+      if (prevButton) {
+        prevButton.disabled = activeIndex === 0;
+      }
+
+      if (nextButton) {
+        nextButton.disabled = activeIndex >= pages.length - 1;
+      }
+    };
+
+    const syncSlider = (animate = true) => {
+      const useAnimation = animate && !prefersReducedMotion;
+
+      track.style.transitionDuration = useAnimation ? "720ms" : "0ms";
+      track.style.transitionTimingFunction = useAnimation ? "var(--ease-out-soft)" : "linear";
+      track.style.transform = `translate3d(-${activeIndex * 100}%, 0, 0)`;
+
+      pages.forEach((page, index) => {
+        const isActive = index === activeIndex;
+
+        page.classList.toggle("is-active", isActive);
+        page.setAttribute("aria-hidden", String(!isActive));
+
+        if ("inert" in page) {
+          page.inert = !isActive;
+        }
+      });
+
+      syncButtons();
+    };
+
+    const showPage = (nextIndex) => {
+      const boundedIndex = clamp(nextIndex, 0, pages.length - 1);
+
+      if (boundedIndex === activeIndex) {
+        syncButtons();
+        return;
+      }
+
+      activeIndex = boundedIndex;
+      syncSlider(true);
+    };
+
+    prevButton?.addEventListener("click", () => {
+      showPage(activeIndex - 1);
+    });
+
+    nextButton?.addEventListener("click", () => {
+      showPage(activeIndex + 1);
+    });
+
+    slider.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+        showPage(activeIndex - 1);
+      }
+
+      if (event.key === "ArrowRight") {
+        showPage(activeIndex + 1);
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      syncSlider(false);
+    });
+
+    syncSlider(false);
+  };
   const initAboutRoutes = () => {
     const sectionElements = new Map(
       routeOrder
@@ -590,6 +701,8 @@
 
   const initAboutPage = () => {
     initSharedHeader();
+    initOverviewReveal();
+    initClientsSlider();
     initAboutRoutes();
     initHistoryTimeline();
   };
