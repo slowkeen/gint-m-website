@@ -1,20 +1,40 @@
 const SHARED_PARTIALS_SCRIPT_SUFFIX = "/scripts/shared-partials.js";
 
-const getSiteRootPath = () => {
-  const currentScript = document.currentScript;
+const getSharedPartialsScriptUrl = () => {
+  const scriptCandidates = [
+    document.currentScript,
+    ...Array.from(document.scripts || [])
+  ].filter(Boolean);
 
-  if (!currentScript?.src) {
+  for (const script of scriptCandidates) {
+    if (!script?.src) {
+      continue;
+    }
+
+    try {
+      const scriptUrl = new URL(script.src, window.location.href);
+      const normalizedPathname = scriptUrl.pathname.replace(/\/+/g, "/");
+
+      if (normalizedPathname.endsWith(SHARED_PARTIALS_SCRIPT_SUFFIX)) {
+        return scriptUrl;
+      }
+    } catch {
+      // Ignore malformed script URLs and continue with the next candidate.
+    }
+  }
+
+  return null;
+};
+
+const getSiteRootPath = () => {
+  const sharedPartialsScriptUrl = getSharedPartialsScriptUrl();
+
+  if (!sharedPartialsScriptUrl) {
     return "";
   }
 
   try {
-    const scriptUrl = new URL(currentScript.src, window.location.href);
-    const normalizedPathname = scriptUrl.pathname.replace(/\/+/g, "/");
-
-    if (!normalizedPathname.endsWith(SHARED_PARTIALS_SCRIPT_SUFFIX)) {
-      return "";
-    }
-
+    const normalizedPathname = sharedPartialsScriptUrl.pathname.replace(/\/+/g, "/");
     const rootPath = normalizedPathname.slice(0, -SHARED_PARTIALS_SCRIPT_SUFFIX.length);
     return rootPath === "/" ? "" : rootPath.replace(/\/$/, "");
   } catch {
