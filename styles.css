@@ -6030,6 +6030,14 @@ tr:last-child td {
   display: none;
 }
 
+.site-footer-address {
+  margin: 0;
+  max-width: 44ch;
+  font-size: clamp(14px, 0.92vw, 16px);
+  line-height: 1.55;
+  color: rgba(17, 19, 26, 0.58);
+}
+
 .site-footer-title {
   max-width: none;
   margin: 0;
@@ -6193,9 +6201,15 @@ tr:last-child td {
 
 .footer-meta-copy,
 .footer-meta-policy {
+  margin: 0;
   font-size: 13px;
   line-height: 1.45;
   color: rgba(17, 19, 26, 0.58);
+}
+
+.footer-meta-policy {
+  justify-self: end;
+  text-decoration: none;
 }
 
 .footer-meta-policy:hover {
