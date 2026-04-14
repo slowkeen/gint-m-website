@@ -1089,6 +1089,365 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
   gap: 16px;
 }
 
+.about-ecology-section {
+  --about-ecology-primary: #193879;
+  --about-ecology-muted: rgba(25, 56, 121, 0.32);
+  --about-ecology-accent: #1f8fff;
+  --about-ecology-eco: #6aa05d;
+  --about-ecology-line: rgba(25, 56, 121, 0.08);
+}
+
+.about-ecology-shell {
+  gap: 0;
+}
+
+.about-ecology-showcase {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: clamp(26px, 3vw, 40px);
+  padding: clamp(28px, 3.2vw, 44px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: clamp(30px, 3vw, 42px);
+  background:
+    radial-gradient(circle at top center, rgba(255, 255, 255, 0.92), transparent 42%),
+    linear-gradient(180deg, #f7f9ff, #f3f6fb);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82), 0 24px 60px rgba(20, 33, 61, 0.06);
+}
+
+.about-ecology-showcase::after {
+  content: none;
+}
+
+.about-ecology-watermark {
+  display: none;
+}
+
+.about-ecology-watermark-art {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.about-ecology-hero {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.about-ecology-display {
+  margin: 0 auto;
+  max-width: 18ch;
+  color: var(--text-strong);
+  font-family: var(--font-heading);
+  font-size: clamp(30px, 3.8vw, 56px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: var(--heading-tracking);
+  text-wrap: balance;
+}
+
+.about-ecology-display-primary,
+.about-ecology-display-secondary {
+  display: inline;
+}
+
+.about-ecology-display-secondary {
+  color: inherit;
+}
+
+.about-ecology-stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: clamp(380px, 40vw, 520px);
+  align-items: center;
+}
+
+.about-ecology-emblem {
+  position: absolute;
+  left: clamp(36px, 7vw, 132px);
+  top: 50%;
+  bottom: auto;
+  z-index: 0;
+  width: clamp(462px, 47vw, 616px);
+  margin: 0;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.about-ecology-emblem-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.about-ecology-emblem-frame::before {
+  content: none;
+}
+
+.about-ecology-emblem-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  transform: none;
+  filter: drop-shadow(0 40px 62px rgba(20, 33, 61, 0.18));
+}
+
+.about-ecology-panel {
+  position: relative;
+  z-index: 1;
+  justify-self: end;
+  align-self: center;
+  display: grid;
+  gap: 20px;
+  width: min(100%, clamp(580px, 58vw, 760px));
+  margin-left: auto;
+  padding: clamp(26px, 2.8vw, 40px);
+  border: 1px solid rgba(25, 56, 121, 0.06);
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 24px 58px rgba(20, 33, 61, 0.08);
+  transform: none;
+}
+
+.about-ecology-panel::before {
+  content: none;
+}
+
+.about-ecology-panel::after {
+  content: none;
+}
+
+.about-ecology-panel-lead {
+  margin: 0;
+  max-width: 24ch;
+  color: var(--text-strong);
+  font-family: var(--font-heading);
+  font-size: clamp(22px, 1.9vw, 32px);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: var(--heading-tracking);
+  text-wrap: balance;
+}
+
+.about-ecology-panel-note {
+  margin: 0;
+  max-width: 30ch;
+  color: rgba(25, 56, 121, 0.78);
+  font-size: clamp(18px, 1.45vw, 24px);
+  line-height: 1.28;
+}
+
+.about-ecology-panel-foot {
+  display: grid;
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(25, 56, 121, 0.08);
+}
+
+.about-ecology-panel-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 34px;
+  padding: 0 13px;
+  border: 1px solid rgba(106, 160, 93, 0.24);
+  border-radius: 999px;
+  background: rgba(242, 249, 240, 0.94);
+  color: var(--about-ecology-eco);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.about-ecology-panel-foot p {
+  margin: 0;
+  color: rgba(25, 56, 121, 0.78);
+  font-size: 16px;
+  line-height: 1.5;
+}
+.about-certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 2.5vw, 34px);
+  align-items: stretch;
+}
+
+.about-certificate-card {
+  scroll-margin-top: calc(var(--about-header-offset) + var(--about-nav-offset) + 30px);
+  display: grid;
+  gap: clamp(20px, 2vw, 26px);
+  align-content: start;
+  min-height: 100%;
+  padding: clamp(24px, 2.6vw, 34px);
+  border: 1px solid rgba(17, 19, 26, 0.08);
+  border-radius: 32px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 248, 246, 0.94));
+  box-shadow: 0 24px 52px rgba(17, 19, 26, 0.08);
+}
+
+.about-certificate-card-head,
+.about-certificate-card-body,
+.about-certificate-copy,
+.about-certificate-standard,
+.about-certificate-points {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.about-certificate-card .about-detail-kicker,
+.about-certificate-card .about-section-title,
+.about-certificate-card .about-subtitle {
+  grid-area: auto;
+}
+
+.about-certificate-card .about-section-title {
+  max-width: none;
+  margin: 0;
+  font-size: clamp(34px, 3vw, 56px);
+  line-height: 0.95;
+  white-space: nowrap;
+}
+
+.about-certificate-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+  gap: clamp(20px, 2vw, 28px);
+  align-items: start;
+}
+
+.about-certificate-copy {
+  gap: 20px;
+}
+
+.about-certificate-standard,
+.about-certificate-points {
+  padding-top: 18px;
+  border-top: 1px solid rgba(17, 19, 26, 0.08);
+}
+
+.about-certificate-standard {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.about-certificate-card .about-subtitle {
+  max-width: none;
+  margin: 0;
+  font-size: clamp(24px, 2vw, 34px);
+  line-height: 1;
+}
+
+.about-certificate-card .about-certificate-copy p:not(.about-detail-kicker) {
+  margin: 0;
+  max-width: 26ch;
+  color: var(--text-muted-strong);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.about-certificate-card .about-list-clean {
+  gap: 12px;
+}
+
+.about-certificate-card .about-list-clean li {
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.about-certificate-figure {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid rgba(17, 19, 26, 0.08);
+  border-radius: 24px;
+  background: #fffdfa;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.about-certificate-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  text-decoration: none;
+  cursor: zoom-in;
+  transition: transform 220ms ease;
+}
+
+.about-certificate-trigger:focus-visible {
+  outline: 2px solid rgba(216, 150, 83, 0.88);
+  outline-offset: 4px;
+}
+
+.about-certificate-trigger:hover,
+.about-certificate-trigger:focus-visible {
+  transform: translateY(-2px);
+}
+
+.about-certificate-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 16px 28px rgba(17, 19, 26, 0.1);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.about-certificate-trigger:hover .about-certificate-image,
+.about-certificate-trigger:focus-visible .about-certificate-image {
+  transform: scale(1.018);
+  box-shadow: 0 20px 32px rgba(17, 19, 26, 0.14);
+}
+
+.about-certificate-modal {
+  z-index: 92;
+}
+
+.about-certificate-modal-dialog {
+  width: min(100%, 1120px);
+}
+
+.about-certificate-modal-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 2vw, 20px);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top right, rgba(216, 150, 83, 0.14), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 242, 235, 0.96));
+  box-shadow: 0 28px 60px rgba(17, 19, 26, 0.18);
+}
+
+.about-certificate-modal-image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 140px);
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 22px 42px rgba(17, 19, 26, 0.16);
+}
+
 .about-history-stage {
   position: relative;
 }
@@ -1254,6 +1613,67 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
       "kicker"
       "title"
       "lead";
+  }
+
+  .about-ecology-showcase {
+    padding: 28px;
+  }
+
+  .about-ecology-display {
+    max-width: 16ch;
+    font-size: clamp(30px, 5.6vw, 48px);
+  }
+
+  .about-ecology-stage {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 24px;
+  }
+
+  .about-ecology-emblem {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    width: clamp(308px, 53vw, 418px);
+    justify-self: center;
+    transform: none;
+  }
+
+  .about-ecology-emblem-frame {
+    width: 100%;
+  }
+
+  .about-ecology-emblem-art {
+    transform: none;
+  }
+
+  .about-ecology-panel {
+    width: 100%;
+    justify-self: stretch;
+    transform: none;
+  }
+
+  .about-ecology-panel-lead,
+  .about-ecology-panel-note,
+  .about-ecology-panel-foot p {
+    max-width: none;
+  }
+  .about-certificates-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-certificate-card .about-section-title {
+    max-width: none;
+    white-space: normal;
+  }
+
+  .about-certificate-content {
+    grid-template-columns: 1fr;
+  }
+
+  .about-certificate-figure {
+    max-width: 320px;
   }
 
   .about-overview-graphic {
@@ -1607,6 +2027,79 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
 
   .about-clients-title {
     font-size: clamp(28px, 8vw, 36px);
+  }
+
+  .about-ecology-showcase {
+    gap: 20px;
+    padding: 20px;
+    border-radius: 26px;
+  }
+
+  .about-ecology-display {
+    max-width: 13ch;
+    font-size: clamp(28px, 8vw, 36px);
+  }
+
+  .about-ecology-emblem {
+    width: min(100%, 308px);
+  }
+
+  .about-ecology-emblem-frame {
+    width: 100%;
+  }
+
+  .about-ecology-emblem-art {
+    width: 100%;
+    transform: none;
+  }
+
+  .about-ecology-panel {
+    gap: 16px;
+    padding: 22px 20px 20px;
+    border-radius: 24px;
+  }
+
+  .about-ecology-panel::before {
+    top: 18px;
+    bottom: 18px;
+  }
+
+
+  .about-ecology-panel-lead {
+    font-size: clamp(20px, 5.8vw, 24px);
+  }
+
+  .about-ecology-panel-note {
+    font-size: clamp(16px, 4.9vw, 19px);
+  }
+
+  .about-ecology-panel-badge {
+    min-height: 32px;
+    padding: 0 11px;
+    font-size: 10px;
+  }
+  .about-certificate-card {
+    padding: 22px;
+    border-radius: 26px;
+  }
+
+  .about-certificate-card .about-section-title {
+    font-size: clamp(28px, 8vw, 42px);
+  }
+
+  .about-certificate-card .about-certificate-copy p:not(.about-detail-kicker),
+  .about-certificate-card .about-list-clean li {
+    font-size: 15px;
+  }
+
+  .about-certificate-figure {
+    max-width: 280px;
+    padding: 10px;
+    border-radius: 20px;
+  }
+
+  .about-certificate-image {
+    border-radius: 12px;
   }
 
   .about-clients-grid .company-logo-card {

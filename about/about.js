@@ -399,6 +399,96 @@
 
     syncSlider(false);
   };
+
+  const initCertificateModal = () => {
+    const modal = document.getElementById("about-certificate-modal");
+    const triggers = Array.from(document.querySelectorAll("[data-certificate-open]"));
+
+    if (!modal || !triggers.length) {
+      return;
+    }
+
+    const modalImage = modal.querySelector(".about-certificate-modal-image");
+    const modalTitle = modal.querySelector("#about-certificate-modal-title");
+    const closeButton = modal.querySelector(".about-certificate-modal-close");
+    const closers = Array.from(modal.querySelectorAll("[data-certificate-close]"));
+    let lastTrigger = null;
+
+    const closeModal = () => {
+      if (modal.hidden) {
+        return;
+      }
+
+      modal.hidden = true;
+      document.body.classList.remove("modal-open");
+
+      if (modalImage) {
+        modalImage.removeAttribute("src");
+        modalImage.alt = "";
+      }
+
+      if (modalTitle) {
+        modalTitle.textContent = "Полный размер сертификата";
+      }
+
+      lastTrigger?.focus();
+      lastTrigger = null;
+    };
+
+    const openModal = (trigger) => {
+      const src = trigger.dataset.certificateSrc;
+
+      if (!src || !modalImage) {
+        return;
+      }
+
+      lastTrigger = trigger;
+      modalImage.src = src;
+      modalImage.alt = trigger.dataset.certificateAlt || trigger.querySelector("img")?.alt || "";
+
+      if (modalTitle) {
+        modalTitle.textContent = trigger.dataset.certificateTitle
+          ? `Полный размер сертификата ${trigger.dataset.certificateTitle}`
+          : modalImage.alt || "Полный размер сертификата";
+      }
+
+      modal.hidden = false;
+      document.body.classList.add("modal-open");
+
+      window.requestAnimationFrame(() => {
+        closeButton?.focus();
+      });
+    };
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", (event) => {
+        if (
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) {
+          return;
+        }
+
+        openModal(trigger);
+      });
+    });
+
+    closers.forEach((closer) => {
+      closer.addEventListener("click", closeModal);
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !modal.hidden) {
+        event.preventDefault();
+        closeModal();
+      }
+    });
+  };
+
   const initAboutRoutes = () => {
     const sectionElements = new Map(
       routeOrder
@@ -411,6 +501,7 @@
     }
 
     const historySection = document.getElementById("about-history");
+    const certificationsSection = document.querySelector("[data-about-certifications]");
     const routeLinks = Array.from(document.querySelectorAll("[data-about-nav]"));
     const historyLinks = Array.from(document.querySelectorAll('[data-about-scroll="history"]'));
     const navWrap = document.querySelector(".about-anchor-nav-wrap");
@@ -578,9 +669,27 @@
     const getCurrentStateFromScroll = () => {
       const marker = window.scrollY + getScrollOffset() + 24;
       const organizationSection = sectionElements.get("organization-chart");
+      const qualitySection = sectionElements.get("quality-control");
+      const safetySection = sectionElements.get("health-and-safety");
 
       if (historySection && marker >= historySection.offsetTop && (!organizationSection || marker < organizationSection.offsetTop)) {
         return "history";
+      }
+
+      if (
+        certificationsSection &&
+        qualitySection &&
+        safetySection &&
+        Math.abs(qualitySection.offsetTop - safetySection.offsetTop) < 24
+      ) {
+        const certificatesTop = Math.min(qualitySection.offsetTop, safetySection.offsetTop);
+        const certificatesBottom = certificationsSection.offsetTop + certificationsSection.offsetHeight;
+
+        if (marker >= certificatesTop && marker < certificatesBottom) {
+          return activeKey === "health-and-safety" || activeNavState === "health-and-safety"
+            ? "health-and-safety"
+            : "quality-control";
+        }
       }
 
       let currentKey = "company";
@@ -705,6 +814,7 @@
     initClientsSlider();
     initAboutRoutes();
     initHistoryTimeline();
+    initCertificateModal();
   };
 
   aboutReadyPromise.then(initAboutPage).catch((error) => {
