@@ -96,8 +96,19 @@ const resolveSitePath = (value = "/") => {
 
   const [, pathname, search = "", hash = ""] = match;
   const basePath = normalizeRootPath(siteRootPath);
-  const targetPath = pathname === "/" ? `${basePath}/` : `${basePath}${pathname}`;
 
+  if (
+    basePath
+    && (
+      pathname === basePath
+      || pathname === `${basePath}/`
+      || pathname.startsWith(`${basePath}/`)
+    )
+  ) {
+    return `${normalizePathname(pathname)}${search}${hash}`;
+  }
+
+  const targetPath = pathname === "/" ? `${basePath}/` : `${basePath}${pathname}`;
   return `${normalizePathname(targetPath)}${search}${hash}`;
 };
 
