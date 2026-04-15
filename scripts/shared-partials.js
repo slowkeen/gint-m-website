@@ -1,5 +1,12 @@
 const SHARED_PARTIALS_SCRIPT_SUFFIX = "/scripts/shared-partials.js";
 
+const normalizePathname = (value = "") => value.replace(/\/+/g, "/");
+
+const normalizeRootPath = (value = "") => {
+  const normalizedValue = normalizePathname(value || "");
+  return normalizedValue === "/" ? "" : normalizedValue.replace(/\/$/, "");
+};
+
 const getSharedPartialsScriptUrl = () => {
   const scriptCandidates = [
     document.currentScript,
@@ -13,7 +20,7 @@ const getSharedPartialsScriptUrl = () => {
 
     try {
       const scriptUrl = new URL(script.src, window.location.href);
-      const normalizedPathname = scriptUrl.pathname.replace(/\/+/g, "/");
+      const normalizedPathname = normalizePathname(scriptUrl.pathname);
 
       if (normalizedPathname.endsWith(SHARED_PARTIALS_SCRIPT_SUFFIX)) {
         return scriptUrl;
@@ -26,7 +33,37 @@ const getSharedPartialsScriptUrl = () => {
   return null;
 };
 
-const getSiteRootPath = () => {
+const getSiteRootPathFromPartials = () => {
+  const partialPlaceholders = Array.from(document.querySelectorAll("[data-site-partial]"));
+  const rootCandidates = partialPlaceholders
+    .map((placeholder) => {
+      const partialPath = placeholder.dataset.sitePartial;
+
+      if (!partialPath) {
+        return "";
+      }
+
+      try {
+        const partialUrl = new URL(partialPath, window.location.href);
+        const normalizedPathname = normalizePathname(partialUrl.pathname);
+        const partialMarkerIndex = normalizedPathname.lastIndexOf("/partials/");
+
+        if (partialMarkerIndex < 0) {
+          return "";
+        }
+
+        return normalizeRootPath(normalizedPathname.slice(0, partialMarkerIndex));
+      } catch {
+        return "";
+      }
+    })
+    .filter(Boolean)
+    .sort((left, right) => left.length - right.length);
+
+  return rootCandidates[0] || "";
+};
+
+const getSiteRootPathFromScript = () => {
   const sharedPartialsScriptUrl = getSharedPartialsScriptUrl();
 
   if (!sharedPartialsScriptUrl) {
@@ -34,13 +71,15 @@ const getSiteRootPath = () => {
   }
 
   try {
-    const normalizedPathname = sharedPartialsScriptUrl.pathname.replace(/\/+/g, "/");
+    const normalizedPathname = normalizePathname(sharedPartialsScriptUrl.pathname);
     const rootPath = normalizedPathname.slice(0, -SHARED_PARTIALS_SCRIPT_SUFFIX.length);
-    return rootPath === "/" ? "" : rootPath.replace(/\/$/, "");
+    return normalizeRootPath(rootPath);
   } catch {
     return "";
   }
 };
+
+const getSiteRootPath = () => getSiteRootPathFromPartials() || getSiteRootPathFromScript();
 
 const siteRootPath = getSiteRootPath();
 
@@ -56,10 +95,10 @@ const resolveSitePath = (value = "/") => {
   }
 
   const [, pathname, search = "", hash = ""] = match;
-  const basePath = siteRootPath.replace(/\/$/, "");
+  const basePath = normalizeRootPath(siteRootPath);
   const targetPath = pathname === "/" ? `${basePath}/` : `${basePath}${pathname}`;
 
-  return `${targetPath.replace(/\/+/g, "/")}${search}${hash}`;
+  return `${normalizePathname(targetPath)}${search}${hash}`;
 };
 
 const rewriteRootRelativeAttributes = (root = document) => {
@@ -83,6 +122,52 @@ const rewriteRootRelativeAttributes = (root = document) => {
       element.setAttribute(attributeName, resolveSitePath(currentValue));
     });
   });
+};
+
+const bindRootRelativeLinkGuard = () => {
+  if (document.documentElement.dataset.rootRelativeLinkGuard === "true") {
+    return;
+  }
+
+  document.documentElement.dataset.rootRelativeLinkGuard = "true";
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    const anchor = target instanceof Element ? target.closest("a[href]") : null;
+
+    if (!anchor) {
+      return;
+    }
+
+    const currentValue = anchor.getAttribute("href");
+
+    if (!currentValue?.startsWith("/")) {
+      return;
+    }
+
+    const resolvedValue = resolveSitePath(currentValue);
+
+    if (!resolvedValue || resolvedValue === currentValue) {
+      return;
+    }
+
+    anchor.setAttribute("href", resolvedValue);
+
+    if (
+      event.defaultPrevented
+      || event.button !== 0
+      || event.metaKey
+      || event.ctrlKey
+      || event.shiftKey
+      || event.altKey
+      || anchor.target === "_blank"
+      || anchor.hasAttribute("download")
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    window.location.assign(resolvedValue);
+  }, true);
 };
 
 const bindImageFallbacks = (root = document) => {
@@ -138,6 +223,7 @@ const loadPartials = async () => {
 
 window.siteRootPath = siteRootPath;
 window.resolveSitePath = resolveSitePath;
+bindRootRelativeLinkGuard();
 window.sharedPartialsReady = loadPartials().then(() => {
   rewriteRootRelativeAttributes(document);
   bindImageFallbacks(document);
