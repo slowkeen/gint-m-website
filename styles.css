@@ -1753,7 +1753,6 @@ body.menu-open {
 }
 
 .hero-top {
-  /* Initial hero header is hidden for now; remove these lines to restore it. */
   display: grid;
   grid-template-columns: auto minmax(0, max-content) auto;
   justify-content: space-between;
@@ -1761,16 +1760,15 @@ body.menu-open {
   gap: 20px;
   width: calc(100% - (var(--page-gutter) * 2));
   margin-inline: auto;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
   transition:
     transform 260ms var(--ease-out-soft),
     opacity 260ms var(--ease-out-soft),
     background-color 260ms ease,
     box-shadow 260ms ease,
-    border-color 260ms ease,
-    visibility 0s linear 260ms;
+    border-color 260ms ease;
 }
 
 .hero-top.is-sticky {

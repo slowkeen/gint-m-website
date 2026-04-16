@@ -74,8 +74,9 @@
   });
 
   const buildPlaceholderMetrics = (index) => ({
+    workScope: "\u041f\u043e\u043b\u043d\u044b\u0439 \u043a\u043e\u043c\u043f\u043b\u0435\u043a\u0441 \u0441\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0445, \u043e\u0442\u0434\u0435\u043b\u043e\u0447\u043d\u044b\u0445 \u0438 \u0438\u043d\u0436\u0435\u043d\u0435\u0440\u043d\u044b\u0445 \u0440\u0430\u0431\u043e\u0442",
     duration: placeholderDurations[index % placeholderDurations.length],
-    area: `${placeholderAreas[index % placeholderAreas.length].toLocaleString("ru-RU")} м²`,
+    area: `${placeholderAreas[index % placeholderAreas.length].toLocaleString("ru-RU")} \u043c\u00b2`,
     year: String(placeholderYears[index % placeholderYears.length]),
     address: placeholderAddresses[index % placeholderAddresses.length]
   });
@@ -171,16 +172,29 @@
         createGalleryItem("../photos/kit-med/kit_med_19.jpg", "Кит-мед — фото 19", 4201, 2806),
         createGalleryItem("../photos/kit-med/kit_med_20.jpg", "Кит-мед — фото 20", 2880, 1920)
       ],
-      summary: "Проект «Кит-мед» — современное пространство с акцентом на чистую навигацию, инженерную надежность и спокойную, аккуратную среду для посетителей и персонала.",
+      workScope: "\u0421\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u043e, \u043e\u0442\u0434\u0435\u043b\u043a\u0430 \u0438 \u0438\u043d\u0436\u0435\u043d\u0435\u0440\u043d\u043e\u0435 \u043e\u0441\u043d\u0430\u0449\u0435\u043d\u0438\u0435 \u043e\u0444\u0438\u0441\u043d\u044b\u0445 \u043f\u043e\u043c\u0435\u0449\u0435\u043d\u0438\u0439",
+      duration: "10.02.2025 — 16.07.2025",
+      area: "1 100 м²",
+      year: "2025",
+      address: "Россия, Москва, Бумажный пр., 19, помещ. 9/1С",
+      summary: "Офис «Кит Мед» в бизнес-центре класса A STONE TOWERS — рабочее и обучающее пространство для команды, гостей и профессионального развития специалистов.",
       about: [
-        "В проекте «Кит-мед» команда Gint-M работала над пространством, где важно совместить представительскую подачу входной зоны, понятный маршрут посетителя и практичную организацию внутренних помещений. Интерьер построен на сочетании светлых поверхностей, теплой древесной фактуры и аккуратной встроенной подсветки, чтобы среда выглядела профессионально, спокойно и собранно.",
-        "Ключевой задачей стало сформировать цельное и визуально чистое пространство без ощущения перегруза: с логичной структурой проходов, удобными зонами ожидания и рабочими помещениями, где отделка, мебель и инженерные элементы работают как единая система. Такой подход позволяет поддерживать высокий уровень комфорта в ежедневной эксплуатации и сохранять аккуратный, доверительный образ объекта."
+        "Проект реализован для компании «Кит Мед» в бизнес-центре класса A STONE TOWERS, башня C. Пространство задумывалось не только как повседневный офис, но и как среда, совмещающая рабочие процессы, прием гостей и обучающую функцию.",
+        "На площади 1 100 м² разместили рабочие места для команды до 60 человек и организовали три функциональные зоны: блок для инженеров, зону отдела продаж и многофункциональное пространство обучения. В его состав вошли три медицинских кабинета, библиотека и площадка Doctor Star School для профессионального развития специалистов индустрии эстетической медицины."
       ],
       role: [
-        "Gint-M выступала в роли генерального подрядчика и отвечала за координацию реализации объекта, качество исполнения и соблюдение сроков на всех этапах строительно-отделочных работ.",
-        "В зону ответственности команды входили организация площадки, управление смежными подрядчиками, контроль инженерных и отделочных решений, а также финальная сборка пространства до состояния, готового к полноценной эксплуатации."
+        "Gint-M выступала на объекте генеральным подрядчиком и выполняла полный комплекс строительных, отделочных и инженерных работ по офисным помещениям заказчика.",
+        "В рамках реализации команда выполнила отделку и инженерное оснащение офиса, а также интегрировала ряд нестандартных решений: двойное остекление, систему умного дома, светильники индивидуальной разработки, большой объем мебели спецзаказа и шпонированные панели по периметру офиса, в кабинетах и переговорных."
       ],
-      ...sharedReviews.align
+      clientName: "\u041a\u0438\u0442 \u041c\u0435\u0434",
+      clientLogoSrc: "../logos/clients/color/Align-logo.svg",
+      clientLogoAlt: "\u0412\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0439 \u043b\u043e\u0433\u043e\u0442\u0438\u043f \u043a\u043b\u0438\u0435\u043d\u0442\u0430",
+      clientQuote: "\u0414\u043c\u0438\u0442\u0440\u0438\u0439 \u0412\u0430\u0441\u0438\u043b\u044c\u0435\u0432\u0438\u0447 \u041a\u043b\u0430\u0431\u0443\u043a\u043e\u0432 \u043e\u0442\u043c\u0435\u0442\u0438\u043b, \u0447\u0442\u043e \u0432 \u043d\u043e\u0432\u043e\u043c \u043e\u0444\u0438\u0441\u0435 \u0431\u044b\u043b\u043e \u0432\u0430\u0436\u043d\u043e \u0441\u043e\u0432\u043c\u0435\u0441\u0442\u0438\u0442\u044c \u0443\u0434\u043e\u0431\u0441\u0442\u0432\u043e \u0434\u043b\u044f \u0441\u043e\u0442\u0440\u0443\u0434\u043d\u0438\u043a\u043e\u0432 \u0441 \u0443\u044e\u0442\u043d\u043e\u0439 \u0430\u0442\u043c\u043e\u0441\u0444\u0435\u0440\u043e\u0439 \u0438 \u0431\u043e\u043b\u0435\u0435 \u0441\u0442\u0430\u0442\u0443\u0441\u043d\u043e\u0439 \u043f\u043e\u0434\u0430\u0447\u0435\u0439 \u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0441\u0442\u0432\u0430.",
+      reviewAddress: "\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439 \u0432\u043b\u0430\u0434\u0435\u043b\u044c\u0446\u0430 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438 \u00ab\u041a\u0438\u0442 \u041c\u0435\u0434\u00bb",
+      reviewBody: [
+        "\u0412\u043b\u0430\u0434\u0435\u043b\u0435\u0446 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438 \u00ab\u041a\u0438\u0442 \u041c\u0435\u0434\u00bb \u0414\u043c\u0438\u0442\u0440\u0438\u0439 \u0412\u0430\u0441\u0438\u043b\u044c\u0435\u0432\u0438\u0447 \u041a\u043b\u0430\u0431\u0443\u043a\u043e\u0432 \u043e\u0442\u043c\u0435\u0442\u0438\u043b, \u0447\u0442\u043e \u043f\u0440\u0438 \u043f\u0435\u0440\u0435\u0435\u0437\u0434\u0435 \u0432 \u043d\u043e\u0432\u044b\u0439 \u043e\u0444\u0438\u0441 \u0434\u043b\u044f \u043a\u043e\u043c\u0430\u043d\u0434\u044b \u0431\u044b\u043b\u043e \u0432\u0430\u0436\u043d\u043e \u043d\u0435 \u0442\u043e\u043b\u044c\u043a\u043e \u043f\u043e\u043b\u0443\u0447\u0438\u0442\u044c \u0444\u0443\u043d\u043a\u0446\u0438\u043e\u043d\u0430\u043b\u044c\u043d\u043e\u0435 \u0438 \u0443\u0434\u043e\u0431\u043d\u043e\u0435 \u0440\u0430\u0431\u043e\u0447\u0435\u0435 \u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0441\u0442\u0432\u043e, \u043d\u043e \u0438 \u0441\u043e\u0437\u0434\u0430\u0442\u044c \u0431\u043e\u043b\u0435\u0435 \u0443\u044e\u0442\u043d\u0443\u044e \u0441\u0440\u0435\u0434\u0443, \u043a\u043e\u0442\u043e\u0440\u0430\u044f \u043f\u043e\u0434\u0447\u0435\u0440\u043a\u0438\u0432\u0430\u0435\u0442 \u0441\u0442\u0430\u0442\u0443\u0441 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438.",
+        "\u0418\u043c\u0435\u043d\u043d\u043e \u043f\u043e\u044d\u0442\u043e\u043c\u0443 \u043f\u0440\u043e\u0435\u043a\u0442 \u0431\u044b\u043b \u043e\u0440\u0438\u0435\u043d\u0442\u0438\u0440\u043e\u0432\u0430\u043d \u043d\u0435 \u0442\u043e\u043b\u044c\u043a\u043e \u043d\u0430 \u0440\u0430\u0431\u043e\u0447\u0443\u044e \u044d\u0444\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u043e\u0441\u0442\u044c, \u043d\u043e \u0438 \u043d\u0430 \u0441\u043e\u0437\u0434\u0430\u043d\u0438\u0435 \u0441\u0440\u0435\u0434\u044b \u0434\u043b\u044f \u0432\u0441\u0442\u0440\u0435\u0447, \u043e\u0431\u0443\u0447\u0435\u043d\u0438\u044f \u0438 \u043a\u043e\u043c\u0444\u043e\u0440\u0442\u043d\u043e\u0439 \u043f\u043e\u0432\u0441\u0435\u0434\u043d\u0435\u0432\u043d\u043e\u0439 \u0440\u0430\u0431\u043e\u0442\u044b \u0441\u043e\u0442\u0440\u0443\u0434\u043d\u0438\u043a\u043e\u0432 \u0438 \u0433\u043e\u0441\u0442\u0435\u0439 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438."
+      ]
     },
     align: {
       ...sharedReviews.align
@@ -368,6 +382,7 @@
   setText("project-case-breadcrumb-current", project.title);
   setText("project-case-title", project.title);
   setText("project-case-summary", project.summary);
+  setText("project-case-metric-workscope", project.workScope);
   setText("project-case-metric-duration", project.duration);
   setText("project-case-metric-area", project.area);
   setText("project-case-metric-year", project.year);
@@ -517,9 +532,9 @@
     : fallbackReviewExcerpt;
   const hasClientReview = reviewExcerpt.length > 0;
   const hasClientLogo = Boolean(project.clientLogoSrc && project.clientLogoSrc.trim());
+  const hasReviewPreview = Boolean(project.reviewPreviewImage && project.reviewPreviewImage.trim());
   const hasFullClientReview = Boolean(
     hasReviewModal
-    && project.reviewPreviewImage
     && reviewParagraphs.length > 0
   );
 
@@ -559,15 +574,25 @@
     clientReadMore.hidden = !hasFullClientReview;
   }
 
-  if (hasFullClientReview) {
-    reviewPreview.setAttribute(
-      "aria-label",
-      project.reviewPreviewAlt || `Скан рекомендательного письма ${project.clientName || "клиента"}`
-    );
-    reviewImage.src = project.reviewPreviewImage;
-    reviewImage.alt = project.reviewPreviewAlt || `Скан рекомендательного письма ${project.clientName || "клиента"}`;
-    reviewImage.width = project.reviewPreviewWidth || 1241;
-    reviewImage.height = project.reviewPreviewHeight || 1755;
+  if (hasReviewModal) {
+    if (reviewPreview) {
+      reviewPreview.hidden = !hasReviewPreview;
+      reviewPreview.setAttribute(
+        "aria-label",
+        project.reviewPreviewAlt || `\u0421\u043a\u0430\u043d \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0442\u0435\u043b\u044c\u043d\u043e\u0433\u043e \u043f\u0438\u0441\u044c\u043c\u0430 ${project.clientName || "\u043a\u043b\u0438\u0435\u043d\u0442\u0430"}`
+      );
+    }
+
+    if (hasReviewPreview) {
+      reviewImage.src = project.reviewPreviewImage;
+      reviewImage.alt = project.reviewPreviewAlt || `\u0421\u043a\u0430\u043d \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0442\u0435\u043b\u044c\u043d\u043e\u0433\u043e \u043f\u0438\u0441\u044c\u043c\u0430 ${project.clientName || "\u043a\u043b\u0438\u0435\u043d\u0442\u0430"}`;
+      reviewImage.width = project.reviewPreviewWidth || 1241;
+      reviewImage.height = project.reviewPreviewHeight || 1755;
+    } else {
+      reviewImage.src = transparentPixel;
+      reviewImage.alt = "";
+    }
+
     reviewAddress.hidden = !project.reviewAddress;
     reviewAddress.textContent = project.reviewAddress || "";
     renderParagraphs(reviewCopy, reviewParagraphs);

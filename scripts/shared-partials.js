@@ -40,7 +40,7 @@ const getSiteRootPathFromPartials = () => {
       const partialPath = placeholder.dataset.sitePartial;
 
       if (!partialPath) {
-        return "";
+        return null;
       }
 
       try {
@@ -49,18 +49,18 @@ const getSiteRootPathFromPartials = () => {
         const partialMarkerIndex = normalizedPathname.lastIndexOf("/partials/");
 
         if (partialMarkerIndex < 0) {
-          return "";
+          return null;
         }
 
         return normalizeRootPath(normalizedPathname.slice(0, partialMarkerIndex));
       } catch {
-        return "";
+        return null;
       }
     })
-    .filter(Boolean)
+    .filter((value) => value !== null)
     .sort((left, right) => left.length - right.length);
 
-  return rootCandidates[0] || "";
+  return rootCandidates.length ? rootCandidates[0] : null;
 };
 
 const getSiteRootPathFromScript = () => {
@@ -79,7 +79,10 @@ const getSiteRootPathFromScript = () => {
   }
 };
 
-const getSiteRootPath = () => getSiteRootPathFromPartials() || getSiteRootPathFromScript();
+const getSiteRootPath = () => {
+  const rootPathFromPartials = getSiteRootPathFromPartials();
+  return rootPathFromPartials === null ? getSiteRootPathFromScript() : rootPathFromPartials;
+};
 
 const siteRootPath = getSiteRootPath();
 
@@ -119,7 +122,8 @@ const rewriteRootRelativeAttributes = (root = document) => {
     "poster",
     "data-default-logo",
     "data-sticky-logo",
-    "data-fallback-src"
+    "data-fallback-src",
+    "data-site-partial"
   ];
 
   attributeNames.forEach((attributeName) => {

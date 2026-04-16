@@ -30,6 +30,16 @@
   gap: 14px;
 }
 
+.project-case-metric-workscope {
+  min-height: 0;
+}
+
+.project-case-metric-workscope .project-case-metric-value {
+  font-size: clamp(18px, 1.18vw, 22px);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+}
+
 .project-case-metric {
   display: grid;
   gap: 10px;
