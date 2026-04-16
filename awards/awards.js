@@ -1,16 +1,15 @@
-(() => {
+﻿(() => {
   const resolveSitePath = typeof window.resolveSitePath === "function"
     ? window.resolveSitePath
     : (value) => value;
   const heroMenuMediaQuery = window.matchMedia("(max-width: 980px)");
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const normalizePath = (value) => {
     if (!value) {
       return "/";
     }
 
-    let normalized = value.replace(/index\.html$/i, "");
+    let normalized = value.replace(/index.html$/i, "");
 
     if (!normalized.startsWith("/")) {
       normalized = `/${normalized}`;
@@ -37,7 +36,6 @@
 
   const initSharedHeader = () => {
     const heroHeader = document.querySelector(".hero-top");
-    const hasPageHero = Boolean(document.querySelector(".news-page-hero"));
 
     if (!heroHeader) {
       return;
@@ -115,7 +113,7 @@
     };
 
     const updateStickyHeader = () => {
-      const isSticky = !hasPageHero || window.scrollY > 56;
+      const isSticky = true;
 
       if (isSticky === wasStickyState) {
         return;
@@ -123,7 +121,7 @@
 
       wasStickyState = isSticky;
       heroHeader.classList.toggle("is-sticky", isSticky);
-      document.body.classList.toggle("is-news-header-sticky", isSticky);
+      document.body.classList.toggle("is-awards-header-sticky", isSticky);
       syncHeroLogo(isSticky);
     };
 
@@ -132,7 +130,7 @@
       contactTrigger.removeAttribute("data-modal-open");
     }
 
-    document.querySelectorAll('a[href$="/news/"]').forEach((link) => {
+    document.querySelectorAll('a[href$="/awards/"]').forEach((link) => {
       try {
         const url = new URL(link.href, window.location.href);
 
@@ -154,10 +152,7 @@
       });
     });
 
-    window.addEventListener("scroll", updateStickyHeader, { passive: true });
     window.addEventListener("load", updateStickyHeader);
-    window.addEventListener("hashchange", updateStickyHeader);
-
     window.addEventListener("resize", () => {
       updateStickyHeader();
 
@@ -195,7 +190,7 @@
     window.requestAnimationFrame(() => {
       target.scrollIntoView({
         block: "start",
-        behavior: prefersReducedMotion ? "auto" : "auto"
+        behavior: "auto"
       });
     });
   };
@@ -207,3 +202,4 @@
 
   (window.sharedPartialsReady || Promise.resolve()).then(init);
 })();
+

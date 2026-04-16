@@ -127,7 +127,7 @@
     };
 
     if (contactTrigger && !document.getElementById("contact-modal")) {
-      contactTrigger.href = resolveSitePath("/#contact-cta");
+      contactTrigger.href = resolveSitePath("/contacts/#contacts-form");
       contactTrigger.removeAttribute("data-modal-open");
     }
 
@@ -383,3 +383,4 @@
 
   (window.sharedPartialsReady || Promise.resolve()).then(init);
 })();
+

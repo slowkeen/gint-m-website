@@ -183,7 +183,7 @@
     };
 
     if (contactTrigger && !document.getElementById("contact-modal")) {
-      contactTrigger.href = resolveSitePath("/#contact-cta");
+      contactTrigger.href = resolveSitePath("/contacts/#contacts-form");
       contactTrigger.removeAttribute("data-modal-open");
     }
 
@@ -821,3 +821,4 @@
     console.error("About page initialization failed.", error);
   });
 })();
+

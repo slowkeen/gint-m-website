@@ -3,7 +3,6 @@
     ? window.resolveSitePath
     : (value) => value;
   const heroMenuMediaQuery = window.matchMedia("(max-width: 980px)");
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const normalizePath = (value) => {
     if (!value) {
@@ -37,7 +36,6 @@
 
   const initSharedHeader = () => {
     const heroHeader = document.querySelector(".hero-top");
-    const hasPageHero = Boolean(document.querySelector(".news-page-hero"));
 
     if (!heroHeader) {
       return;
@@ -115,7 +113,7 @@
     };
 
     const updateStickyHeader = () => {
-      const isSticky = !hasPageHero || window.scrollY > 56;
+      const isSticky = true;
 
       if (isSticky === wasStickyState) {
         return;
@@ -123,7 +121,7 @@
 
       wasStickyState = isSticky;
       heroHeader.classList.toggle("is-sticky", isSticky);
-      document.body.classList.toggle("is-news-header-sticky", isSticky);
+      document.body.classList.toggle("is-contacts-header-sticky", isSticky);
       syncHeroLogo(isSticky);
     };
 
@@ -132,7 +130,7 @@
       contactTrigger.removeAttribute("data-modal-open");
     }
 
-    document.querySelectorAll('a[href$="/news/"]').forEach((link) => {
+    document.querySelectorAll('a[href$="/contacts/"]').forEach((link) => {
       try {
         const url = new URL(link.href, window.location.href);
 
@@ -154,10 +152,7 @@
       });
     });
 
-    window.addEventListener("scroll", updateStickyHeader, { passive: true });
     window.addEventListener("load", updateStickyHeader);
-    window.addEventListener("hashchange", updateStickyHeader);
-
     window.addEventListener("resize", () => {
       updateStickyHeader();
 
@@ -179,6 +174,91 @@
     updateStickyHeader();
   };
 
+  const initFormState = () => {
+    const messengerToggles = document.querySelectorAll("[data-messenger-toggle]");
+    const messengerFields = Array.from(document.querySelectorAll("[data-messenger-field]")).reduce((fields, field) => {
+      fields.set(field.dataset.messengerField, field);
+      return fields;
+    }, new Map());
+    const phoneInput = document.querySelector("[data-phone-input]");
+    const phoneMethodToggle = document.querySelector('[data-contact-method="phone"]');
+
+    const formatPhoneValue = (rawValue) => {
+      const digits = rawValue.replace(/\D/g, "");
+      const localDigits = (digits.startsWith("7") || digits.startsWith("8")) ? digits.slice(1, 11) : digits.slice(0, 10);
+
+      let formatted = "+7";
+
+      if (localDigits.length > 0) {
+        formatted += ` (${localDigits.slice(0, 3)}`;
+      } else {
+        return `${formatted} `;
+      }
+
+      if (localDigits.length >= 4) {
+        formatted += `) ${localDigits.slice(3, 6)}`;
+      }
+
+      if (localDigits.length >= 7) {
+        formatted += `-${localDigits.slice(6, 8)}`;
+      }
+
+      if (localDigits.length >= 9) {
+        formatted += `-${localDigits.slice(8, 10)}`;
+      }
+
+      return formatted;
+    };
+
+    const setMessengerFieldState = () => {
+      messengerToggles.forEach((toggle) => {
+        const target = messengerFields.get(toggle.dataset.messengerToggle);
+
+        if (!target) {
+          return;
+        }
+
+        target.hidden = !toggle.checked;
+      });
+    };
+
+    const syncPhoneMethodState = () => {
+      if (!phoneInput || !phoneMethodToggle) {
+        return;
+      }
+
+      const digits = phoneInput.value.replace(/\D/g, "");
+      const localDigits = digits.startsWith("7") ? digits.slice(1) : digits;
+
+      phoneMethodToggle.checked = localDigits.length > 0;
+    };
+
+    messengerToggles.forEach((toggle) => {
+      toggle.addEventListener("change", setMessengerFieldState);
+    });
+
+    if (phoneInput) {
+      phoneInput.value = formatPhoneValue(phoneInput.value);
+
+      phoneInput.addEventListener("focus", () => {
+        phoneInput.value = formatPhoneValue(phoneInput.value);
+      });
+
+      phoneInput.addEventListener("input", () => {
+        const cursorPos = phoneInput.selectionStart;
+        const prevLen = phoneInput.value.length;
+        phoneInput.value = formatPhoneValue(phoneInput.value);
+        const newLen = phoneInput.value.length;
+        const newPos = Math.max(0, cursorPos + (newLen - prevLen));
+        phoneInput.setSelectionRange(newPos, newPos);
+        syncPhoneMethodState();
+      });
+    }
+
+    syncPhoneMethodState();
+    setMessengerFieldState();
+  };
+
   const scrollToHashTarget = () => {
     const { hash } = window.location;
 
@@ -195,13 +275,14 @@
     window.requestAnimationFrame(() => {
       target.scrollIntoView({
         block: "start",
-        behavior: prefersReducedMotion ? "auto" : "auto"
+        behavior: "auto"
       });
     });
   };
 
   const init = () => {
     initSharedHeader();
+    initFormState();
     scrollToHashTarget();
   };
 
