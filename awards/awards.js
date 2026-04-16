@@ -1,8 +1,13 @@
-﻿(() => {
+(() => {
   const resolveSitePath = typeof window.resolveSitePath === "function"
     ? window.resolveSitePath
     : (value) => value;
   const heroMenuMediaQuery = window.matchMedia("(max-width: 980px)");
+  const featuredAwardIds = new Set([
+    "award-2025-natsproektstroy",
+    "award-2021-avito-client-service",
+    "award-2014-baring-vostok"
+  ]);
 
   const normalizePath = (value) => {
     if (!value) {
@@ -126,7 +131,7 @@
     };
 
     if (contactTrigger && !document.getElementById("contact-modal")) {
-      contactTrigger.href = resolveSitePath("/contacts/#contacts-form");
+      contactTrigger.href = resolveSitePath("/contacts/");
       contactTrigger.removeAttribute("data-modal-open");
     }
 
@@ -174,6 +179,46 @@
     updateStickyHeader();
   };
 
+  const enhanceAwardsArchive = () => {
+    document.querySelectorAll(".awards-page-year").forEach((yearBlock) => {
+      const year = yearBlock.querySelector(".awards-page-year-label")?.textContent?.trim();
+
+      yearBlock.querySelectorAll(".awards-page-card").forEach((card) => {
+        const media = card.querySelector(".awards-page-card-media");
+        const bodyChildren = Array.from(card.children).filter((child) => !child.classList.contains("awards-page-card-media"));
+
+        if (featuredAwardIds.has(card.id)) {
+          card.classList.add("is-featured");
+        }
+
+        if (year) {
+          card.dataset.awardYear = year;
+        }
+
+        if (media && year && !media.querySelector(".awards-page-card-badges")) {
+          const badges = document.createElement("div");
+          const typeChip = document.createElement("span");
+          const yearChip = document.createElement("span");
+
+          badges.className = "awards-page-card-badges";
+          typeChip.className = "awards-page-card-chip";
+          yearChip.className = "awards-page-card-chip";
+          typeChip.textContent = "Награда";
+          yearChip.textContent = year;
+          badges.append(typeChip, yearChip);
+          media.append(badges);
+        }
+
+        if (bodyChildren.length > 0 && !card.querySelector(".awards-page-card-body")) {
+          const body = document.createElement("div");
+          body.className = "awards-page-card-body";
+          bodyChildren.forEach((child) => body.appendChild(child));
+          card.appendChild(body);
+        }
+      });
+    });
+  };
+
   const scrollToHashTarget = () => {
     const { hash } = window.location;
 
@@ -181,11 +226,15 @@
       return;
     }
 
-    const target = document.querySelector(hash);
+    const rawTarget = document.querySelector(hash);
 
-    if (!target) {
+    if (!rawTarget) {
       return;
     }
+
+    const target = rawTarget.matches(".awards-page-year")
+      ? rawTarget.querySelector(".awards-page-card") || rawTarget
+      : rawTarget;
 
     window.requestAnimationFrame(() => {
       target.scrollIntoView({
@@ -197,9 +246,9 @@
 
   const init = () => {
     initSharedHeader();
+    enhanceAwardsArchive();
     scrollToHashTarget();
   };
 
   (window.sharedPartialsReady || Promise.resolve()).then(init);
 })();
-
