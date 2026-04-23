@@ -101,7 +101,6 @@
     const heroMenuToggle = heroHeader.querySelector(".hero-menu-toggle");
     const heroTopNav = heroHeader.querySelector(".hero-top-nav");
     const heroTopControls = heroHeader.querySelector(".hero-top-controls");
-    const contactTrigger = heroHeader.querySelector(".hero-top-cta");
     const aboutNavLink = heroHeader.querySelector('.hero-top-nav a[href$="/about/"]');
     const footerAboutLink = document.querySelector('.site-footer-menu a[href$="/about/"]');
     let isHeroMenuOpen = false;
@@ -181,11 +180,6 @@
       document.body.classList.toggle("is-about-header-sticky", isSticky);
       syncHeroLogo(isSticky);
     };
-
-    if (contactTrigger && !document.getElementById("contact-modal")) {
-      contactTrigger.href = resolveSitePath("/contacts/#contacts-form");
-      contactTrigger.removeAttribute("data-modal-open");
-    }
 
     if (aboutNavLink) {
       aboutNavLink.setAttribute("aria-current", "page");

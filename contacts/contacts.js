@@ -42,7 +42,6 @@
     const heroMenuToggle = heroHeader.querySelector(".hero-menu-toggle");
     const heroTopNav = heroHeader.querySelector(".hero-top-nav");
     const heroTopControls = heroHeader.querySelector(".hero-top-controls");
-    const contactTrigger = heroHeader.querySelector(".hero-top-cta");
     const currentPath = normalizePath(window.location.pathname);
     let isHeroMenuOpen = false;
     let wasStickyState = null;
@@ -121,12 +120,6 @@
       document.body.classList.toggle("is-contacts-header-sticky", isSticky);
       syncHeroLogo(isSticky);
     };
-
-    if (contactTrigger && !document.getElementById("contact-modal")) {
-      contactTrigger.href = "tel:+74959679490";
-      contactTrigger.textContent = "Позвонить";
-      contactTrigger.removeAttribute("data-modal-open");
-    }
 
     document.querySelectorAll('a[href$="/contacts/"]').forEach((link) => {
       try {

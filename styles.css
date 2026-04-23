@@ -7445,3 +7445,119 @@ img {
     width: clamp(216px, 66vw, 273px);
   }
 }
+
+/* Sticky header compact menu */
+@media (min-width: 981px) {
+  .hero-top.is-sticky {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(12px, 1.2vw, 22px);
+    padding: 12px clamp(16px, 2vw, 24px);
+  }
+
+  .hero-top.is-sticky .hero-logo {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+
+  .hero-top.is-sticky .hero-logo img {
+    width: clamp(150px, 12vw, 230px);
+  }
+
+  .hero-top.is-sticky .hero-top-nav {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    gap: 6px clamp(6px, 0.8vw, 12px);
+    max-width: min(100%, 720px);
+    max-height: 42px;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      max-height 220ms ease,
+      visibility 0s linear 180ms;
+  }
+
+  .hero-top.is-sticky:hover .hero-top-nav,
+  .hero-top.is-sticky:focus-within .hero-top-nav {
+    max-height: 92px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .hero-top.is-sticky .hero-top-nav a {
+    min-height: 38px;
+    padding-inline: clamp(10px, 0.9vw, 14px);
+    white-space: nowrap;
+  }
+
+  .hero-top.is-sticky .hero-top-controls {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    justify-self: end;
+    flex-wrap: nowrap;
+    gap: clamp(10px, 1vw, 14px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      visibility 0s linear 180ms;
+  }
+
+  .hero-top.is-sticky:hover .hero-top-controls,
+  .hero-top.is-sticky:focus-within .hero-top-controls {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .hero-top.is-sticky .hero-top-cta {
+    min-height: 40px;
+    padding-inline: clamp(12px, 1.2vw, 18px);
+    border-color: #1E3A8A;
+    background: #1E3A8A;
+    color: var(--light-bg);
+    white-space: nowrap;
+  }
+
+  .hero-top.is-sticky .hero-lang-switch {
+    white-space: nowrap;
+  }
+
+  .hero-top.is-sticky .hero-menu-toggle {
+    grid-column: 3;
+    grid-row: 1;
+    display: inline-flex;
+    justify-self: end;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .hero-top.is-sticky:hover .hero-menu-toggle {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-4px);
+  }
+}

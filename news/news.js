@@ -47,7 +47,6 @@
     const heroMenuToggle = heroHeader.querySelector(".hero-menu-toggle");
     const heroTopNav = heroHeader.querySelector(".hero-top-nav");
     const heroTopControls = heroHeader.querySelector(".hero-top-controls");
-    const contactTrigger = heroHeader.querySelector(".hero-top-cta");
     const currentPath = normalizePath(window.location.pathname);
     let isHeroMenuOpen = false;
     let wasStickyState = null;
@@ -126,11 +125,6 @@
       document.body.classList.toggle("is-news-header-sticky", isSticky);
       syncHeroLogo(isSticky);
     };
-
-    if (contactTrigger && !document.getElementById("contact-modal")) {
-      contactTrigger.href = resolveSitePath("/contacts/#contacts-form");
-      contactTrigger.removeAttribute("data-modal-open");
-    }
 
     document.querySelectorAll('a[href$="/news/"]').forEach((link) => {
       try {
