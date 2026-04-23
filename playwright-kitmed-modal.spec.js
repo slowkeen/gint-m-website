@@ -1,4 +1,4 @@
-﻿const { test, expect } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 test('kit-med testimonial modal opens', async ({ page }) => {
   await page.goto('http://127.0.0.1:8125/projects/project.html?slug=kit-med', { waitUntil: 'networkidle' });
   await expect(page.locator('#project-client-logo')).toBeVisible();
