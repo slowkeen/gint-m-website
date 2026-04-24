@@ -8087,3 +8087,36 @@ img {
     justify-self: start;
   }
 }
+
+@media (min-width: 1025px) {
+  .company-shell {
+    align-items: stretch;
+  }
+
+  .company-lead {
+    align-self: stretch;
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+
+  .company-stats {
+    display: flex;
+    min-height: 0;
+  }
+
+  .company-advantages {
+    flex: 1 1 auto;
+    min-height: 100%;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .company-stats {
+    margin-top: 0;
+    height: 412px;
+  }
+
+  .company-advantages li {
+    min-height: 0;
+  }
+}
