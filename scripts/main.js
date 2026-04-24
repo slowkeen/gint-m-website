@@ -1311,9 +1311,7 @@ const initSite = () => {
     [".award-card", 90],
     [".news-head", 0],
     [".news-card", 80],
-    [".news-actions", 160],
-    [".site-footer-brand", 0],
-    [".site-footer-contacts", 90]
+    [".news-actions", 160]
   ];
 
   revealGroups.forEach(([selector, baseDelay]) => {

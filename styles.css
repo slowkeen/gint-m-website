@@ -7707,3 +7707,335 @@ img {
     transform: translateY(-4px);
   }
 }
+
+/* Footer refresh: quiet three-column layout with a compact legal row. */
+.site-footer {
+  border-top: 1px solid rgba(17, 19, 26, 0.08);
+  background: #ffffff;
+}
+
+.site-footer-shell {
+  width: calc(100% - (var(--page-gutter) * 2));
+  margin: 0 auto;
+  padding: clamp(40px, 4vw, 56px) 0 clamp(18px, 2vw, 24px);
+  display: grid;
+  grid-template-columns: minmax(360px, 1.14fr) minmax(220px, 0.78fr) minmax(290px, 0.9fr);
+  grid-template-areas:
+    "brand main contacts"
+    "bottom bottom bottom";
+  gap: clamp(28px, 3vw, 54px);
+  align-items: start;
+}
+
+.site-footer-brand {
+  grid-area: brand;
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-width: 0;
+}
+
+.site-footer-brand-copy {
+  display: grid;
+  gap: 12px;
+}
+
+.site-footer-logo {
+  display: inline-flex;
+  width: fit-content;
+}
+
+.site-footer-logo img {
+  display: block;
+  width: min(100%, clamp(170px, 14vw, 250px));
+  height: auto;
+}
+
+.site-footer-founded {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(17, 19, 26, 0.44);
+}
+
+.site-footer-address {
+  margin: 0;
+  font-size: clamp(15px, 0.92vw, 16px);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: rgba(17, 19, 26, 0.62);
+  white-space: nowrap;
+}
+
+.site-footer-main {
+  grid-area: main;
+  display: grid;
+  justify-content: start;
+  align-content: start;
+  padding-left: clamp(36px, 4vw, 88px);
+}
+
+.site-footer-menu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(132px, max-content));
+  gap: 12px clamp(28px, 2.5vw, 48px);
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer-menu-column {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.site-footer-menu a,
+.site-footer-contact,
+.site-footer-phone-link {
+  color: #11131a;
+  text-decoration: none;
+}
+
+.site-footer-menu a {
+  padding: 0;
+  font-size: clamp(18px, 1.02vw, 20px);
+  font-weight: 450;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #11131a;
+  transition: color 220ms ease, opacity 220ms ease;
+}
+
+.site-footer-menu a:hover,
+.site-footer-menu a:focus-visible {
+  color: var(--hover);
+  opacity: 1;
+  transform: none;
+}
+
+.site-footer-contacts {
+  grid-area: contacts;
+  display: grid;
+  align-content: start;
+  justify-self: end;
+  gap: 12px;
+  max-width: 340px;
+  padding: 0;
+  border: 0;
+}
+
+.site-footer-contact {
+  min-height: 0;
+  width: fit-content;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  transition: color 220ms ease, opacity 220ms ease;
+}
+
+.site-footer-contact:hover {
+  transform: none;
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+}
+
+.site-footer-contact:hover .site-footer-contact-text,
+.site-footer-contact:focus-visible .site-footer-contact-text,
+.site-footer-contact:hover .site-footer-contact-icon,
+.site-footer-contact:focus-visible .site-footer-contact-icon,
+.site-footer-phone-link:hover .site-footer-contact-text,
+.site-footer-phone-link:focus-visible .site-footer-contact-text {
+  color: var(--hover);
+}
+
+.site-footer-contact-primary {
+  display: inline-flex;
+}
+
+.site-footer-contact-secondary,
+.site-footer-phone-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  padding: 0;
+}
+
+.site-footer-contact-icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  color: rgba(17, 19, 26, 0.92);
+  flex: 0 0 auto;
+  transition: color 220ms ease;
+}
+
+.site-footer-contact-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.site-footer-contact-text {
+  display: inline;
+  font-family: inherit;
+  font-size: clamp(17px, 1vw, 19px);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: #11131a;
+  text-decoration: none;
+}
+
+.site-footer-phone-link {
+  transition: color 220ms ease, opacity 220ms ease;
+}
+
+.site-footer-phone-link:hover {
+  transform: none;
+}
+
+.footer-meta-row {
+  grid-area: bottom;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px 24px;
+  margin-top: clamp(4px, 1vw, 10px);
+  padding-top: clamp(16px, 2vw, 22px);
+  border-top: 1px solid rgba(17, 19, 26, 0.1);
+}
+
+.footer-meta-copy,
+.footer-meta-policy {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(17, 19, 26, 0.58);
+}
+
+.footer-meta-copy {
+  max-width: 60ch;
+}
+
+.footer-meta-policy {
+  justify-self: end;
+  text-decoration: none;
+}
+
+.footer-meta-policy:hover,
+.footer-meta-policy:focus-visible {
+  color: var(--hover);
+}
+
+@media (max-width: 1360px) {
+  .site-footer-address {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 1180px) {
+  .site-footer-shell {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "brand contacts"
+      "main main"
+      "bottom bottom";
+    gap: 28px clamp(24px, 3vw, 40px);
+  }
+
+  .site-footer-main {
+    justify-content: start;
+    padding-left: 0;
+  }
+
+  .site-footer-menu {
+    grid-template-columns: repeat(2, minmax(140px, max-content));
+  }
+
+  .site-footer-contacts {
+    justify-self: start;
+    max-width: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-footer-shell {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "brand"
+      "main"
+      "contacts"
+      "bottom";
+    padding-top: 34px;
+    gap: 24px;
+  }
+
+  .site-footer-brand {
+    gap: 16px;
+  }
+
+  .site-footer-address {
+    white-space: normal;
+  }
+
+  .site-footer-logo img {
+    width: min(100%, 190px);
+  }
+
+  .site-footer-main {
+    justify-content: start;
+    padding-left: 0;
+  }
+
+  .site-footer-menu {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 20px;
+  }
+
+  .site-footer-menu-column {
+    gap: 12px;
+  }
+
+  .site-footer-menu a {
+    font-size: clamp(16px, 4.6vw, 19px);
+  }
+
+  .site-footer-contact,
+  .site-footer-phone-link {
+    gap: 10px;
+  }
+
+  .site-footer-contact-text {
+    font-size: clamp(16px, 4.8vw, 18px);
+  }
+
+  .footer-meta-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .footer-meta-policy {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 520px) {
+  .site-footer-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer-contacts {
+    justify-self: start;
+  }
+}
