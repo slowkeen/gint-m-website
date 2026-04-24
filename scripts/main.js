@@ -314,10 +314,6 @@ const initSite = () => {
       </div>
 
       <footer class="testimonial-review-footer">
-        <div class="testimonial-review-meta">
-          <p class="testimonial-review-name">${item.personName}</p>
-          <p class="testimonial-review-role">${item.personRole}</p>
-        </div>
         <button class="testimonial-read-more" type="button" data-modal-open="${item.modalId}">${uiText.testimonialReadMore}</button>
       </footer>
     `;
