@@ -7509,6 +7509,10 @@ img {
     gap: clamp(40px, 4.2vw, 64px);
   }
 
+  .company-logos {
+    margin-top: clamp(52px, calc(5vw - 28px), 68px);
+  }
+
   .company-advantages li {
     min-height: clamp(208px, 19vw, 252px);
     padding: 30px 32px 28px;
