@@ -30,6 +30,30 @@
   const placeholderDurations = ["7 мес.", "11 мес.", "9 мес.", "14 мес.", "6 мес.", "8 мес."];
   const placeholderAreas = [1450, 2200, 1860, 3140, 970, 2680, 1520, 4050];
   const placeholderYears = [2024, 2023, 2022, 2021, 2020, 2019];
+  const projectYearBySlug = {
+    "kit-med": 2025,
+    "skolkovo-park": 2025,
+    "avito-spb": 2021,
+    "winline": 2022,
+    "samsung": 2018,
+    "skolkovo-vet": 2019,
+    "natsproektstroy": 2024,
+    "restaurant-skolkovo-park": 2024,
+    "ab-development": 2023,
+    "krylatskie-holmy": 2023,
+    "align": 2022,
+    "avito-spb-2021": 2021,
+    "avito-cks": 2021,
+    "international-bank": 2021,
+    "avito-spb-2020": 2020,
+    "snigeri-school": 2020,
+    "align-technology": 2020,
+    "bnp-paribas": 2020,
+    "dell": 2020,
+    "avito-moscow": 2020,
+    "s7-airlines": 2019,
+    "philip-morris": 2019
+  };
   const placeholderAddresses = [
     "Москва, ЦАО",
     "Москва, Пресненская наб.",
@@ -73,11 +97,11 @@
     reviewBody
   });
 
-  const buildPlaceholderMetrics = (index) => ({
+  const buildPlaceholderMetrics = (slug, index) => ({
     workScope: "\u041f\u043e\u043b\u043d\u044b\u0439 \u043a\u043e\u043c\u043f\u043b\u0435\u043a\u0441 \u0441\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0445, \u043e\u0442\u0434\u0435\u043b\u043e\u0447\u043d\u044b\u0445 \u0438 \u0438\u043d\u0436\u0435\u043d\u0435\u0440\u043d\u044b\u0445 \u0440\u0430\u0431\u043e\u0442",
     duration: placeholderDurations[index % placeholderDurations.length],
     area: `${placeholderAreas[index % placeholderAreas.length].toLocaleString("ru-RU")} \u043c\u00b2`,
-    year: String(placeholderYears[index % placeholderYears.length]),
+    year: String(projectYearBySlug[slug] ?? placeholderYears[index % placeholderYears.length]),
     address: placeholderAddresses[index % placeholderAddresses.length]
   });
 
@@ -207,7 +231,7 @@
     dell: {
       duration: "4 мес.",
       area: "2 400 м²",
-      year: "2021",
+      year: "2020",
       address: "Москва, Пресненская наб., 10, блок C",
       ...sharedReviews.dell
     }
@@ -222,7 +246,7 @@
       width,
       height,
       gallery: [createGalleryItem(image, alt, width, height)],
-      ...buildPlaceholderMetrics(index),
+      ...buildPlaceholderMetrics(slug, index),
       summary: "Кейс проекта Gint-M. Страница находится в наполнении и будет дополнена фактами об объекте.",
       about: [
         "Раздел «О проекте» подготовлен под финальное описание объекта, архитектурной задачи и ключевых решений по реализации."

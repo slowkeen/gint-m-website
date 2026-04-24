@@ -183,8 +183,151 @@
       return;
     }
 
+    const orderedProjectSlugs = [
+      "kit-med",
+      "skolkovo-park",
+      "natsproektstroy",
+      "restaurant-skolkovo-park",
+      "ab-development",
+      "krylatskie-holmy",
+      "winline",
+      "align",
+      "avito-spb",
+      "avito-spb-2021",
+      "avito-cks",
+      "international-bank",
+      "avito-spb-2020",
+      "snigeri-school",
+      "align-technology",
+      "bnp-paribas",
+      "dell",
+      "avito-moscow",
+      "s7-airlines",
+      "philip-morris",
+      "skolkovo-vet",
+      "samsung"
+    ];
+    const projectYearBySlug = new Map([
+      ["kit-med", "2025"],
+      ["skolkovo-park", "2025"],
+      ["natsproektstroy", "2024"],
+      ["restaurant-skolkovo-park", "2024"],
+      ["ab-development", "2023"],
+      ["krylatskie-holmy", "2023"],
+      ["winline", "2022"],
+      ["align", "2022"],
+      ["avito-spb", "2021"],
+      ["avito-spb-2021", "2021"],
+      ["avito-cks", "2021"],
+      ["international-bank", "2021"],
+      ["avito-spb-2020", "2020"],
+      ["snigeri-school", "2020"],
+      ["align-technology", "2020"],
+      ["bnp-paribas", "2020"],
+      ["dell", "2020"],
+      ["avito-moscow", "2020"],
+      ["s7-airlines", "2019"],
+      ["philip-morris", "2019"],
+      ["skolkovo-vet", "2019"],
+      ["samsung", "2018"]
+    ]);
+    const projectSortOrder = new Map(orderedProjectSlugs.map((slug, index) => [slug, index]));
+
     let projectMasonryFrame = null;
     let lastProjectMasonryWidth = 0;
+
+    const getProjectSlug = (card) => {
+      const link = card.querySelector(".project-photo-link");
+
+      if (!link) {
+        return "";
+      }
+
+      try {
+        const url = new URL(link.href, window.location.href);
+        return url.searchParams.get("slug") || "";
+      } catch {
+        return "";
+      }
+    };
+
+    const ensureProjectYearBadge = (card, year) => {
+      if (!year) {
+        return;
+      }
+
+      const caption = card.querySelector(".project-photo-caption");
+      const title = caption?.querySelector(".project-photo-name");
+
+      if (!caption || !title) {
+        return;
+      }
+
+      let heading = caption.querySelector(".project-photo-heading");
+
+      if (!heading) {
+        heading = document.createElement("div");
+        heading.className = "project-photo-heading";
+        caption.prepend(heading);
+      }
+
+      if (!heading.contains(title)) {
+        heading.prepend(title);
+      }
+
+      let badge = heading.querySelector(".project-photo-year");
+
+      if (!badge) {
+        const existingBadge = caption.querySelector(".project-photo-year");
+        badge = document.createElement("span");
+        badge.className = "project-photo-year";
+        (existingBadge || badge).replaceWith(badge);
+        heading.append(badge);
+      } else if (!heading.contains(badge)) {
+        heading.append(badge);
+      }
+
+      badge.textContent = year;
+      badge.setAttribute("aria-label", `Год реализации ${year}`);
+      card.dataset.projectYear = year;
+
+      const legacyMeta = caption.querySelector(".project-photo-meta");
+
+      if (legacyMeta) {
+        legacyMeta.remove();
+      }
+    };
+
+    const syncProjectCards = () => {
+      const orderedCards = projectCards
+        .map((card, index) => {
+          const slug = getProjectSlug(card);
+          const year = projectYearBySlug.get(slug) || "";
+          const yearValue = Number.parseInt(year, 10) || 0;
+
+          ensureProjectYearBadge(card, year);
+
+          return {
+            card,
+            index,
+            yearValue,
+            sortIndex: projectSortOrder.get(slug) ?? Number.MAX_SAFE_INTEGER
+          };
+        })
+        .sort((left, right) => (
+          right.yearValue - left.yearValue
+          || left.sortIndex - right.sortIndex
+          || left.index - right.index
+        ));
+
+      orderedCards.forEach(({ card }) => {
+        projectsMasonry.append(card);
+      });
+
+      projectCards.splice(0, projectCards.length, ...orderedCards.map(({ card }) => card));
+    };
+
+    syncProjectCards();
 
     const resetProjectMasonryCardStyles = (card) => {
       card.style.removeProperty("width");

@@ -45,11 +45,11 @@
 
 .news-page .news-eyebrow {
   margin: 0;
-  color: #e9ac68;
+  color: rgba(17, 19, 26, 0.46);
 }
 
 .news-page-intro {
-  max-width: 62ch;
+  max-width: 34ch;
   color: rgba(17, 19, 26, 0.72);
   font-size: clamp(18px, 1.35vw, 22px);
 }
@@ -85,6 +85,10 @@
 
 .news-feed-card .trust-journal-card-meta {
   max-width: 34ch;
+}
+
+.news-feed-card.trust-journal-card-featured .trust-journal-card-meta {
+  max-width: 46ch;
 }
 
 .news-feed-card .trust-journal-card-link {

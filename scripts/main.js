@@ -528,6 +528,212 @@ const initSite = () => {
     });
   }
 
+  const awardsTimeline = document.querySelector("[data-awards-timeline]");
+  const awardsTimelineStage = awardsTimeline ? awardsTimeline.querySelector("[data-awards-timeline-stage]") : null;
+  const awardsTimelineTrack = awardsTimeline ? awardsTimeline.querySelector("[data-awards-timeline-track]") : null;
+  let awardsTimelineItems = awardsTimelineTrack ? Array.from(awardsTimelineTrack.querySelectorAll(".awards-timeline-item")) : [];
+  const awardsTimelinePrevButton = awardsTimeline ? awardsTimeline.querySelector('[data-awards-timeline-nav="prev"]') : null;
+  const awardsTimelineNextButton = awardsTimeline ? awardsTimeline.querySelector('[data-awards-timeline-nav="next"]') : null;
+  let awardsTimelineSyncFrame = 0;
+  let awardsTimelineAutoplayId = 0;
+
+  if (awardsTimelineTrack && awardsTimelineItems.length > 1) {
+    awardsTimelineItems = awardsTimelineItems
+      .map((item, index) => {
+        const yearLabel = item.querySelector(".awards-timeline-year");
+        const yearValue = Number.parseInt(yearLabel?.textContent?.trim() || "", 10);
+
+        return {
+          item,
+          index,
+          year: Number.isFinite(yearValue) ? yearValue : 0
+        };
+      })
+      .sort((left, right) => right.year - left.year || left.index - right.index)
+      .map(({ item }) => item);
+
+    awardsTimelineTrack.append(...awardsTimelineItems);
+  }
+
+  const getAwardsTimelineStep = () => {
+    if (!awardsTimelineStage || awardsTimelineItems.length === 0) {
+      return 0;
+    }
+
+    const firstItem = awardsTimelineItems[0];
+    const firstItemWidth = firstItem.getBoundingClientRect().width;
+    const trackStyles = awardsTimelineTrack ? window.getComputedStyle(awardsTimelineTrack) : null;
+    const gap = trackStyles ? Number.parseFloat(trackStyles.columnGap || trackStyles.gap || "0") || 0 : 0;
+    const viewportStep = Math.round(awardsTimelineStage.clientWidth * 0.82);
+
+    return Math.max(Math.round(firstItemWidth + gap), viewportStep);
+  };
+
+  const syncAwardsTimelineButtons = () => {
+    if (!awardsTimelineStage) {
+      return;
+    }
+
+    const maxScrollLeft = Math.max(0, awardsTimelineStage.scrollWidth - awardsTimelineStage.clientWidth);
+    const isScrollable = maxScrollLeft > 4;
+    const atStart = awardsTimelineStage.scrollLeft <= 4;
+    const atEnd = maxScrollLeft - awardsTimelineStage.scrollLeft <= 4;
+
+    if (awardsTimelinePrevButton) {
+      awardsTimelinePrevButton.disabled = !isScrollable || atStart;
+    }
+
+    if (awardsTimelineNextButton) {
+      awardsTimelineNextButton.disabled = !isScrollable || atEnd;
+    }
+  };
+
+  const requestAwardsTimelineSync = () => {
+    if (awardsTimelineSyncFrame !== 0) {
+      return;
+    }
+
+    awardsTimelineSyncFrame = window.requestAnimationFrame(() => {
+      awardsTimelineSyncFrame = 0;
+      syncAwardsTimelineButtons();
+    });
+  };
+
+  const shiftAwardsTimeline = (direction) => {
+    if (!awardsTimelineStage) {
+      return;
+    }
+
+    const step = getAwardsTimelineStep();
+
+    if (step <= 0) {
+      return;
+    }
+
+    const maxScrollLeft = Math.max(0, awardsTimelineStage.scrollWidth - awardsTimelineStage.clientWidth);
+    const nextLeft = Math.min(
+      maxScrollLeft,
+      Math.max(0, awardsTimelineStage.scrollLeft + (step * direction))
+    );
+
+    awardsTimelineStage.scrollTo({
+      left: nextLeft,
+      behavior: prefersReducedMotion ? "auto" : "smooth"
+    });
+
+    requestAwardsTimelineSync();
+  };
+
+  const stopAwardsTimelineAutoplay = () => {
+    if (awardsTimelineAutoplayId === 0) {
+      return;
+    }
+
+    window.clearInterval(awardsTimelineAutoplayId);
+    awardsTimelineAutoplayId = 0;
+  };
+
+  const autoplayAwardsTimeline = () => {
+    if (!awardsTimelineStage) {
+      return;
+    }
+
+    const maxScrollLeft = Math.max(0, awardsTimelineStage.scrollWidth - awardsTimelineStage.clientWidth);
+    const atEnd = maxScrollLeft - awardsTimelineStage.scrollLeft <= 4;
+
+    if (maxScrollLeft <= 4) {
+      return;
+    }
+
+    if (atEnd) {
+      awardsTimelineStage.scrollTo({
+        left: 0,
+        behavior: "auto"
+      });
+      requestAwardsTimelineSync();
+      return;
+    }
+
+    shiftAwardsTimeline(1);
+  };
+
+  const startAwardsTimelineAutoplay = () => {
+    stopAwardsTimelineAutoplay();
+
+    if (!awardsTimelineStage || prefersReducedMotion) {
+      return;
+    }
+
+    const maxScrollLeft = Math.max(0, awardsTimelineStage.scrollWidth - awardsTimelineStage.clientWidth);
+
+    if (maxScrollLeft <= 4) {
+      return;
+    }
+
+    awardsTimelineAutoplayId = window.setInterval(() => {
+      autoplayAwardsTimeline();
+    }, 3000);
+  };
+
+  if (awardsTimelineStage) {
+    syncAwardsTimelineButtons();
+    awardsTimelineStage.addEventListener("scroll", requestAwardsTimelineSync, { passive: true });
+
+    if (awardsTimelineNextButton) {
+      awardsTimelineNextButton.addEventListener("click", () => {
+        stopAwardsTimelineAutoplay();
+        shiftAwardsTimeline(1);
+        startAwardsTimelineAutoplay();
+      });
+    }
+
+    if (awardsTimelinePrevButton) {
+      awardsTimelinePrevButton.addEventListener("click", () => {
+        stopAwardsTimelineAutoplay();
+        shiftAwardsTimeline(-1);
+        startAwardsTimelineAutoplay();
+      });
+    }
+
+    if ("ResizeObserver" in window) {
+      const awardsTimelineResizeObserver = new ResizeObserver(() => {
+        requestAwardsTimelineSync();
+        startAwardsTimelineAutoplay();
+      });
+
+      awardsTimelineResizeObserver.observe(awardsTimelineStage);
+
+      if (awardsTimelineTrack) {
+        awardsTimelineResizeObserver.observe(awardsTimelineTrack);
+      }
+    }
+
+    if (awardsTimeline) {
+      awardsTimeline.addEventListener("pointerenter", stopAwardsTimelineAutoplay);
+      awardsTimeline.addEventListener("pointerleave", startAwardsTimelineAutoplay);
+      awardsTimeline.addEventListener("focusin", stopAwardsTimelineAutoplay);
+      awardsTimeline.addEventListener("focusout", (event) => {
+        if (!awardsTimeline.contains(event.relatedTarget)) {
+          startAwardsTimelineAutoplay();
+        }
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          stopAwardsTimelineAutoplay();
+          return;
+        }
+
+        startAwardsTimelineAutoplay();
+      });
+    }
+
+    window.addEventListener("load", requestAwardsTimelineSync, { once: true });
+    window.addEventListener("resize", requestAwardsTimelineSync);
+    window.addEventListener("resize", startAwardsTimelineAutoplay);
+    startAwardsTimelineAutoplay();
+  }
+
   const companyLogosSlider = document.querySelector("[data-company-logos]");
   const companyLogosTrack = companyLogosSlider ? companyLogosSlider.querySelector("[data-company-logos-track]") : null;
   const companyLogoPages = companyLogosTrack ? Array.from(companyLogosTrack.querySelectorAll("[data-company-logos-page]")) : [];
@@ -740,11 +946,155 @@ const initSite = () => {
   const projectLoadButton = document.querySelector("[data-load-projects]");
   const projectsMasonry = document.querySelector(".projects-masonry");
   const projectCards = projectsMasonry ? Array.from(projectsMasonry.querySelectorAll(".project-photo-card")) : [];
+  const orderedProjectSlugs = [
+    "kit-med",
+    "skolkovo-park",
+    "natsproektstroy",
+    "restaurant-skolkovo-park",
+    "ab-development",
+    "krylatskie-holmy",
+    "winline",
+    "align",
+    "avito-spb",
+    "avito-spb-2021",
+    "avito-cks",
+    "international-bank",
+    "avito-spb-2020",
+    "snigeri-school",
+    "align-technology",
+    "bnp-paribas",
+    "dell",
+    "avito-moscow",
+    "s7-airlines",
+    "philip-morris",
+    "skolkovo-vet",
+    "samsung"
+  ];
+  const projectYearBySlug = new Map([
+    ["kit-med", "2025"],
+    ["skolkovo-park", "2025"],
+    ["natsproektstroy", "2024"],
+    ["restaurant-skolkovo-park", "2024"],
+    ["ab-development", "2023"],
+    ["krylatskie-holmy", "2023"],
+    ["winline", "2022"],
+    ["align", "2022"],
+    ["avito-spb", "2021"],
+    ["avito-spb-2021", "2021"],
+    ["avito-cks", "2021"],
+    ["international-bank", "2021"],
+    ["avito-spb-2020", "2020"],
+    ["snigeri-school", "2020"],
+    ["align-technology", "2020"],
+    ["bnp-paribas", "2020"],
+    ["dell", "2020"],
+    ["avito-moscow", "2020"],
+    ["s7-airlines", "2019"],
+    ["philip-morris", "2019"],
+    ["skolkovo-vet", "2019"],
+    ["samsung", "2018"]
+  ]);
+  const projectSortOrder = new Map(orderedProjectSlugs.map((slug, index) => [slug, index]));
   const PROJECTS_INITIAL_VISIBLE = 16;
   let hiddenProjectCards = [];
   const revealElements = [];
   let projectMasonryFrame = null;
   let lastProjectMasonryWidth = 0;
+
+  const getProjectSlug = (card) => {
+    const link = card.querySelector(".project-photo-link");
+
+    if (!link) {
+      return "";
+    }
+
+    try {
+      const url = new URL(link.href, window.location.href);
+      return url.searchParams.get("slug") || "";
+    } catch {
+      return "";
+    }
+  };
+
+  const ensureProjectYearBadge = (card, year) => {
+    if (!year) {
+      return;
+    }
+
+    const caption = card.querySelector(".project-photo-caption");
+    const title = caption?.querySelector(".project-photo-name");
+
+    if (!caption || !title) {
+      return;
+    }
+
+    let heading = caption.querySelector(".project-photo-heading");
+
+    if (!heading) {
+      heading = document.createElement("div");
+      heading.className = "project-photo-heading";
+      caption.prepend(heading);
+    }
+
+    if (!heading.contains(title)) {
+      heading.prepend(title);
+    }
+
+    let badge = heading.querySelector(".project-photo-year");
+
+    if (!badge) {
+      const existingBadge = caption.querySelector(".project-photo-year");
+      badge = document.createElement("span");
+      badge.className = "project-photo-year";
+      (existingBadge || badge).replaceWith(badge);
+      heading.append(badge);
+    } else if (!heading.contains(badge)) {
+      heading.append(badge);
+    }
+
+    badge.textContent = year;
+    badge.setAttribute("aria-label", `Год реализации ${year}`);
+    card.dataset.projectYear = year;
+
+    const legacyMeta = caption.querySelector(".project-photo-meta");
+
+    if (legacyMeta) {
+      legacyMeta.remove();
+    }
+  };
+
+  const syncProjectCardOrder = () => {
+    if (!projectsMasonry || projectCards.length === 0) {
+      return;
+    }
+
+    const orderedCards = projectCards
+      .map((card, index) => {
+        const slug = getProjectSlug(card);
+        const year = projectYearBySlug.get(slug) || "";
+        const yearValue = Number.parseInt(year, 10) || 0;
+
+        ensureProjectYearBadge(card, year);
+
+        return {
+          card,
+          index,
+          yearValue,
+          sortIndex: projectSortOrder.get(slug) ?? Number.MAX_SAFE_INTEGER
+        };
+      })
+      .sort((left, right) => (
+        right.yearValue - left.yearValue
+        || left.sortIndex - right.sortIndex
+        || left.index - right.index
+      ));
+
+    orderedCards.forEach(({ card }) => {
+      projectsMasonry.append(card);
+    });
+
+    projectCards.splice(0, projectCards.length, ...orderedCards.map(({ card }) => card));
+  };
 
   const syncInitialProjectVisibility = () => {
     hiddenProjectCards = [];
@@ -902,6 +1252,7 @@ const initSite = () => {
     });
   };
 
+  syncProjectCardOrder();
   syncInitialProjectVisibility();
 
   const applyClasses = (selectors, classes) => {
