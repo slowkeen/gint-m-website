@@ -3012,6 +3012,7 @@ body.menu-open {
   display: grid;
   grid-template-rows: auto 1fr;
   align-content: space-between;
+  min-width: 0;
   gap: 22px;
   min-height: clamp(182px, 20vw, 240px);
   padding: 20px 24px 18px;
@@ -3031,10 +3032,10 @@ body.menu-open {
   align-self: end;
   color: var(--text-dark);
   font-family: "Oswald", "Arial Narrow", sans-serif;
-  font-size: clamp(40px, 4vw, 66px);
+  font-size: clamp(34px, 3.2vw, 52px);
   font-weight: 600;
   line-height: 0.86;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em;
   white-space: nowrap;
 }
 
@@ -5466,8 +5467,8 @@ tr:last-child td {
 }
 
 .company-stats .hero-adv-value {
-  font-size: clamp(38px, 3.8vw, 60px);
-  letter-spacing: -0.045em;
+  font-size: clamp(34px, 3.2vw, 52px);
+  letter-spacing: -0.05em;
 }
 
 .company-stats .hero-adv-label {
