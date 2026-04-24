@@ -7,7 +7,7 @@
       path: resolveSitePath("/about/"),
       sectionId: "company",
       title: "ГИНТ-М — О компании",
-      description: "История ГИНТ-М, структура управления, система качества, безопасность труда и экологическая ответственность компании.",
+      description: "ГИНТ-М: структура компании, система качества и охрана труда.",
       label: "О компании"
     },
     "organization-chart": {
@@ -30,13 +30,6 @@
       title: "ГИНТ-М — Охрана труда",
       description: "Охрана труда в ГИНТ-М: безопасная среда, профилактика рисков и системное обучение сотрудников.",
       label: "Безопасность"
-    },
-    "ecology-responsibilities": {
-      path: resolveSitePath("/about/ecology-responsibilities/"),
-      sectionId: "ecology-responsibilities",
-      title: "ГИНТ-М — Экология и защита окружающей среды",
-      description: "Экологическая ответственность ГИНТ-М: соблюдение норм, международная сертификация и развитие зеленого строительства.",
-      label: "Экология"
     }
   };
 
@@ -44,8 +37,7 @@
     routes.company,
     routes["organization-chart"],
     routes["quality-control"],
-    routes["health-and-safety"],
-    routes["ecology-responsibilities"]
+    routes["health-and-safety"]
   ];
 
   const pathMap = new Map();
@@ -226,62 +218,6 @@
     return heroHeader;
   };
 
-  const initHistoryTimeline = () => {
-    const timeline = document.querySelector("[data-history-timeline]");
-
-    if (!timeline) {
-      return;
-    }
-
-    const progressPath = timeline.querySelector(".about-history-progress");
-    const items = Array.from(timeline.querySelectorAll("[data-history-item]"));
-    let scrollTicking = false;
-
-    const syncProgress = () => {
-      const rect = timeline.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      const traveled = viewportHeight * 0.68 - rect.top;
-      const distance = rect.height + viewportHeight * 0.32;
-      const progress = clamp(traveled / distance, 0, 1);
-
-      timeline.style.setProperty("--about-history-progress", progress.toFixed(4));
-
-      if (progressPath) {
-        progressPath.style.strokeDashoffset = String(100 - (progress * 100));
-      }
-    };
-
-    const requestSync = () => {
-      if (scrollTicking) {
-        return;
-      }
-
-      scrollTicking = true;
-      window.requestAnimationFrame(() => {
-        scrollTicking = false;
-        syncProgress();
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          entry.target.classList.toggle("is-visible", entry.isIntersecting || entry.intersectionRatio >= 0.25);
-        });
-      },
-      {
-        threshold: [0.2, 0.35, 0.6],
-        rootMargin: "0px 0px -12% 0px"
-      }
-    );
-
-    items.forEach((item) => observer.observe(item));
-
-    syncProgress();
-    window.addEventListener("scroll", requestSync, { passive: true });
-    window.addEventListener("resize", syncProgress);
-  };
-
   const initOverviewReveal = () => {
     const revealItems = Array.from(document.querySelectorAll("[data-about-reveal]"));
 
@@ -316,37 +252,137 @@
 
   const initClientsSlider = () => {
     const slider = document.querySelector("[data-about-clients]");
+    const section = slider ? slider.closest(".about-clients-block") : null;
     const track = slider ? slider.querySelector("[data-about-clients-track]") : null;
-    const pages = track ? Array.from(track.querySelectorAll("[data-about-clients-page]")) : [];
-    const prevButton = document.querySelector('[data-about-clients-nav="prev"]');
-    const nextButton = document.querySelector('[data-about-clients-nav="next"]');
-    let activeIndex = 0;
+    const prevButton = section ? section.querySelector('[data-about-clients-nav="prev"]') : null;
+    const nextButton = section ? section.querySelector('[data-about-clients-nav="next"]') : null;
 
-    if (!slider || !track || !pages.length) {
+    if (!slider || !track) {
       return;
+    }
+
+    const buildRotatedPages = () => {
+      const sourcePages = Array.from(track.querySelectorAll("[data-about-clients-page]"));
+
+      if (sourcePages.length !== 1) {
+        return sourcePages;
+      }
+
+      const sourceGrid = sourcePages[0].querySelector(".about-clients-grid");
+      const sourceCards = sourceGrid ? Array.from(sourceGrid.children) : [];
+      const cardsPerRow = 6;
+
+      if (sourceCards.length <= cardsPerRow || sourceCards.length % cardsPerRow !== 0) {
+        return sourcePages;
+      }
+
+      const rowCount = sourceCards.length / cardsPerRow;
+
+      if (rowCount < 2) {
+        return sourcePages;
+      }
+
+      const rows = Array.from({ length: rowCount }, (_, index) => {
+        const start = index * cardsPerRow;
+        return sourceCards.slice(start, start + cardsPerRow);
+      });
+
+      const fragment = document.createDocumentFragment();
+
+      rows.forEach((_, rotation) => {
+        const page = document.createElement("div");
+        const grid = document.createElement("div");
+
+        page.className = `about-clients-page${rotation === 0 ? " is-active" : ""}`;
+        page.dataset.aboutClientsPage = String(rotation);
+
+        if (rotation !== 0) {
+          page.setAttribute("aria-hidden", "true");
+        }
+
+        grid.className = "about-clients-grid";
+
+        rows.forEach((__, rowIndex) => {
+          const row = rows[(rotation + rowIndex) % rows.length];
+
+          row.forEach((card) => {
+            grid.append(card.cloneNode(true));
+          });
+        });
+
+        page.append(grid);
+        fragment.append(page);
+      });
+
+      track.replaceChildren(fragment);
+      return Array.from(track.querySelectorAll("[data-about-clients-page]"));
+    };
+
+    const pages = buildRotatedPages();
+    const pageCount = pages.length;
+    let slides = pages;
+    let slideIndex = pageCount > 1 ? 1 : 0;
+    let isAnimating = false;
+    let autoplayId = 0;
+    let normalizeTimeoutId = 0;
+
+    if (!pages.length) {
+      return;
+    }
+
+    if (pageCount > 1) {
+      const firstClone = pages[0].cloneNode(true);
+      const lastClone = pages[pageCount - 1].cloneNode(true);
+
+      firstClone.dataset.aboutClientsClone = "first";
+      lastClone.dataset.aboutClientsClone = "last";
+      firstClone.setAttribute("aria-hidden", "true");
+      lastClone.setAttribute("aria-hidden", "true");
+
+      track.prepend(lastClone);
+      track.append(firstClone);
+      slides = Array.from(track.children);
     }
 
     const syncButtons = () => {
       if (prevButton) {
-        prevButton.disabled = activeIndex === 0;
+        prevButton.disabled = pageCount < 2;
       }
 
       if (nextButton) {
-        nextButton.disabled = activeIndex >= pages.length - 1;
+        nextButton.disabled = pageCount < 2;
       }
+    };
+
+    const getActivePageIndex = () => {
+      if (pageCount < 2) {
+        return 0;
+      }
+
+      if (slideIndex === 0) {
+        return pageCount - 1;
+      }
+
+      if (slideIndex === slides.length - 1) {
+        return 0;
+      }
+
+      return slideIndex - 1;
     };
 
     const syncSlider = (animate = true) => {
       const useAnimation = animate && !prefersReducedMotion;
+      const activePageIndex = getActivePageIndex();
 
       track.style.transitionDuration = useAnimation ? "720ms" : "0ms";
       track.style.transitionTimingFunction = useAnimation ? "var(--ease-out-soft)" : "linear";
-      track.style.transform = `translate3d(-${activeIndex * 100}%, 0, 0)`;
+      track.style.transform = `translate3d(-${slideIndex * 100}%, 0, 0)`;
 
       pages.forEach((page, index) => {
-        const isActive = index === activeIndex;
+        const isActive = index === activePageIndex;
 
         page.classList.toggle("is-active", isActive);
+        page.hidden = false;
         page.setAttribute("aria-hidden", String(!isActive));
 
         if ("inert" in page) {
@@ -354,44 +390,153 @@
         }
       });
 
+      slides.forEach((page, index) => {
+        const isClone = page.hasAttribute("data-about-clients-clone");
+        const isActive = index === slideIndex;
+
+        page.setAttribute("aria-hidden", String(!isActive || isClone));
+
+        if ("inert" in page) {
+          page.inert = !isActive || isClone;
+        }
+      });
+
       syncButtons();
     };
 
-    const showPage = (nextIndex) => {
-      const boundedIndex = clamp(nextIndex, 0, pages.length - 1);
+    const clearNormalizeTimeout = () => {
+      if (normalizeTimeoutId === 0) {
+        return;
+      }
 
-      if (boundedIndex === activeIndex) {
+      window.clearTimeout(normalizeTimeoutId);
+      normalizeTimeoutId = 0;
+    };
+
+    const normalizeLoop = () => {
+      clearNormalizeTimeout();
+
+      if (pageCount < 2) {
+        isAnimating = false;
+        return;
+      }
+
+      if (slideIndex === 0) {
+        slideIndex = pageCount;
+        syncSlider(false);
+      } else if (slideIndex === slides.length - 1) {
+        slideIndex = 1;
+        syncSlider(false);
+      }
+
+      isAnimating = false;
+    };
+
+    const showPage = (direction) => {
+      if (pageCount < 2 || isAnimating) {
         syncButtons();
         return;
       }
 
-      activeIndex = boundedIndex;
+      slideIndex += direction;
+
+      if (prefersReducedMotion) {
+        if (slideIndex === 0) {
+          slideIndex = pageCount;
+        } else if (slideIndex === slides.length - 1) {
+          slideIndex = 1;
+        }
+
+        syncSlider(false);
+        return;
+      }
+
+      isAnimating = true;
       syncSlider(true);
+      clearNormalizeTimeout();
+      normalizeTimeoutId = window.setTimeout(() => {
+        normalizeLoop();
+      }, 900);
+    };
+
+    const stopAutoplay = () => {
+      if (autoplayId === 0) {
+        return;
+      }
+
+      window.clearInterval(autoplayId);
+      autoplayId = 0;
+    };
+
+    const startAutoplay = () => {
+      stopAutoplay();
+
+      if (pageCount < 2) {
+        return;
+      }
+
+      autoplayId = window.setInterval(() => {
+        showPage(1);
+      }, 3000);
+    };
+
+    const shiftPage = (direction) => {
+      showPage(direction);
+      startAutoplay();
     };
 
     prevButton?.addEventListener("click", () => {
-      showPage(activeIndex - 1);
+      shiftPage(-1);
     });
 
     nextButton?.addEventListener("click", () => {
-      showPage(activeIndex + 1);
+      shiftPage(1);
     });
 
     slider.addEventListener("keydown", (event) => {
       if (event.key === "ArrowLeft") {
-        showPage(activeIndex - 1);
+        shiftPage(-1);
       }
 
       if (event.key === "ArrowRight") {
-        showPage(activeIndex + 1);
+        shiftPage(1);
       }
     });
 
+    track.addEventListener("transitionend", (event) => {
+      if (event.propertyName !== "transform") {
+        return;
+      }
+
+      normalizeLoop();
+    });
+
+    section?.addEventListener("pointerenter", stopAutoplay);
+    section?.addEventListener("pointerleave", startAutoplay);
+    section?.addEventListener("focusin", stopAutoplay);
+    section?.addEventListener("focusout", (event) => {
+      if (!section.contains(event.relatedTarget)) {
+        startAutoplay();
+      }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        stopAutoplay();
+        return;
+      }
+
+      startAutoplay();
+    });
+
     window.addEventListener("resize", () => {
+      clearNormalizeTimeout();
+      isAnimating = false;
       syncSlider(false);
     });
 
     syncSlider(false);
+    startAutoplay();
   };
 
   const initCertificateModal = () => {
@@ -494,11 +639,8 @@
       return;
     }
 
-    const historySection = document.getElementById("about-history");
     const certificationsSection = document.querySelector("[data-about-certifications]");
     const routeLinks = Array.from(document.querySelectorAll("[data-about-nav]"));
-    const historyLinks = Array.from(document.querySelectorAll('[data-about-scroll="history"]'));
-    const navWrap = document.querySelector(".about-anchor-nav-wrap");
     const heroHeader = document.querySelector(".hero-top");
     const breadcrumbCurrent = document.querySelector("[data-about-breadcrumb-current]");
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -550,9 +692,7 @@
         return;
       }
 
-      breadcrumbCurrent.textContent = stateKey === "history"
-        ? "История компании"
-        : routes[stateKey]?.label || routes.company.label;
+      breadcrumbCurrent.textContent = routes[stateKey]?.label || routes.company.label;
     };
 
     const syncNavState = (stateKey) => {
@@ -562,17 +702,6 @@
 
         if (isActive) {
           link.setAttribute("aria-current", "page");
-        } else {
-          link.removeAttribute("aria-current");
-        }
-      });
-
-      historyLinks.forEach((link) => {
-        const isActive = stateKey === "history";
-        link.classList.toggle("is-active", isActive);
-
-        if (isActive) {
-          link.setAttribute("aria-current", "location");
         } else {
           link.removeAttribute("aria-current");
         }
@@ -646,29 +775,10 @@
       finishProgrammaticScroll();
     };
 
-    const scrollToHistory = (historyMode = "push", behavior = prefersReducedMotion ? "auto" : "smooth") => {
-      if (!historySection) {
-        return;
-      }
-
-      syncRouteState("company", historyMode);
-      setActiveNavState("history");
-      isProgrammaticScroll = true;
-
-      const top = Math.max(0, window.scrollY + historySection.getBoundingClientRect().top - getScrollOffset());
-      window.scrollTo({ top, behavior });
-      finishProgrammaticScroll();
-    };
-
     const getCurrentStateFromScroll = () => {
       const marker = window.scrollY + getScrollOffset() + 24;
-      const organizationSection = sectionElements.get("organization-chart");
       const qualitySection = sectionElements.get("quality-control");
       const safetySection = sectionElements.get("health-and-safety");
-
-      if (historySection && marker >= historySection.offsetTop && (!organizationSection || marker < organizationSection.offsetTop)) {
-        return "history";
-      }
 
       if (
         certificationsSection &&
@@ -711,15 +821,6 @@
 
       const nextState = getCurrentStateFromScroll();
 
-      if (nextState === "history") {
-        if (activeKey !== "company") {
-          syncRouteState("company", "replace");
-        }
-
-        setActiveNavState("history");
-        return;
-      }
-
       if (nextState !== activeKey) {
         syncRouteState(nextState, "replace");
       }
@@ -750,25 +851,6 @@
         scrollToRoute(key, "push");
         return;
       }
-
-      const historyLink = event.target.closest('[data-about-scroll="history"]');
-      if (!historyLink) {
-        return;
-      }
-
-      if (
-        event.defaultPrevented ||
-        event.button !== 0 ||
-        event.metaKey ||
-        event.ctrlKey ||
-        event.shiftKey ||
-        event.altKey
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-      scrollToHistory("push");
     });
 
     window.addEventListener(
@@ -807,7 +889,6 @@
     initOverviewReveal();
     initClientsSlider();
     initAboutRoutes();
-    initHistoryTimeline();
     initCertificateModal();
   };
 
