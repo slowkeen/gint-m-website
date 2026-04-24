@@ -3,7 +3,7 @@
   const transparentPixel = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 
   const projectEntries = [
-    ["kit-med", "Кит-мед", "../photos/kit-med/kitmed_1.jpg", "Кит-мед", 4095, 2735],
+    ["kit-med", "Кит Мед", "../photos/kit-med/web/kitmed_1.jpg", "Кит Мед", 1800, 1202],
     ["skolkovo-park", "Сколково Парк", "../photos/skolkovo-park/1.jpg", "Сколково Парк", 3974, 3197],
     ["avito-spb", "Авито Санкт-Петербург", "../photos/avito-spb/glavnoe_foto.jpg", "Авито Санкт-Петербург", 1600, 1067],
     ["winline", "Winline", "../photos/Winline/part4854_glavnoe_foto.jpg", "Winline", 3500, 2333],
@@ -68,6 +68,8 @@
   const createClientReview = ({
     clientCardTitle = "Клиент",
     clientName = "",
+    clientPersonName = "",
+    clientPersonRole = "",
     clientSector = "",
     clientQuote = "",
     clientLogoSrc = "",
@@ -83,6 +85,8 @@
   }) => ({
     clientCardTitle,
     clientName,
+    clientPersonName,
+    clientPersonRole,
     clientSector,
     clientQuote,
     clientLogoSrc,
@@ -174,33 +178,44 @@
 
   const projectOverrides = {
     "kit-med": {
+      galleryLayout: ["pair", "review", "full"],
+      galleryLayoutOptions: {
+        randomize: true,
+        continueAlternating: true,
+        preferPortraitReviewImage: true,
+        seed: "kit-med-gallery-v2",
+        swapReviewPairWithQueueGalleryIndex: 9
+      },
       gallery: [
-        createGalleryItem("../photos/kit-med/kitmed_1.jpg", "Кит-мед — фото 1", 4095, 2735),
-        createGalleryItem("../photos/kit-med/kitmed_2.jpg", "Кит-мед — фото 2", 4042, 2700),
-        createGalleryItem("../photos/kit-med/kitmed_3.jpg", "Кит-мед — фото 3", 4012, 2680),
-        createGalleryItem("../photos/kit-med/kitmed_4.jpg", "Кит-мед — фото 4", 4032, 2693),
-        createGalleryItem("../photos/kit-med/kit_med_5.jpg", "Кит-мед — фото 5", 2786, 4171),
-        createGalleryItem("../photos/kit-med/kit_med_6.jpg", "Кит-мед — фото 6", 4212, 2814),
-        createGalleryItem("../photos/kit-med/kit_med_7.jpg", "Кит-мед — фото 7", 4044, 2701),
-        createGalleryItem("../photos/kit-med/kit_med_8.jpg", "Кит-мед — фото 8", 4134, 2761),
-        createGalleryItem("../photos/kit-med/kit_med_9.jpg", "Кит-мед — фото 9", 2880, 1920),
-        createGalleryItem("../photos/kit-med/kit_med_10.jpg", "Кит-мед — фото 10", 2880, 1920),
-        createGalleryItem("../photos/kit-med/kit_med_11.jpg", "Кит-мед — фото 11", 2824, 1920),
-        createGalleryItem("../photos/kit-med/kit_med_12.jpg", "Кит-мед — фото 12", 4021, 2686),
-        createGalleryItem("../photos/kit-med/kit_med_13.jpg", "Кит-мед — фото 13", 4184, 2795),
-        createGalleryItem("../photos/kit-med/kit_med_14.jpg", "Кит-мед — фото 14", 4211, 2813),
-        createGalleryItem("../photos/kit-med/kit_med_15.jpg", "Кит-мед — фото 15", 3965, 2648),
-        createGalleryItem("../photos/kit-med/kit_med_16.jpg", "Кит-мед — фото 16", 4193, 2801),
-        createGalleryItem("../photos/kit-med/kit_med_17.jpg", "Кит-мед — фото 17", 4190, 2798),
-        createGalleryItem("../photos/kit-med/kit_med_18.jpg", "Кит-мед — фото 18", 1920, 2880),
-        createGalleryItem("../photos/kit-med/kit_med_19.jpg", "Кит-мед — фото 19", 4201, 2806),
-        createGalleryItem("../photos/kit-med/kit_med_20.jpg", "Кит-мед — фото 20", 2880, 1920)
+        createGalleryItem("../photos/kit-med/web/kitmed_1.jpg", "Кит Мед — фото 1", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kitmed_2.jpg", "Кит Мед — фото 2", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kitmed_3.jpg", "Кит Мед — фото 3", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kitmed_4.jpg", "Кит Мед — фото 4", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kit_med_5.jpg", "Кит Мед — фото 5", 1202, 1800),
+        createGalleryItem("../photos/kit-med/web/kit_med_6.jpg", "Кит Мед — фото 6", 1800, 1203),
+        createGalleryItem("../photos/kit-med/web/kit_med_7.jpg", "Кит Мед — фото 7", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kit_med_8.jpg", "Кит Мед — фото 8", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kit_med_9.jpg", "Кит Мед — фото 9", 1800, 1200),
+        createGalleryItem("../photos/kit-med/web/kit_med_10.jpg", "Кит Мед — фото 10", 1800, 1200),
+        createGalleryItem("../photos/kit-med/web/kit_med_11.jpg", "Кит Мед — фото 11", 1800, 1224),
+        createGalleryItem("../photos/kit-med/web/kit_med_12.jpg", "Кит Мед — фото 12", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kit_med_13.jpg", "Кит Мед — фото 13", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kit_med_14.jpg", "Кит Мед — фото 14", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kit_med_15.jpg", "Кит Мед — фото 15", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kit_med_16.jpg", "Кит Мед — фото 16", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kit_med_17.jpg", "Кит Мед — фото 17", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kit_med_18.jpg", "Кит Мед — фото 18", 1200, 1800),
+        createGalleryItem("../photos/kit-med/web/kit_med_19.jpg", "Кит Мед — фото 19", 1800, 1202),
+        createGalleryItem("../photos/kit-med/web/kit_med_20.jpg", "Кит Мед — фото 20", 1800, 1200)
       ],
-      workScope: "\u0421\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u043e, \u043e\u0442\u0434\u0435\u043b\u043a\u0430 \u0438 \u0438\u043d\u0436\u0435\u043d\u0435\u0440\u043d\u043e\u0435 \u043e\u0441\u043d\u0430\u0449\u0435\u043d\u0438\u0435 \u043e\u0444\u0438\u0441\u043d\u044b\u0445 \u043f\u043e\u043c\u0435\u0449\u0435\u043d\u0438\u0439",
+      descriptionLead: "Полный комплекс работ по строительству, отделке и инженерному оснащению офисных помещений Заказчика.",
+      workScope: "Полный комплекс работ по строительству, отделке и инженерному оснащению офисных помещений Заказчика.",
       duration: "10.02.2025 — 16.07.2025",
-      area: "1 100 м²",
+      startDate: "10.02.2025",
+      endDate: "16.07.2025",
+      area: "1100 м²",
       year: "2025",
-      address: "Россия, Москва, Бумажный пр., 19, помещ. 9/1С",
+      address: "Россия, Москва, проезд Бумажный, д. 19, помещ. 9/1С",
       summary: "Офис «Кит Мед» в бизнес-центре класса A STONE TOWERS — рабочее и обучающее пространство для команды, гостей и профессионального развития специалистов.",
       about: [
         "Проект реализован для компании «Кит Мед» в бизнес-центре класса A STONE TOWERS, башня C. Пространство задумывалось не только как повседневный офис, но и как среда, совмещающая рабочие процессы, прием гостей и обучающую функцию.",
@@ -210,14 +225,14 @@
         "Gint-M выступала на объекте генеральным подрядчиком и выполняла полный комплекс строительных, отделочных и инженерных работ по офисным помещениям заказчика.",
         "В рамках реализации команда выполнила отделку и инженерное оснащение офиса, а также интегрировала ряд нестандартных решений: двойное остекление, систему умного дома, светильники индивидуальной разработки, большой объем мебели спецзаказа и шпонированные панели по периметру офиса, в кабинетах и переговорных."
       ],
-      clientName: "\u041a\u0438\u0442 \u041c\u0435\u0434",
-      clientLogoSrc: "../logos/clients/color/Align-logo.svg",
-      clientLogoAlt: "\u0412\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0439 \u043b\u043e\u0433\u043e\u0442\u0438\u043f \u043a\u043b\u0438\u0435\u043d\u0442\u0430",
-      clientQuote: "\u0414\u043c\u0438\u0442\u0440\u0438\u0439 \u0412\u0430\u0441\u0438\u043b\u044c\u0435\u0432\u0438\u0447 \u041a\u043b\u0430\u0431\u0443\u043a\u043e\u0432 \u043e\u0442\u043c\u0435\u0442\u0438\u043b, \u0447\u0442\u043e \u0432 \u043d\u043e\u0432\u043e\u043c \u043e\u0444\u0438\u0441\u0435 \u0431\u044b\u043b\u043e \u0432\u0430\u0436\u043d\u043e \u0441\u043e\u0432\u043c\u0435\u0441\u0442\u0438\u0442\u044c \u0443\u0434\u043e\u0431\u0441\u0442\u0432\u043e \u0434\u043b\u044f \u0441\u043e\u0442\u0440\u0443\u0434\u043d\u0438\u043a\u043e\u0432 \u0441 \u0443\u044e\u0442\u043d\u043e\u0439 \u0430\u0442\u043c\u043e\u0441\u0444\u0435\u0440\u043e\u0439 \u0438 \u0431\u043e\u043b\u0435\u0435 \u0441\u0442\u0430\u0442\u0443\u0441\u043d\u043e\u0439 \u043f\u043e\u0434\u0430\u0447\u0435\u0439 \u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0441\u0442\u0432\u0430.",
-      reviewAddress: "\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439 \u0432\u043b\u0430\u0434\u0435\u043b\u044c\u0446\u0430 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438 \u00ab\u041a\u0438\u0442 \u041c\u0435\u0434\u00bb",
+      clientName: "Кит Мед",
+      clientPersonName: "Дмитрий Васильевич Клабуков",
+      clientPersonRole: "Владелец компании «Кит Мед»",
+      clientQuote: "В новом офисе было важно не только обеспечить функциональность и удобство для сотрудников, но и создать атмосферу уюта, которая подчеркивает статус компании.",
+      reviewAddress: "Комментарий владельца компании «Кит Мед»",
       reviewBody: [
-        "\u0412\u043b\u0430\u0434\u0435\u043b\u0435\u0446 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438 \u00ab\u041a\u0438\u0442 \u041c\u0435\u0434\u00bb \u0414\u043c\u0438\u0442\u0440\u0438\u0439 \u0412\u0430\u0441\u0438\u043b\u044c\u0435\u0432\u0438\u0447 \u041a\u043b\u0430\u0431\u0443\u043a\u043e\u0432 \u043e\u0442\u043c\u0435\u0442\u0438\u043b, \u0447\u0442\u043e \u043f\u0440\u0438 \u043f\u0435\u0440\u0435\u0435\u0437\u0434\u0435 \u0432 \u043d\u043e\u0432\u044b\u0439 \u043e\u0444\u0438\u0441 \u0434\u043b\u044f \u043a\u043e\u043c\u0430\u043d\u0434\u044b \u0431\u044b\u043b\u043e \u0432\u0430\u0436\u043d\u043e \u043d\u0435 \u0442\u043e\u043b\u044c\u043a\u043e \u043f\u043e\u043b\u0443\u0447\u0438\u0442\u044c \u0444\u0443\u043d\u043a\u0446\u0438\u043e\u043d\u0430\u043b\u044c\u043d\u043e\u0435 \u0438 \u0443\u0434\u043e\u0431\u043d\u043e\u0435 \u0440\u0430\u0431\u043e\u0447\u0435\u0435 \u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0441\u0442\u0432\u043e, \u043d\u043e \u0438 \u0441\u043e\u0437\u0434\u0430\u0442\u044c \u0431\u043e\u043b\u0435\u0435 \u0443\u044e\u0442\u043d\u0443\u044e \u0441\u0440\u0435\u0434\u0443, \u043a\u043e\u0442\u043e\u0440\u0430\u044f \u043f\u043e\u0434\u0447\u0435\u0440\u043a\u0438\u0432\u0430\u0435\u0442 \u0441\u0442\u0430\u0442\u0443\u0441 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438.",
-        "\u0418\u043c\u0435\u043d\u043d\u043e \u043f\u043e\u044d\u0442\u043e\u043c\u0443 \u043f\u0440\u043e\u0435\u043a\u0442 \u0431\u044b\u043b \u043e\u0440\u0438\u0435\u043d\u0442\u0438\u0440\u043e\u0432\u0430\u043d \u043d\u0435 \u0442\u043e\u043b\u044c\u043a\u043e \u043d\u0430 \u0440\u0430\u0431\u043e\u0447\u0443\u044e \u044d\u0444\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u043e\u0441\u0442\u044c, \u043d\u043e \u0438 \u043d\u0430 \u0441\u043e\u0437\u0434\u0430\u043d\u0438\u0435 \u0441\u0440\u0435\u0434\u044b \u0434\u043b\u044f \u0432\u0441\u0442\u0440\u0435\u0447, \u043e\u0431\u0443\u0447\u0435\u043d\u0438\u044f \u0438 \u043a\u043e\u043c\u0444\u043e\u0440\u0442\u043d\u043e\u0439 \u043f\u043e\u0432\u0441\u0435\u0434\u043d\u0435\u0432\u043d\u043e\u0439 \u0440\u0430\u0431\u043e\u0442\u044b \u0441\u043e\u0442\u0440\u0443\u0434\u043d\u0438\u043a\u043e\u0432 \u0438 \u0433\u043e\u0441\u0442\u0435\u0439 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438."
+        "Владелец компании «Кит Мед», Дмитрий Васильевич Клабуков, поделился своими впечатлениями от переезда компании в новый офис. Он подчеркнул, что при создании этого пространства ставилась задача не просто обеспечить функциональность и удобство для сотрудников, но и создать атмосферу уюта и подчеркнуть статусность компании.",
+        "Именно поэтому проект был ориентирован не только на рабочую эффективность, но и на создание среды для встреч, обучения и комфортной повседневной работы сотрудников и гостей компании."
       ]
     },
     align: {
@@ -248,6 +263,9 @@
       gallery: [createGalleryItem(image, alt, width, height)],
       ...buildPlaceholderMetrics(slug, index),
       summary: "Кейс проекта Gint-M. Страница находится в наполнении и будет дополнена фактами об объекте.",
+      descriptionLead: "Полный комплекс строительных, отделочных и инженерных работ на объекте.",
+      startDate: "",
+      endDate: "",
       about: [
         "Раздел «О проекте» подготовлен под финальное описание объекта, архитектурной задачи и ключевых решений по реализации."
       ],
@@ -267,7 +285,9 @@
       reviewPreviewWidth: 1241,
       reviewPreviewHeight: 1755,
       reviewAddress: "",
-      reviewBody: []
+      reviewBody: [],
+      clientPersonName: "",
+      clientPersonRole: ""
     }))
     .map((project) => ({
       ...project,
@@ -288,29 +308,74 @@
     );
   };
 
-  const getPhotoLabel = (count) => {
-    const mod100 = count % 100;
-    const mod10 = count % 10;
+  const createSeededRandom = (seedValue = "") => {
+    let seed = 2166136261;
 
-    if (mod100 >= 11 && mod100 <= 14) {
-      return "фотографий";
+    for (const character of String(seedValue)) {
+      seed ^= character.charCodeAt(0);
+      seed = Math.imul(seed, 16777619);
     }
 
-    if (mod10 === 1) {
-      return "фото";
+    return () => {
+      seed += 0x6D2B79F5;
+      let nextValue = seed;
+      nextValue = Math.imul(nextValue ^ (nextValue >>> 15), nextValue | 1);
+      nextValue ^= nextValue + Math.imul(nextValue ^ (nextValue >>> 7), nextValue | 61);
+      return ((nextValue ^ (nextValue >>> 14)) >>> 0) / 4294967296;
+    };
+  };
+
+  const shuffleGalleryItems = (items, random) => {
+    const shuffledItems = items.slice();
+
+    for (let index = shuffledItems.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(random() * (index + 1));
+      [shuffledItems[index], shuffledItems[swapIndex]] = [shuffledItems[swapIndex], shuffledItems[index]];
     }
 
-    if (mod10 >= 2 && mod10 <= 4) {
-      return "фотографии";
+    return shuffledItems;
+  };
+
+  const pickReviewPairImage = (items, random) => {
+    if (!Array.isArray(items) || items.length === 0) {
+      return null;
     }
 
-    return "фотографий";
+    const portraitCandidates = items
+      .map((item, index) => ({
+        index,
+        ratio: item.width && item.height ? item.width / item.height : 1
+      }))
+      .filter(({ ratio }) => Number.isFinite(ratio) && ratio <= 0.9);
+
+    if (portraitCandidates.length > 0) {
+      const selectedPortrait = portraitCandidates[Math.floor(random() * portraitCandidates.length)];
+      return items.splice(selectedPortrait.index, 1)[0];
+    }
+
+    let bestIndex = 0;
+    let bestScore = Number.NEGATIVE_INFINITY;
+
+    items.forEach((item, index) => {
+      const ratio = item.width && item.height ? item.width / item.height : 1;
+      const closenessToTallCard = -Math.abs(ratio - 0.68);
+      const softerLandscapeBonus = ratio < 1.2 ? 0.35 : 0;
+      const score = closenessToTallCard + softerLandscapeBonus + (random() * 0.05);
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestIndex = index;
+      }
+    });
+
+    return items.splice(bestIndex, 1)[0];
   };
 
   const createGalleryFigure = (item, index, projectTitle, { isHero = false } = {}) => {
     const figure = document.createElement("figure");
     const trigger = document.createElement("button");
     const image = document.createElement("img");
+    const resolvedIndex = Number.isInteger(item.galleryIndex) ? item.galleryIndex : index;
 
     figure.className = "project-case-stream-item";
 
@@ -320,20 +385,175 @@
 
     trigger.type = "button";
     trigger.className = "project-case-stream-trigger";
-    trigger.dataset.galleryIndex = String(index);
-    trigger.setAttribute("aria-label", `Открыть фото ${index + 1}`);
+    trigger.dataset.galleryIndex = String(resolvedIndex);
+    trigger.setAttribute("aria-label", `Открыть фото ${resolvedIndex + 1}`);
 
     image.className = "project-case-stream-image";
     image.src = item.src;
-    image.alt = item.alt || `${projectTitle} — фото ${index + 1}`;
+    image.alt = item.alt || `${projectTitle} — фото ${resolvedIndex + 1}`;
     image.width = item.width;
     image.height = item.height;
-    image.loading = isHero && index === 0 ? "eager" : "lazy";
+    image.loading = "eager";
     image.decoding = "async";
+    image.fetchPriority = isHero || resolvedIndex < 4 ? "high" : "auto";
 
     trigger.append(image);
     figure.append(trigger);
     return figure;
+  };
+
+  const applyGalleryVariant = (figure, variant = "half") => {
+    figure.classList.toggle("project-case-stream-item-full", variant === "full");
+    figure.classList.toggle("project-case-stream-item-review-pair", variant === "review");
+    return figure;
+  };
+
+  const defaultGalleryLayout = ["full", "pair", "full", "pair", "review"];
+
+  const buildSecondaryGalleryNodes = (
+    items,
+    projectTitle,
+    reviewNode = null,
+    layoutPattern = defaultGalleryLayout,
+    layoutOptions = {}
+  ) => {
+    const options = {
+      randomize: false,
+      continueAlternating: false,
+      preferPortraitReviewImage: false,
+      swapReviewPairWithQueueGalleryIndex: null,
+      seed: projectTitle,
+      ...layoutOptions
+    };
+    const nodes = [];
+    const workingItems = Array.isArray(items) ? items.slice() : [];
+    const random = createSeededRandom(options.seed || projectTitle);
+    let reviewPairItem = reviewNode && options.preferPortraitReviewImage
+      ? pickReviewPairImage(workingItems, random)
+      : null;
+    const queue = options.randomize ? shuffleGalleryItems(workingItems, random) : workingItems;
+
+    if (reviewPairItem && Number.isInteger(options.swapReviewPairWithQueueGalleryIndex)) {
+      const swapIndex = queue.findIndex((item) => item.galleryIndex === options.swapReviewPairWithQueueGalleryIndex);
+
+      if (swapIndex >= 0) {
+        const queuedSwapItem = queue[swapIndex];
+        queue[swapIndex] = reviewPairItem;
+        reviewPairItem = queuedSwapItem;
+      }
+    }
+    let cursor = 0;
+    let reviewInserted = false;
+    let lastMediaStep = null;
+
+    if (reviewNode) {
+      reviewNode.classList.remove("project-case-gallery-review-wide");
+    }
+
+    const pushFigure = (item, variant = "half") => {
+      const figure = createGalleryFigure(item, item.galleryIndex ?? 0, projectTitle);
+      nodes.push(applyGalleryVariant(figure, variant));
+      return true;
+    };
+
+    const pushImage = (variant = "half") => {
+      if (cursor >= queue.length) {
+        return false;
+      }
+
+      pushFigure(queue[cursor], variant);
+      cursor += 1;
+      return true;
+    };
+
+    const pushPair = () => {
+      if (cursor >= queue.length) {
+        return false;
+      }
+
+      if (queue.length - cursor === 1) {
+        return pushImage("full");
+      }
+
+      const pushedFirst = pushImage("half");
+      const pushedSecond = pushImage("half");
+      return pushedFirst || pushedSecond;
+    };
+
+    const pushReviewPair = () => {
+      if (!reviewNode || reviewInserted) {
+        return false;
+      }
+
+      if (reviewPairItem) {
+        pushFigure(reviewPairItem, "review");
+        reviewNode.classList.remove("project-case-gallery-review-wide");
+      } else if (!pushImage("review")) {
+        reviewNode.classList.add("project-case-gallery-review-wide");
+      } else {
+        reviewNode.classList.remove("project-case-gallery-review-wide");
+      }
+
+      nodes.push(reviewNode);
+      reviewInserted = true;
+      return true;
+    };
+
+    const applyStep = (step) => {
+      switch (step) {
+        case "full":
+          if (pushImage("full")) {
+            lastMediaStep = "full";
+          }
+          break;
+        case "pair":
+          if (pushPair()) {
+            lastMediaStep = "pair";
+          }
+          break;
+        case "review":
+          if (reviewNode) {
+            pushReviewPair();
+          } else if (pushPair()) {
+            lastMediaStep = "pair";
+          }
+          break;
+        default:
+          break;
+      }
+    };
+
+    (Array.isArray(layoutPattern) ? layoutPattern : defaultGalleryLayout).forEach((step) => {
+      applyStep(step);
+    });
+
+    if (options.continueAlternating) {
+      let nextStep = lastMediaStep === "pair" ? "full" : "pair";
+
+      while (cursor < queue.length) {
+        const pushed = nextStep === "pair"
+          ? pushPair()
+          : pushImage("full");
+
+        if (!pushed) {
+          break;
+        }
+
+        lastMediaStep = nextStep;
+        nextStep = nextStep === "pair" ? "full" : "pair";
+      }
+    } else {
+      while (cursor < queue.length) {
+        pushPair();
+      }
+    }
+
+    if (reviewNode && !reviewInserted) {
+      reviewNode.classList.add("project-case-gallery-review-wide");
+      nodes.push(reviewNode);
+    }
+
+    return nodes;
   };
 
   const params = new URLSearchParams(window.location.search);
@@ -353,13 +573,22 @@
   }
 
   const metaDescription = document.querySelector('meta[name="description"]');
-  const galleryCount = document.getElementById("project-case-gallery-count");
+  const galleryHero = document.getElementById("project-case-gallery-hero");
+  const galleryGridSection = document.getElementById("project-case-gallery-grid-section");
+  const galleryReview = document.getElementById("project-case-gallery-review");
   const galleryStream = document.getElementById("project-case-gallery-stream");
-  const clientSection = document.getElementById("project-case-client-section");
+  const descriptionLead = document.getElementById("project-case-description-lead");
+  const yearBadge = document.getElementById("project-case-year");
+  const dateStartCard = document.getElementById("project-case-date-start-card");
+  const dateStartLabel = document.getElementById("project-case-date-start-label");
+  const dateStartValue = document.getElementById("project-case-date-start");
+  const dateEndCard = document.getElementById("project-case-date-end-card");
+  const dateEndValue = document.getElementById("project-case-date-end");
   const clientCard = document.getElementById("project-case-client-card");
   const clientBrand = document.getElementById("project-case-client-brand");
   const clientLogo = document.getElementById("project-client-logo");
   const clientName = document.getElementById("project-client-name");
+  const clientRole = document.getElementById("project-client-role");
   const clientQuoteCopy = document.getElementById("project-client-quote");
   const clientReadMore = document.getElementById("project-client-read-more");
   const nextTrack = document.getElementById("project-case-next-track");
@@ -369,8 +598,6 @@
   const galleryBackdrop = document.getElementById("project-gallery-backdrop");
   const galleryClose = document.getElementById("project-gallery-close");
   const galleryLightboxImage = document.getElementById("project-gallery-lightbox-image");
-  const galleryLightboxTitle = document.getElementById("project-gallery-lightbox-title");
-  const galleryLightboxCounter = document.getElementById("project-gallery-lightbox-counter");
   const galleryLightboxPrev = document.getElementById("project-gallery-lightbox-prev");
   const galleryLightboxNext = document.getElementById("project-gallery-lightbox-next");
   const reviewModal = document.getElementById("project-client-review-modal");
@@ -384,7 +611,10 @@
   document.title = `ГИНТ-М — ${project.title}`;
 
   if (metaDescription) {
-    metaDescription.setAttribute("content", `Проект ГИНТ-М — ${project.title}.`);
+    metaDescription.setAttribute(
+      "content",
+      `Проект ГИНТ-М — ${project.title}. ${project.descriptionLead || project.summary || project.workScope || ""}`.trim()
+    );
   }
 
   const setText = (id, value) => {
@@ -403,24 +633,45 @@
     document.body.classList.toggle("modal-open", hasOpenModal);
   };
 
-  setText("project-case-breadcrumb-current", project.title);
   setText("project-case-title", project.title);
-  setText("project-case-summary", project.summary);
-  setText("project-case-metric-workscope", project.workScope);
-  setText("project-case-metric-duration", project.duration);
-  setText("project-case-metric-area", project.area);
-  setText("project-case-metric-year", project.year);
-  setText("project-case-metric-address", project.address);
+  setText("project-case-area", project.area);
+  setText("project-case-address", project.address);
 
-  renderParagraphs(document.getElementById("project-about-copy"), project.about);
-  renderParagraphs(document.getElementById("project-role-copy"), project.role);
+  if (yearBadge) {
+    yearBadge.hidden = !project.year;
+    yearBadge.textContent = project.year || "";
+  }
 
   const galleryItems = Array.isArray(project.gallery) && project.gallery.length > 0
     ? project.gallery
     : [createGalleryItem(project.image, project.alt, project.width, project.height)];
+  const galleryRenderItems = galleryItems.map((item, index) => ({
+    ...item,
+    galleryIndex: index
+  }));
+  const clientFeatureItem = galleryItems[Math.min(1, galleryItems.length - 1)] || galleryItems[0];
 
-  if (galleryCount) {
-    galleryCount.textContent = `${galleryItems.length} ${getPhotoLabel(galleryItems.length)}`;
+  if (descriptionLead) {
+    descriptionLead.textContent = project.descriptionLead || project.workScope || project.summary || "";
+  }
+
+  if (dateStartLabel && dateStartValue) {
+    if (project.startDate) {
+      dateStartLabel.textContent = "Начало";
+      dateStartValue.textContent = project.startDate;
+    } else {
+      dateStartLabel.textContent = "Срок реализации";
+      dateStartValue.textContent = project.duration || "—";
+    }
+  }
+
+  if (dateEndCard && dateEndValue) {
+    if (project.endDate) {
+      dateEndCard.hidden = false;
+      dateEndValue.textContent = project.endDate;
+    } else {
+      dateEndCard.hidden = true;
+    }
   }
 
   let activeLightboxIndex = 0;
@@ -429,9 +680,9 @@
 
   const hasLightbox = Boolean(
     galleryModal
+    && galleryBackdrop
+    && galleryClose
     && galleryLightboxImage
-    && galleryLightboxTitle
-    && galleryLightboxCounter
     && galleryLightboxPrev
     && galleryLightboxNext
   );
@@ -456,15 +707,12 @@
 
     activeLightboxIndex = Math.min(Math.max(index, 0), galleryItems.length - 1);
     const activeItem = galleryItems[activeLightboxIndex];
-    const imageTitle = activeItem.alt || `${project.title} — фото ${activeLightboxIndex + 1}`;
     const hasMultipleImages = galleryItems.length > 1;
 
     galleryLightboxImage.src = activeItem.src;
-    galleryLightboxImage.alt = imageTitle;
+    galleryLightboxImage.alt = activeItem.alt || "";
     galleryLightboxImage.width = activeItem.width;
     galleryLightboxImage.height = activeItem.height;
-    galleryLightboxTitle.textContent = imageTitle;
-    galleryLightboxCounter.textContent = `${activeLightboxIndex + 1} / ${galleryItems.length}`;
     galleryLightboxPrev.hidden = !hasMultipleImages;
     galleryLightboxNext.hidden = !hasMultipleImages;
     galleryLightboxPrev.disabled = !hasMultipleImages || activeLightboxIndex === 0;
@@ -510,23 +758,10 @@
     syncLightbox(nextIndex);
   };
 
-  if (galleryStream) {
-    const heroFigure = createGalleryFigure(galleryItems[0], 0, project.title, { isHero: true });
+  if (galleryHero) {
+    galleryHero.replaceChildren(createGalleryFigure(galleryRenderItems[0], 0, project.title, { isHero: true }));
 
-    if (galleryItems.length === 1) {
-      galleryStream.replaceChildren(heroFigure);
-    } else {
-      const masonry = document.createElement("div");
-      masonry.className = "project-case-gallery-masonry";
-      const masonryFigures = galleryItems.slice(1).map((item, index) => (
-        createGalleryFigure(item, index + 1, project.title)
-      ));
-
-      masonry.append(...masonryFigures);
-      galleryStream.replaceChildren(heroFigure, masonry);
-    }
-
-    galleryStream.querySelectorAll(".project-case-stream-trigger").forEach((trigger) => {
+    galleryHero.querySelectorAll(".project-case-stream-trigger").forEach((trigger) => {
       trigger.addEventListener("click", () => {
         openLightbox(Number.parseInt(trigger.dataset.galleryIndex || "0", 10), trigger);
       });
@@ -552,18 +787,36 @@
     ? [project.clientQuote.trim()]
     : [];
   const reviewExcerpt = reviewParagraphs.length > 0
-    ? reviewParagraphs.slice(0, Math.min(2, reviewParagraphs.length))
+    ? reviewParagraphs.slice(0, 1)
     : fallbackReviewExcerpt;
   const hasClientReview = reviewExcerpt.length > 0;
   const hasClientLogo = Boolean(project.clientLogoSrc && project.clientLogoSrc.trim());
   const hasReviewPreview = Boolean(project.reviewPreviewImage && project.reviewPreviewImage.trim());
+  const reviewPreviewSource = hasReviewPreview ? project.reviewPreviewImage : (clientFeatureItem?.src || "");
+  const reviewPreviewAlt = hasReviewPreview
+    ? (project.reviewPreviewAlt || `Скан рекомендательного письма ${project.clientName || "клиента"}`)
+    : (clientFeatureItem?.alt || `${project.title} — отзыв заказчика`);
+  const reviewPreviewWidth = hasReviewPreview
+    ? (project.reviewPreviewWidth || 1241)
+    : (clientFeatureItem?.width || 1600);
+  const reviewPreviewHeight = hasReviewPreview
+    ? (project.reviewPreviewHeight || 1755)
+    : (clientFeatureItem?.height || 1067);
+  const hasReviewMedia = Boolean(reviewPreviewSource);
+  const displayClientName = project.clientPersonName || project.clientName;
+  const displayClientRole = project.clientPersonRole || (project.clientPersonName ? project.clientName : "");
   const hasFullClientReview = Boolean(
     hasReviewModal
-    && reviewParagraphs.length > 0
+    && (reviewParagraphs.length > reviewExcerpt.length || hasReviewPreview)
   );
 
-  if (clientSection) {
-    clientSection.hidden = !hasClientReview;
+  if (galleryGridSection) {
+    galleryGridSection.hidden = galleryItems.length <= 1 && !hasClientReview;
+  }
+
+  if (galleryReview) {
+    galleryReview.hidden = !hasClientReview;
+    galleryReview.classList.remove("project-case-gallery-review-wide");
   }
 
   if (clientCard) {
@@ -571,13 +824,19 @@
   }
 
   if (clientName) {
-    clientName.hidden = !project.clientName;
-    clientName.textContent = project.clientName || "";
+    clientName.hidden = !displayClientName;
+    clientName.textContent = displayClientName || "";
+  }
+
+  if (clientRole) {
+    clientRole.hidden = !displayClientRole;
+    clientRole.textContent = displayClientRole || "";
   }
 
   if (clientQuoteCopy) {
     renderParagraphs(clientQuoteCopy, reviewExcerpt);
   }
+
   if (clientBrand) {
     clientBrand.hidden = !hasClientLogo;
   }
@@ -600,18 +859,19 @@
 
   if (hasReviewModal) {
     if (reviewPreview) {
-      reviewPreview.hidden = !hasReviewPreview;
+      reviewPreview.hidden = !hasReviewMedia;
+      reviewPreview.dataset.reviewMediaKind = hasReviewPreview ? "scan" : "photo";
       reviewPreview.setAttribute(
         "aria-label",
-        project.reviewPreviewAlt || `\u0421\u043a\u0430\u043d \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0442\u0435\u043b\u044c\u043d\u043e\u0433\u043e \u043f\u0438\u0441\u044c\u043c\u0430 ${project.clientName || "\u043a\u043b\u0438\u0435\u043d\u0442\u0430"}`
+        reviewPreviewAlt
       );
     }
 
-    if (hasReviewPreview) {
-      reviewImage.src = project.reviewPreviewImage;
-      reviewImage.alt = project.reviewPreviewAlt || `\u0421\u043a\u0430\u043d \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0442\u0435\u043b\u044c\u043d\u043e\u0433\u043e \u043f\u0438\u0441\u044c\u043c\u0430 ${project.clientName || "\u043a\u043b\u0438\u0435\u043d\u0442\u0430"}`;
-      reviewImage.width = project.reviewPreviewWidth || 1241;
-      reviewImage.height = project.reviewPreviewHeight || 1755;
+    if (hasReviewMedia) {
+      reviewImage.src = reviewPreviewSource;
+      reviewImage.alt = reviewPreviewAlt;
+      reviewImage.width = reviewPreviewWidth;
+      reviewImage.height = reviewPreviewHeight;
     } else {
       reviewImage.src = transparentPixel;
       reviewImage.alt = "";
@@ -620,6 +880,25 @@
     reviewAddress.hidden = !project.reviewAddress;
     reviewAddress.textContent = project.reviewAddress || "";
     renderParagraphs(reviewCopy, reviewParagraphs);
+  }
+
+  if (galleryStream) {
+    const secondaryGalleryItems = galleryRenderItems.slice(1);
+    const galleryNodes = buildSecondaryGalleryNodes(
+      secondaryGalleryItems,
+      project.title,
+      hasClientReview && galleryReview ? galleryReview : null,
+      project.galleryLayout,
+      project.galleryLayoutOptions
+    );
+
+    galleryStream.replaceChildren(...galleryNodes);
+
+    galleryStream.querySelectorAll(".project-case-stream-trigger").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        openLightbox(Number.parseInt(trigger.dataset.galleryIndex || "0", 10), trigger);
+      });
+    });
   }
 
   const openReviewModal = (trigger = null) => {
