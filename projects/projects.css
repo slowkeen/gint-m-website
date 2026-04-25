@@ -42,12 +42,63 @@
 
 .projects-page-head {
   display: grid;
+  gap: clamp(20px, 2.6vw, 30px);
+}
+
+.projects-page-controls {
+  display: grid;
+  gap: 0;
+}
+
+.projects-page-filters {
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+}
+
+.projects-page-filter {
+  appearance: none;
+  border: 1px solid rgba(17, 19, 26, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: rgba(17, 19, 26, 0.74);
+  padding: 11px 18px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 220ms ease,
+    background-color 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.projects-page-filter:hover,
+.projects-page-filter:focus-visible {
+  border-color: rgba(23, 46, 110, 0.18);
+  color: #172E6E;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+.projects-page-filter.is-active {
+  border-color: #172E6E;
+  background: #172E6E;
+  color: #ffffff;
+  box-shadow: 0 18px 34px rgba(23, 46, 110, 0.18);
 }
 
 .projects-page-title {
   margin: 0;
   max-width: none;
+  font-size: clamp(24px, 3.2vw, 48px);
+  line-height: 0.98;
+  letter-spacing: 0.01em;
 }
 
 .projects-page-breadcrumbs {
@@ -74,6 +125,24 @@
 
 .projects-page .project-photo-link {
   cursor: pointer;
+}
+
+.projects-page-empty {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: clamp(28px, 4vw, 48px);
+  border: 1px dashed rgba(17, 19, 26, 0.16);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(248, 250, 252, 0.84), rgba(255, 255, 255, 0.96));
+  color: rgba(17, 19, 26, 0.62);
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
 }
 
 .projects-page-next {
@@ -167,6 +236,29 @@
   .projects-page-shell,
   .projects-page-next-shell {
     gap: 24px;
+  }
+
+  .projects-page-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .projects-page-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .projects-page-filter {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .projects-page-empty {
+    min-height: 180px;
+    padding: 24px 18px;
+    border-radius: 22px;
+    font-size: clamp(18px, 7vw, 24px);
   }
 
   .projects-page-next-grid {

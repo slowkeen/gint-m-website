@@ -10,7 +10,7 @@
   />
   <link rel="icon" href="../logo/Frame%20109.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../styles.css?v=20260424-footer-2" />
-  <link rel="stylesheet" href="./projects.css?v=20260415-projects-2" />
+  <link rel="stylesheet" href="./projects.css?v=20260425-project-filters-1" />
 </head>
 <body class="page-font-sf-pro projects-page">
   <div data-site-partial="../partials/header.ru.html"></div>
@@ -26,6 +26,16 @@
 
         <div class="projects-page-head">
           <h1 class="projects-title projects-page-title" id="projects-page-title">Проекты Gint-M</h1>
+          <div class="projects-page-controls">
+            <nav class="projects-page-filters" aria-label="Фильтр проектов">
+              <button class="projects-page-filter is-active" type="button" data-project-filter="all" aria-pressed="true" aria-controls="projects-page-masonry">Все</button>
+              <button class="projects-page-filter" type="button" data-project-filter="office" aria-pressed="false" aria-controls="projects-page-masonry">Офисные</button>
+              <button class="projects-page-filter" type="button" data-project-filter="sports" aria-pressed="false" aria-controls="projects-page-masonry">Спортивные</button>
+              <button class="projects-page-filter" type="button" data-project-filter="capital-construction" aria-pressed="false" aria-controls="projects-page-masonry">Капитальное строительство</button>
+              <button class="projects-page-filter" type="button" data-project-filter="retail" aria-pressed="false" aria-controls="projects-page-masonry">Торговая недвижимость</button>
+              <button class="projects-page-filter" type="button" data-project-filter="residential" aria-pressed="false" aria-controls="projects-page-masonry">Жилая недвижимость</button>
+            </nav>
+          </div>
         </div>
 
         <div class="projects-masonry projects-page-masonry" aria-label="Портфолио проектов Gint-M">
@@ -52,6 +62,9 @@
           <article class="project-photo-card project-photo-card-wide" id="project-s7-airlines"><a class="project-photo-link" href="./project.html?slug=s7-airlines"><div class="project-photo project-photo-hh"><img class="project-photo-media" src="../photos/s7-airlines/img_1711.jpg" alt="S7 Airlines" width="1800" height="1200" loading="lazy" decoding="async" /></div><div class="project-photo-caption"><p class="project-photo-name">S7 Airlines</p></div></a></article>
           <article class="project-photo-card" id="project-philip-morris"><a class="project-photo-link" href="./project.html?slug=philip-morris"><div class="project-photo project-photo-bank"><img class="project-photo-media" src="../photos/Philip morris/img_5954.jpg" alt="Philip Morris" width="2048" height="1319" loading="lazy" decoding="async" /></div><div class="project-photo-caption"><p class="project-photo-name">Philip Morris</p></div></a></article>
         </div>
+        <div class="projects-page-empty" data-projects-empty hidden aria-live="polite">
+          По выбранному фильтру пока нет проектов.
+        </div>
       </div>
     </section>
 
@@ -70,7 +83,7 @@
 
   <div data-site-partial="../partials/footer.ru.html"></div>
   <script src="../scripts/shared-partials.js?v=20260416-partials-6"></script>
-  <script src="./projects.js?v=20260423-project-years-2"></script>
+  <script src="./projects.js?v=20260425-project-filters-1"></script>
 </body>
 </html>
 

@@ -85,6 +85,9 @@
 .project-case-title {
   margin: 0;
   max-width: none;
+  font-size: clamp(24px, 3.2vw, 48px);
+  line-height: 0.98;
+  letter-spacing: 0.01em;
 }
 
 .project-case-summary {

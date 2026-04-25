@@ -232,9 +232,46 @@
       ["samsung", "2018"]
     ]);
     const projectSortOrder = new Map(orderedProjectSlugs.map((slug, index) => [slug, index]));
+    const projectFilterButtons = Array.from(document.querySelectorAll("[data-project-filter]"));
+    const projectEmptyState = document.querySelector("[data-projects-empty]");
+    const projectCategoryBySlug = new Map([
+      ["kit-med", ["office"]],
+      ["skolkovo-park", ["office"]],
+      ["avito-spb", ["office"]],
+      ["winline", ["office"]],
+      ["samsung", ["office"]],
+      ["skolkovo-vet", ["capital-construction"]],
+      ["natsproektstroy", ["office"]],
+      ["restaurant-skolkovo-park", ["retail"]],
+      ["ab-development", ["office"]],
+      ["krylatskie-holmy", ["office"]],
+      ["align", ["office"]],
+      ["avito-spb-2021", ["office"]],
+      ["avito-cks", ["office"]],
+      ["international-bank", ["office"]],
+      ["avito-spb-2020", ["office"]],
+      ["snigeri-school", ["capital-construction"]],
+      ["align-technology", ["office"]],
+      ["bnp-paribas", ["office"]],
+      ["dell", ["office"]],
+      ["avito-moscow", ["office"]],
+      ["s7-airlines", ["office"]],
+      ["philip-morris", ["office"]]
+    ]);
+    const validProjectFilters = new Set(projectFilterButtons.map((button) => button.dataset.projectFilter).filter(Boolean));
 
     let projectMasonryFrame = null;
     let lastProjectMasonryWidth = 0;
+    let activeProjectFilter = "all";
+
+    projectsMasonry.id = projectsMasonry.id || "projects-page-masonry";
+
+    const getProjectFilterLabel = (filterId) => {
+      const button = projectFilterButtons.find((item) => item.dataset.projectFilter === filterId);
+      return button?.textContent?.trim() || "";
+    };
+
+    const getSafeProjectFilter = (filterId) => (validProjectFilters.has(filterId) ? filterId : "all");
 
     const getProjectSlug = (card) => {
       const link = card.querySelector(".project-photo-link");
@@ -302,10 +339,12 @@
       const orderedCards = projectCards
         .map((card, index) => {
           const slug = getProjectSlug(card);
+          const categories = projectCategoryBySlug.get(slug) || [];
           const year = projectYearBySlug.get(slug) || "";
           const yearValue = Number.parseInt(year, 10) || 0;
 
           ensureProjectYearBadge(card, year);
+          card.dataset.projectCategories = categories.join(" ");
 
           return {
             card,
@@ -450,6 +489,92 @@
       });
     };
 
+    const updateProjectFilterButtons = () => {
+      projectFilterButtons.forEach((button) => {
+        const isActive = button.dataset.projectFilter === activeProjectFilter;
+
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+    };
+
+    const updateProjectEmptyState = (visibleCount) => {
+      if (!projectEmptyState) {
+        return;
+      }
+
+      const isEmpty = visibleCount === 0;
+      const filterLabel = getProjectFilterLabel(activeProjectFilter);
+
+      projectEmptyState.hidden = !isEmpty;
+      projectEmptyState.textContent = isEmpty
+        ? `По фильтру «${filterLabel || "Все"}» пока нет проектов.`
+        : "";
+    };
+
+    const syncProjectFilterUrl = () => {
+      if (!window.history || typeof window.history.replaceState !== "function") {
+        return;
+      }
+
+      try {
+        const url = new URL(window.location.href);
+
+        if (activeProjectFilter === "all") {
+          url.searchParams.delete("category");
+        } else {
+          url.searchParams.set("category", activeProjectFilter);
+        }
+
+        window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+      } catch {
+        // Ignore malformed URLs.
+      }
+    };
+
+    const applyProjectFilter = (nextFilter, { updateHistory = true } = {}) => {
+      activeProjectFilter = getSafeProjectFilter(nextFilter);
+
+      let visibleCount = 0;
+
+      projectCards.forEach((card) => {
+        const categories = card.dataset.projectCategories
+          ? card.dataset.projectCategories.split(/\s+/).filter(Boolean)
+          : [];
+        const isVisible = activeProjectFilter === "all" || categories.includes(activeProjectFilter);
+
+        card.hidden = !isVisible;
+        card.setAttribute("aria-hidden", String(!isVisible));
+
+        if (isVisible) {
+          visibleCount += 1;
+        }
+      });
+
+      updateProjectFilterButtons();
+      updateProjectEmptyState(visibleCount);
+      requestProjectMasonryLayout();
+
+      if (updateHistory) {
+        syncProjectFilterUrl();
+      }
+    };
+
+    const resolveInitialProjectFilter = () => {
+      try {
+        const url = new URL(window.location.href);
+        return getSafeProjectFilter(url.searchParams.get("category") || "all");
+      } catch {
+        return "all";
+      }
+    };
+
+    projectFilterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        applyProjectFilter(button.dataset.projectFilter || "all");
+      });
+    });
+
     projectCards.forEach((card) => {
       const media = card.querySelector(".project-photo-media");
 
@@ -488,7 +613,7 @@
 
     window.addEventListener("load", requestProjectMasonryLayout);
     window.addEventListener("resize", requestProjectMasonryLayout);
-    requestProjectMasonryLayout();
+    applyProjectFilter(resolveInitialProjectFilter(), { updateHistory: false });
   };
 
   const scrollToHashTarget = () => {
