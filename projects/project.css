@@ -2119,7 +2119,7 @@
 }
 
 .project-case-page .project-case-description-layout.project-case-description-layout-has-award {
-  grid-template-columns: minmax(0, 1fr) minmax(210px, 268px);
+  grid-template-columns: minmax(0, 1fr) minmax(188px, 228px);
 }
 
 .project-case-page .project-case-description-main {
@@ -2140,7 +2140,9 @@
 }
 
 .project-case-page .project-case-summary {
-  max-width: 47ch;
+  max-width: 60ch;
+  font-size: clamp(15px, 0.92vw, 17px);
+  line-height: 1.58;
 }
 
 .project-case-page .project-case-intro-read-more {
@@ -2164,6 +2166,22 @@
   height: 100%;
   grid-template-rows: minmax(0, 1fr) auto;
   align-content: stretch;
+  padding: clamp(14px, 1.2vw, 18px);
+}
+
+.project-case-page .project-case-award-media {
+  display: grid;
+  place-items: center;
+}
+
+.project-case-page .project-case-award-image {
+  width: 82%;
+  max-width: 178px;
+  margin: 0 auto;
+}
+
+.project-case-page .project-case-award-title {
+  font-size: clamp(12px, 0.82vw, 14px);
 }
 
 @media (max-width: 1180px) {
