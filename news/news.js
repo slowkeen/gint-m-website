@@ -37,7 +37,10 @@
 
   const initSharedHeader = () => {
     const heroHeader = document.querySelector(".hero-top");
-    const hasPageHero = Boolean(document.querySelector(".news-page-hero"));
+    const hasPageHero = (
+      Boolean(document.querySelector(".news-page-hero"))
+      && !document.body.classList.contains("news-article-page")
+    );
 
     if (!heroHeader) {
       return;
