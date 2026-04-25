@@ -84,6 +84,7 @@
 
   const initSharedHeader = () => {
     const heroHeader = document.querySelector(".hero-top");
+    const hasPageHero = Boolean(document.querySelector(".about-hero-block"));
 
     if (!heroHeader) {
       return null;
@@ -161,7 +162,7 @@
     };
 
     const updateStickyHeader = () => {
-      const isSticky = window.scrollY > 56;
+      const isSticky = !hasPageHero || window.scrollY > 56;
 
       if (isSticky === wasStickyState) {
         return;
