@@ -129,8 +129,9 @@
     document.querySelectorAll('a[href$="/news/"]').forEach((link) => {
       try {
         const url = new URL(link.href, window.location.href);
+        const linkPath = normalizePath(url.pathname);
 
-        if (normalizePath(url.pathname) === currentPath) {
+        if (currentPath === linkPath || currentPath.startsWith(linkPath)) {
           link.setAttribute("aria-current", "page");
         }
       } catch {

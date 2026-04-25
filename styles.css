@@ -5768,6 +5768,10 @@ tr:last-child td {
     border-color 220ms var(--ease-out-soft);
 }
 
+.trust-journal-card-news {
+  border-color: transparent;
+}
+
 .trust-journal-card-link:focus-visible {
   outline: none;
 }
