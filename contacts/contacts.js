@@ -1,5 +1,6 @@
 (() => {
   const heroMenuMediaQuery = window.matchMedia("(max-width: 980px)");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const normalizePath = (value) => {
     if (!value) {
@@ -186,8 +187,52 @@
     });
   };
 
+  const initContactsMotion = () => {
+    const motionTargets = [
+      ...document.querySelectorAll(".contacts-page-breadcrumbs, .contacts-page-title"),
+      ...document.querySelectorAll(".contacts-page-card"),
+      ...document.querySelectorAll(".contacts-page-map-head, .contacts-page-map-frame"),
+      ...document.querySelectorAll(".page-next-title, .page-next-link")
+    ];
+
+    if (motionTargets.length === 0) {
+      return;
+    }
+
+    motionTargets.forEach((element, index) => {
+      element.classList.add("contacts-motion-reveal");
+      element.style.setProperty("--contacts-motion-delay", `${Math.min(index * 45, 220)}ms`);
+    });
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      motionTargets.forEach((element) => {
+        element.classList.add("is-visible");
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.16,
+      rootMargin: "0px 0px -8% 0px"
+    });
+
+    motionTargets.forEach((element) => {
+      observer.observe(element);
+    });
+  };
+
   const init = () => {
     initSharedHeader();
+    initContactsMotion();
     scrollToHashTarget();
   };
 

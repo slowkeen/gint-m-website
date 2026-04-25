@@ -1212,6 +1212,50 @@
     nextTrack.replaceChildren(...nextCards);
   }
 
+  const initProjectCaseMotion = () => {
+    const motionTargets = [
+      ...document.querySelectorAll(".project-case-topline, .project-case-headline, .project-case-description-panel"),
+      ...document.querySelectorAll("#project-case-award:not([hidden]) .project-case-award-card"),
+      ...document.querySelectorAll(".project-case-gallery-stream-hero .project-case-stream-item"),
+      ...document.querySelectorAll("#project-case-gallery-stream .project-case-stream-item"),
+      ...document.querySelectorAll(".project-case-client-story, .project-case-next-card")
+    ];
+
+    if (motionTargets.length === 0) {
+      return;
+    }
+
+    motionTargets.forEach((element, index) => {
+      element.classList.add("project-case-reveal");
+      element.style.setProperty("--project-case-reveal-delay", `${Math.min(index * 42, 252)}ms`);
+    });
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      motionTargets.forEach((element) => {
+        element.classList.add("is-visible");
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.16,
+      rootMargin: "0px 0px -8% 0px"
+    });
+
+    motionTargets.forEach((element) => {
+      observer.observe(element);
+    });
+  };
+
   const getNextScrollStep = () => {
     if (!nextTrack) {
       return 0;
@@ -1265,5 +1309,6 @@
   nextTrack?.addEventListener("scroll", updateNextControls, { passive: true });
   window.addEventListener("resize", updateNextControls);
   window.addEventListener("load", updateNextControls);
+  initProjectCaseMotion();
   window.requestAnimationFrame(updateNextControls);
 })();

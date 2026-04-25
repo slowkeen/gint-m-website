@@ -483,6 +483,48 @@
       });
     };
 
+    const initProjectsPageMotion = () => {
+      const motionTargets = [
+        ...document.querySelectorAll(".projects-page-breadcrumbs, .projects-page-title, .projects-page-controls"),
+        ...projectCards,
+        ...document.querySelectorAll(".projects-page-next-title, .projects-page-next-link")
+      ];
+
+      if (motionTargets.length === 0) {
+        return;
+      }
+
+      motionTargets.forEach((element, index) => {
+        element.classList.add("projects-page-reveal");
+        element.style.setProperty("--projects-page-reveal-delay", `${Math.min(index * 35, 210)}ms`);
+      });
+
+      if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        motionTargets.forEach((element) => {
+          element.classList.add("is-visible");
+        });
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      }, {
+        threshold: 0.16,
+        rootMargin: "0px 0px -8% 0px"
+      });
+
+      motionTargets.forEach((element) => {
+        observer.observe(element);
+      });
+    };
+
     const updateProjectFilterButtons = () => {
       projectFilterButtons.forEach((button) => {
         const isActive = button.dataset.projectFilter === activeProjectFilter;
@@ -587,6 +629,7 @@
     window.addEventListener("load", requestProjectMasonryLayout);
     window.addEventListener("resize", requestProjectMasonryLayout);
     applyProjectFilter(resolveInitialProjectFilter(), { updateHistory: false });
+    initProjectsPageMotion();
   };
 
   const scrollToHashTarget = () => {

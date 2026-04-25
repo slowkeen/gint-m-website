@@ -198,8 +198,57 @@
     });
   };
 
+  const initNewsMotion = () => {
+    const motionTargets = document.body.classList.contains("news-article-page")
+      ? [
+        ...document.querySelectorAll(".news-page-breadcrumbs, .news-article-title, .news-article-lead"),
+        ...document.querySelectorAll(".news-article-cover .news-article-figure"),
+        ...document.querySelectorAll(".news-article-block, .news-article-back .trust-journal-link")
+      ]
+      : [
+        ...document.querySelectorAll(".news-page-breadcrumbs, .news-page-title"),
+        ...document.querySelectorAll(".news-feed-card"),
+        ...document.querySelectorAll(".page-next-title, .page-next-link")
+      ];
+
+    if (motionTargets.length === 0) {
+      return;
+    }
+
+    motionTargets.forEach((element, index) => {
+      element.classList.add("news-motion-reveal");
+      element.style.setProperty("--news-motion-delay", `${Math.min(index * 40, 240)}ms`);
+    });
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      motionTargets.forEach((element) => {
+        element.classList.add("is-visible");
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.16,
+      rootMargin: "0px 0px -8% 0px"
+    });
+
+    motionTargets.forEach((element) => {
+      observer.observe(element);
+    });
+  };
+
   const init = () => {
     initSharedHeader();
+    initNewsMotion();
     scrollToHashTarget();
   };
 
