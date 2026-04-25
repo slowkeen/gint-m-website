@@ -2362,9 +2362,6 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
 
 .about-overview-intro-page .about-overview-title {
   max-width: none;
-  font-size: clamp(40px, 5vw, 72px);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
 }
 
 .about-overview-intro-page .about-overview-lead {
@@ -2374,7 +2371,7 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
 }
 
 .about-overview-story {
-  gap: clamp(24px, 3vw, 40px);
+  gap: clamp(18px, 2vw, 28px);
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -2384,17 +2381,18 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
 
 .about-overview-story .about-overview-points-head {
   gap: 14px;
-  max-width: 36ch;
+  max-width: 48ch;
 }
 
 .about-overview-story .about-overview-points-title {
+  max-width: 15ch;
   font-size: clamp(28px, 2.6vw, 42px);
   line-height: 1.02;
 }
 
 .about-overview-story-lead {
   margin: 0;
-  max-width: 44ch;
+  max-width: 50ch;
   color: var(--text-muted-strong);
   font-size: clamp(16px, 1vw, 18px);
   line-height: 1.56;
@@ -2455,10 +2453,6 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
 @media (max-width: 767px) {
   .about-page-main {
     padding-top: clamp(92px, 16vw, 108px);
-  }
-
-  .about-overview-intro-page .about-overview-title {
-    font-size: clamp(32px, 8vw, 44px);
   }
 
   .about-overview-intro-page .about-overview-lead {
