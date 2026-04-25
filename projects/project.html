@@ -8,7 +8,7 @@
   <link rel="icon" href="../logo/Frame%20109.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../styles.css?v=20260424-footer-2" />
   <link rel="stylesheet" href="./projects.css?v=20260415-projects-2" />
-  <link rel="stylesheet" href="./project.css?v=20260425-project-26" />
+  <link rel="stylesheet" href="./project.css?v=20260425-project-27" />
 </head>
 <body class="page-font-sf-pro projects-page project-case-page">
   <div data-site-partial="../partials/header.ru.html"></div>
@@ -19,11 +19,16 @@
         <div class="project-case-headline">
           <h1 class="projects-title project-case-title" id="project-case-title">Проект</h1>
           <p class="project-case-year" id="project-case-year">—</p>
+          <div class="project-case-headline-copy" id="project-case-headline-copy" hidden>
+            <p class="project-case-summary" id="project-case-summary" hidden>Краткое описание проекта.</p>
+            <button class="testimonial-read-more project-case-intro-read-more" id="project-case-summary-read-more" type="button" hidden>Читать полностью</button>
+          </div>
         </div>
         <div class="project-case-description-panel">
           <p class="project-case-description-lead" id="project-case-description-lead">Описание проекта.</p>
 
-          <div class="project-case-description-grid">
+          <div class="project-case-description-layout" id="project-case-description-layout">
+            <div class="project-case-description-grid">
             <article class="project-case-description-card" id="project-case-date-start-card">
               <span class="project-case-description-label" id="project-case-date-start-label">Начало</span>
               <strong class="project-case-description-value" id="project-case-date-start">—</strong>
@@ -43,6 +48,24 @@
               <span class="project-case-description-label">Адрес</span>
               <strong class="project-case-description-value" id="project-case-address">—</strong>
             </article>
+            </div>
+
+            <aside class="project-case-award" id="project-case-award" aria-label="РќР°РіСЂР°РґР° РїСЂРѕРµРєС‚Р°" hidden>
+              <div class="project-case-award-card">
+                <div class="project-case-award-media">
+                  <img
+                    class="project-case-award-image"
+                    id="project-case-award-image"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                    alt=""
+                    width="1024"
+                    height="1536"
+                    decoding="async"
+                  />
+                </div>
+                <p class="project-case-award-title" id="project-case-award-title"></p>
+              </div>
+            </aside>
           </div>
         </div>
       </div>
@@ -147,9 +170,29 @@
       </article>
     </div>
   </div>
+
+  <div class="contact-modal project-case-details-modal" id="project-case-details-modal" hidden>
+    <div class="contact-modal-backdrop" id="project-case-details-backdrop"></div>
+    <div class="contact-modal-dialog project-case-details-dialog" role="dialog" aria-modal="true" aria-labelledby="project-case-details-title">
+      <button class="contact-modal-close" id="project-case-details-close" type="button" aria-label="Закрыть описание проекта">&times;</button>
+      <article class="project-case-details-card">
+        <header class="project-case-details-head">
+          <h2 class="project-case-details-title" id="project-case-details-title">Проект</h2>
+          <p class="project-case-details-lead" id="project-case-details-lead" hidden></p>
+        </header>
+
+        <div class="project-case-details-copy project-case-copy" id="project-case-details-copy" hidden></div>
+
+        <section class="project-case-details-section" id="project-case-details-role-section" hidden aria-labelledby="project-case-details-role-title">
+          <p class="project-case-details-section-title" id="project-case-details-role-title">Роль Gint-M</p>
+          <div class="project-case-details-role-copy project-case-copy" id="project-case-details-role-copy"></div>
+        </section>
+      </article>
+    </div>
+  </div>
   <div data-site-partial="../partials/footer.ru.html"></div>
   <script src="../scripts/shared-partials.js?v=20260416-partials-6"></script>
   <script src="./projects.js?v=20260423-project-years-2"></script>
-  <script src="./project.js?v=20260425-project-years-10"></script>
+  <script src="./project.js?v=20260425-project-years-11"></script>
 </body>
 </html>

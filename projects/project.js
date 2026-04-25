@@ -101,6 +101,20 @@
     reviewBody
   });
 
+  const createProjectAward = ({
+    title = "",
+    imageSrc = "",
+    imageAlt = "",
+    imageWidth = 1024,
+    imageHeight = 1536
+  }) => ({
+    title,
+    imageSrc,
+    imageAlt,
+    imageWidth,
+    imageHeight
+  });
+
   const buildPlaceholderMetrics = (slug, index) => ({
     workScope: "\u041f\u043e\u043b\u043d\u044b\u0439 \u043a\u043e\u043c\u043f\u043b\u0435\u043a\u0441 \u0441\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0445, \u043e\u0442\u0434\u0435\u043b\u043e\u0447\u043d\u044b\u0445 \u0438 \u0438\u043d\u0436\u0435\u043d\u0435\u0440\u043d\u044b\u0445 \u0440\u0430\u0431\u043e\u0442",
     duration: placeholderDurations[index % placeholderDurations.length],
@@ -178,6 +192,13 @@
 
   const projectOverrides = {
     "kit-med": {
+      award: createProjectAward({
+        title: "Best Office Awards 2025",
+        imageSrc: "../awards/photos/2025/01-best-office-awards-natsproektstroy/ChatGPT Image 9 апр. 2026 г., 22_33_52 (1).png",
+        imageAlt: "Best Office Awards 2025",
+        imageWidth: 1024,
+        imageHeight: 1536
+      }),
       galleryLayout: ["pair", "review", "full"],
       galleryLayoutOptions: {
         randomize: true,
@@ -307,6 +328,24 @@
       })
     );
   };
+
+  const firstText = (...values) => {
+    for (const value of values) {
+      if (typeof value === "string" && value.trim()) {
+        return value.trim();
+      }
+    }
+
+    return "";
+  };
+
+  const toParagraphs = (items) => (
+    Array.isArray(items)
+      ? items
+        .filter((item) => typeof item === "string" && item.trim())
+        .map((item) => item.trim())
+      : []
+  );
 
   const createSeededRandom = (seedValue = "") => {
     let seed = 2166136261;
@@ -578,11 +617,18 @@
   const galleryReview = document.getElementById("project-case-gallery-review");
   const galleryStream = document.getElementById("project-case-gallery-stream");
   const yearBadge = document.getElementById("project-case-year");
+  const headlineCopy = document.getElementById("project-case-headline-copy");
+  const headlineSummary = document.getElementById("project-case-summary");
+  const headlineReadMore = document.getElementById("project-case-summary-read-more");
+  const descriptionLayout = document.getElementById("project-case-description-layout");
   const dateStartCard = document.getElementById("project-case-date-start-card");
   const dateStartLabel = document.getElementById("project-case-date-start-label");
   const dateStartValue = document.getElementById("project-case-date-start");
   const dateEndCard = document.getElementById("project-case-date-end-card");
   const dateEndValue = document.getElementById("project-case-date-end");
+  const awardCard = document.getElementById("project-case-award");
+  const awardImage = document.getElementById("project-case-award-image");
+  const awardTitle = document.getElementById("project-case-award-title");
   const clientCard = document.getElementById("project-case-client-card");
   const clientBrand = document.getElementById("project-case-client-brand");
   const clientLogo = document.getElementById("project-client-logo");
@@ -606,6 +652,14 @@
   const reviewImage = document.getElementById("project-client-review-image");
   const reviewAddress = document.getElementById("project-client-review-address");
   const reviewCopy = document.getElementById("project-client-review-copy");
+  const detailsModal = document.getElementById("project-case-details-modal");
+  const detailsBackdrop = document.getElementById("project-case-details-backdrop");
+  const detailsClose = document.getElementById("project-case-details-close");
+  const detailsTitle = document.getElementById("project-case-details-title");
+  const detailsLead = document.getElementById("project-case-details-lead");
+  const detailsCopy = document.getElementById("project-case-details-copy");
+  const detailsRoleSection = document.getElementById("project-case-details-role-section");
+  const detailsRoleCopy = document.getElementById("project-case-details-role-copy");
 
   document.title = `ГИНТ-М — ${project.title}`;
 
@@ -626,7 +680,9 @@
 
   const syncBodyModalState = () => {
     const hasOpenModal = Boolean(
-      (galleryModal && !galleryModal.hidden) || (reviewModal && !reviewModal.hidden)
+      (galleryModal && !galleryModal.hidden)
+      || (reviewModal && !reviewModal.hidden)
+      || (detailsModal && !detailsModal.hidden)
     );
 
     document.body.classList.toggle("modal-open", hasOpenModal);
@@ -636,9 +692,59 @@
   setText("project-case-area", project.area);
   setText("project-case-address", project.address);
 
+  const hasProjectAward = Boolean(
+    project.award
+    && typeof project.award === "object"
+    && project.award.imageSrc
+    && project.award.title
+  );
+
   if (yearBadge) {
     yearBadge.hidden = !project.year;
     yearBadge.textContent = project.year || "";
+  }
+
+  if (descriptionLayout) {
+    descriptionLayout.classList.toggle("project-case-description-layout-has-award", hasProjectAward);
+  }
+
+  const descriptionGrid = descriptionLayout?.querySelector(".project-case-description-grid");
+  let descriptionMain = descriptionLayout?.querySelector(".project-case-description-main");
+
+  if (descriptionLayout && descriptionGrid) {
+    if (!descriptionMain) {
+      descriptionMain = document.createElement("div");
+      descriptionMain.className = "project-case-description-main";
+      descriptionLayout.insertBefore(descriptionMain, descriptionGrid);
+    }
+
+    if (headlineCopy && !descriptionMain.contains(headlineCopy)) {
+      descriptionMain.append(headlineCopy);
+    }
+
+    if (!descriptionMain.contains(descriptionGrid)) {
+      descriptionMain.append(descriptionGrid);
+    }
+  }
+
+  if (awardCard) {
+    awardCard.hidden = !hasProjectAward;
+  }
+
+  if (awardImage) {
+    if (hasProjectAward) {
+      awardImage.src = project.award.imageSrc;
+      awardImage.alt = project.award.imageAlt || project.award.title || "Project award";
+      awardImage.width = project.award.imageWidth || 1024;
+      awardImage.height = project.award.imageHeight || 1536;
+    } else {
+      awardImage.src = transparentPixel;
+      awardImage.alt = "";
+    }
+  }
+
+  if (awardTitle) {
+    awardTitle.textContent = hasProjectAward ? (project.award.title || "") : "";
   }
 
   const galleryItems = Array.isArray(project.gallery) && project.gallery.length > 0
@@ -669,9 +775,68 @@
     }
   }
 
+  const summaryText = firstText(project.summary, project.descriptionLead, project.workScope);
+  const detailsLeadText = firstText(project.descriptionLead, project.workScope, project.summary);
+  const aboutParagraphs = toParagraphs(project.about);
+  const roleParagraphs = toParagraphs(project.role);
+  const detailParagraphs = [];
+  const detailParagraphSet = new Set();
+  const pushDetailParagraph = (value) => {
+    const text = firstText(value);
+
+    if (!text || detailParagraphSet.has(text)) {
+      return;
+    }
+
+    detailParagraphSet.add(text);
+    detailParagraphs.push(text);
+  };
+
+  pushDetailParagraph(project.summary);
+  aboutParagraphs.forEach(pushDetailParagraph);
+
+  const detailBodyParagraphs = detailParagraphs.filter((text) => text !== detailsLeadText);
+  const hasOverviewDetails = Boolean(detailsLeadText || detailBodyParagraphs.length > 0);
+  const hasRoleDetails = roleParagraphs.length > 0;
+  const hasDetailsModal = Boolean(
+    detailsModal
+    && detailsBackdrop
+    && detailsClose
+    && detailsTitle
+    && detailsLead
+    && detailsCopy
+    && detailsRoleSection
+    && detailsRoleCopy
+    && (hasOverviewDetails || hasRoleDetails)
+  );
+
+  if (headlineCopy) {
+    headlineCopy.hidden = !(summaryText || hasDetailsModal);
+  }
+
+  if (headlineSummary) {
+    headlineSummary.hidden = !summaryText;
+    headlineSummary.textContent = summaryText || "";
+  }
+
+  if (headlineReadMore) {
+    headlineReadMore.hidden = !hasDetailsModal;
+  }
+
+  if (hasDetailsModal) {
+    detailsTitle.textContent = project.title;
+    detailsLead.hidden = !detailsLeadText;
+    detailsLead.textContent = detailsLeadText || "";
+    detailsCopy.hidden = detailBodyParagraphs.length === 0;
+    renderParagraphs(detailsCopy, detailBodyParagraphs);
+    detailsRoleSection.hidden = !hasRoleDetails;
+    renderParagraphs(detailsRoleCopy, roleParagraphs);
+  }
+
   let activeLightboxIndex = 0;
   let lastLightboxTrigger = null;
   let lastReviewTrigger = null;
+  let lastDetailsTrigger = null;
 
   const hasLightbox = Boolean(
     galleryModal
@@ -694,6 +859,7 @@
 
   const isLightboxOpen = () => Boolean(galleryModal && !galleryModal.hidden);
   const isReviewModalOpen = () => Boolean(reviewModal && !reviewModal.hidden);
+  const isDetailsModalOpen = () => Boolean(detailsModal && !detailsModal.hidden);
 
   const syncLightbox = (index) => {
     if (!hasLightbox) {
@@ -920,6 +1086,30 @@
     }
   };
 
+  const openDetailsModal = (trigger = null) => {
+    if (!hasDetailsModal) {
+      return;
+    }
+
+    lastDetailsTrigger = trigger instanceof HTMLElement ? trigger : document.activeElement;
+    detailsModal.hidden = false;
+    syncBodyModalState();
+    detailsClose.focus({ preventScroll: true });
+  };
+
+  const closeDetailsModal = () => {
+    if (!hasDetailsModal || detailsModal.hidden) {
+      return;
+    }
+
+    detailsModal.hidden = true;
+    syncBodyModalState();
+
+    if (lastDetailsTrigger instanceof HTMLElement && document.contains(lastDetailsTrigger)) {
+      lastDetailsTrigger.focus({ preventScroll: true });
+    }
+  };
+
   if (hasFullClientReview) {
     clientReadMore?.addEventListener("click", () => {
       openReviewModal(clientReadMore);
@@ -928,7 +1118,24 @@
     reviewClose.addEventListener("click", closeReviewModal);
   }
 
+  if (hasDetailsModal) {
+    headlineReadMore?.addEventListener("click", () => {
+      openDetailsModal(headlineReadMore);
+    });
+    detailsBackdrop.addEventListener("click", closeDetailsModal);
+    detailsClose.addEventListener("click", closeDetailsModal);
+  }
+
   document.addEventListener("keydown", (event) => {
+    if (isDetailsModalOpen()) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeDetailsModal();
+      }
+
+      return;
+    }
+
     if (isReviewModalOpen()) {
       if (event.key === "Escape") {
         event.preventDefault();

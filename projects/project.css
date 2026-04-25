@@ -1132,6 +1132,94 @@
   transform: scale(0.97);
 }
 
+.project-case-page .project-case-details-dialog {
+  width: min(100%, 880px);
+}
+
+.project-case-page .project-case-details-card {
+  display: grid;
+  gap: clamp(20px, 2.3vw, 28px);
+  padding: clamp(28px, 3vw, 40px);
+  border-radius: clamp(32px, 3vw, 38px);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.99) 0%, rgba(243, 247, 250, 0.97) 100%);
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.14);
+}
+
+.project-case-page .project-case-details-head {
+  display: grid;
+  gap: 12px;
+}
+
+.project-case-page .project-case-details-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(34px, 3vw, 46px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: #11131a;
+}
+
+.project-case-page .project-case-details-lead {
+  margin: 0;
+  max-width: 42ch;
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 1.7vw, 28px);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  color: rgba(17, 19, 26, 0.86);
+}
+
+.project-case-page .project-case-details-copy[hidden] {
+  display: none !important;
+}
+
+.project-case-page .project-case-details-copy,
+.project-case-page .project-case-details-role-copy {
+  gap: 16px;
+}
+
+.project-case-page .project-case-details-copy p,
+.project-case-page .project-case-details-role-copy p {
+  max-width: none;
+}
+
+.project-case-page .project-case-details-section {
+  display: grid;
+  gap: 14px;
+  padding-top: clamp(20px, 2vw, 24px);
+  border-top: 1px solid rgba(17, 19, 26, 0.08);
+}
+
+.project-case-page .project-case-details-section[hidden] {
+  display: none !important;
+}
+
+.project-case-page .project-case-details-section-title {
+  margin: 0;
+  color: rgba(17, 19, 26, 0.48);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .project-case-page .project-case-details-card {
+    padding: 24px 18px 20px;
+    border-radius: 28px;
+  }
+
+  .project-case-page .project-case-details-title {
+    font-size: clamp(28px, 7vw, 34px);
+  }
+
+  .project-case-page .project-case-details-lead {
+    font-size: clamp(18px, 5vw, 24px);
+  }
+}
+
 .project-case-page .testimonial-modal-dialog {
   width: min(100%, 1360px);
 }
@@ -1399,6 +1487,20 @@
   flex-wrap: wrap;
 }
 
+.project-case-page .project-case-headline-copy {
+  display: flex;
+  flex: 1 0 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(16px, 2vw, 24px);
+  max-width: min(100%, 920px);
+  padding-top: clamp(4px, 0.5vw, 8px);
+}
+
+.project-case-page .project-case-headline-copy[hidden] {
+  display: none !important;
+}
+
 .project-case-page .project-case-title {
   max-width: none;
 }
@@ -1411,6 +1513,51 @@
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.03em;
+}
+
+.project-case-page .project-case-summary {
+  margin: 0;
+  max-width: 58ch;
+  color: rgba(17, 19, 26, 0.74);
+  font-size: clamp(16px, 1.02vw, 18px);
+  line-height: 1.72;
+}
+
+.project-case-page .project-case-intro-read-more {
+  flex: 0 0 auto;
+  min-height: 48px;
+  padding-inline: 18px;
+  white-space: nowrap;
+  transition:
+    transform 180ms var(--project-case-ease-out),
+    box-shadow 180ms ease;
+}
+
+.project-case-page .project-case-intro-read-more:hover,
+.project-case-page .project-case-intro-read-more:focus-visible {
+  transform: translateY(-2px);
+}
+
+.project-case-page .project-case-intro-read-more:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 900px) {
+  .project-case-page .project-case-headline-copy {
+    width: 100%;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 760px) {
+  .project-case-page .project-case-headline-copy {
+    padding-top: 4px;
+  }
+
+  .project-case-page .project-case-intro-read-more {
+    min-height: 44px;
+  }
 }
 
 .project-case-page .project-case-gallery-shell {
@@ -1875,5 +2022,167 @@
   .project-case-page .project-case-stream-item-review-pair .project-case-stream-image {
     min-height: 0;
     height: auto;
+  }
+}
+
+.project-case-page .project-case-description-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(20px, 2.2vw, 30px);
+  align-items: start;
+}
+
+.project-case-page .project-case-description-layout.project-case-description-layout-has-award {
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 220px);
+}
+
+.project-case-page .project-case-award {
+  min-width: 0;
+}
+
+.project-case-page .project-case-award[hidden] {
+  display: none !important;
+}
+
+.project-case-page .project-case-award-card {
+  display: grid;
+  gap: clamp(8px, 1vw, 12px);
+  align-content: start;
+  padding: clamp(10px, 1.1vw, 14px);
+  border: 1px solid rgba(17, 19, 26, 0.08);
+  border-radius: clamp(18px, 2vw, 22px);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(242, 246, 250, 0.96) 100%);
+  box-shadow: 0 24px 58px rgba(15, 23, 42, 0.08);
+}
+
+.project-case-page .project-case-award-media {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+.project-case-page .project-case-award-image {
+  display: block;
+  width: 108%;
+  max-width: none;
+  max-height: none;
+  height: auto;
+  object-fit: contain;
+  margin-top: -6%;
+  margin-left: -4%;
+  filter: none;
+}
+
+.project-case-page .project-case-award-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(13px, 0.92vw, 17px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: #11131a;
+  text-wrap: balance;
+}
+
+@media (max-width: 1180px) {
+  .project-case-page .project-case-description-layout.project-case-description-layout-has-award {
+    grid-template-columns: 1fr;
+  }
+
+  .project-case-page .project-case-award {
+    max-width: min(100%, 260px);
+  }
+}
+
+@media (max-width: 760px) {
+  .project-case-page .project-case-award {
+    max-width: none;
+  }
+
+  .project-case-page .project-case-award-card {
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .project-case-page .project-case-award-media {
+    min-height: 0;
+    border-radius: 0;
+  }
+}
+
+.project-case-page .project-case-description-layout {
+  align-items: stretch;
+  gap: clamp(22px, 2.2vw, 32px);
+}
+
+.project-case-page .project-case-description-layout.project-case-description-layout-has-award {
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 268px);
+}
+
+.project-case-page .project-case-description-main {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(22px, 2vw, 30px);
+  min-height: 100%;
+  align-items: stretch;
+}
+
+.project-case-page .project-case-headline-copy {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: 14px;
+  max-width: min(100%, 760px);
+  padding-top: 0;
+}
+
+.project-case-page .project-case-summary {
+  max-width: 47ch;
+}
+
+.project-case-page .project-case-intro-read-more {
+  align-self: start;
+  min-height: 0;
+  padding-inline: 0;
+  padding-left: 0;
+  justify-self: start;
+}
+
+.project-case-page .project-case-description-grid {
+  height: 100%;
+  align-content: end;
+}
+
+.project-case-page .project-case-award {
+  height: 100%;
+}
+
+.project-case-page .project-case-award-card {
+  height: 100%;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-content: stretch;
+}
+
+@media (max-width: 1180px) {
+  .project-case-page .project-case-description-main {
+    min-height: 0;
+  }
+
+  .project-case-page .project-case-description-grid {
+    height: auto;
+    align-content: start;
+  }
+}
+
+@media (max-width: 760px) {
+  .project-case-page .project-case-description-main {
+    gap: 18px;
+  }
+
+  .project-case-page .project-case-headline-copy {
+    gap: 12px;
   }
 }
