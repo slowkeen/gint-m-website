@@ -1347,10 +1347,10 @@
 }
 
 .project-case-page .project-case-headline {
-  display: flex;
-  align-items: flex-end;
-  gap: 14px;
-  flex-wrap: wrap;
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: 10px;
 }
 
 .project-case-page .project-case-title {

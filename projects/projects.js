@@ -233,7 +233,6 @@
     ]);
     const projectSortOrder = new Map(orderedProjectSlugs.map((slug, index) => [slug, index]));
     const projectFilterButtons = Array.from(document.querySelectorAll("[data-project-filter]"));
-    const projectEmptyState = document.querySelector("[data-projects-empty]");
     const projectCategoryBySlug = new Map([
       ["kit-med", ["office"]],
       ["skolkovo-park", ["office"]],
@@ -265,11 +264,6 @@
     let activeProjectFilter = "all";
 
     projectsMasonry.id = projectsMasonry.id || "projects-page-masonry";
-
-    const getProjectFilterLabel = (filterId) => {
-      const button = projectFilterButtons.find((item) => item.dataset.projectFilter === filterId);
-      return button?.textContent?.trim() || "";
-    };
 
     const getSafeProjectFilter = (filterId) => (validProjectFilters.has(filterId) ? filterId : "all");
 
@@ -498,20 +492,6 @@
       });
     };
 
-    const updateProjectEmptyState = (visibleCount) => {
-      if (!projectEmptyState) {
-        return;
-      }
-
-      const isEmpty = visibleCount === 0;
-      const filterLabel = getProjectFilterLabel(activeProjectFilter);
-
-      projectEmptyState.hidden = !isEmpty;
-      projectEmptyState.textContent = isEmpty
-        ? `По фильтру «${filterLabel || "Все"}» пока нет проектов.`
-        : "";
-    };
-
     const syncProjectFilterUrl = () => {
       if (!window.history || typeof window.history.replaceState !== "function") {
         return;
@@ -535,8 +515,6 @@
     const applyProjectFilter = (nextFilter, { updateHistory = true } = {}) => {
       activeProjectFilter = getSafeProjectFilter(nextFilter);
 
-      let visibleCount = 0;
-
       projectCards.forEach((card) => {
         const categories = card.dataset.projectCategories
           ? card.dataset.projectCategories.split(/\s+/).filter(Boolean)
@@ -545,14 +523,9 @@
 
         card.hidden = !isVisible;
         card.setAttribute("aria-hidden", String(!isVisible));
-
-        if (isVisible) {
-          visibleCount += 1;
-        }
       });
 
       updateProjectFilterButtons();
-      updateProjectEmptyState(visibleCount);
       requestProjectMasonryLayout();
 
       if (updateHistory) {
