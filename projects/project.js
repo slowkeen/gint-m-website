@@ -660,6 +660,7 @@
   const detailsCopy = document.getElementById("project-case-details-copy");
   const detailsRoleSection = document.getElementById("project-case-details-role-section");
   const detailsRoleCopy = document.getElementById("project-case-details-role-copy");
+  const breadcrumbCurrent = document.getElementById("project-case-breadcrumb-current");
 
   document.title = `ГИНТ-М — ${project.title}`;
 
@@ -689,6 +690,9 @@
   };
 
   setText("project-case-title", project.title);
+  if (breadcrumbCurrent) {
+    breadcrumbCurrent.textContent = project.title;
+  }
   setText("project-case-area", project.area);
   setText("project-case-address", project.address);
 

@@ -1343,7 +1343,8 @@
 }
 
 .project-case-page .project-case-topline {
-  display: none;
+  display: grid;
+  justify-items: start;
 }
 
 .project-case-page .project-case-headline {
