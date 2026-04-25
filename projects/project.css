@@ -915,43 +915,53 @@
 }
 
 .project-case-page .project-case-description-panel {
-  display: grid;
-  gap: clamp(22px, 2.5vw, 30px);
-  padding: clamp(24px, 3vw, 40px);
-  border: 1px solid rgba(17, 19, 26, 0.08);
+  display: block;
+  gap: clamp(18px, 2vw, 24px);
+  padding: clamp(18px, 2.2vw, 28px);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: clamp(28px, 3vw, 36px);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 247, 250, 0.96) 100%);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.62) 0%, rgba(244, 247, 250, 0.36) 100%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.12);
+}
+
+.project-case-page .project-case-description-panel > .project-case-description-lead {
+  display: none;
 }
 
 .project-case-page .project-case-description-lead {
   margin: 0;
-  max-width: 34ch;
+  max-width: 30ch;
   font-family: var(--font-heading);
-  font-size: clamp(24px, 2.4vw, 36px);
+  font-size: clamp(22px, 2.1vw, 32px);
   font-weight: 500;
-  line-height: 1.08;
+  line-height: 1.1;
   letter-spacing: -0.04em;
   color: #11131a;
 }
 
 .project-case-page .project-case-description-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  grid-auto-rows: 1fr;
+  align-items: stretch;
 }
 
 .project-case-page .project-case-description-card {
   display: grid;
-  gap: 10px;
-  padding: 20px 22px;
-  border: 1px solid rgba(17, 19, 26, 0.08);
+  gap: 8px;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  backdrop-filter: blur(12px) saturate(130%);
 }
 
 .project-case-page .project-case-description-card-address {
-  grid-column: 1 / -1;
+  grid-column: auto;
 }
 
 .project-case-page .project-case-description-label {
@@ -965,17 +975,18 @@
 
 .project-case-page .project-case-description-value {
   font-family: var(--font-heading);
-  font-size: clamp(22px, 1.6vw, 30px);
+  font-size: clamp(20px, 1.4vw, 24px);
   font-weight: 500;
-  line-height: 1.12;
+  line-height: 1.14;
   letter-spacing: -0.03em;
   color: #11131a;
 }
 
 .project-case-page .project-case-description-card-address .project-case-description-value {
-  max-width: 28ch;
-  font-size: clamp(18px, 1.2vw, 22px);
-  line-height: 1.48;
+  max-width: none;
+  font-size: clamp(20px, 1.4vw, 24px);
+  line-height: 1.14;
+  overflow-wrap: anywhere;
 }
 
 .project-case-page .project-case-client-shell {
@@ -1274,10 +1285,6 @@
   display: block;
 }
 
-.project-case-page .project-case-description-shell {
-  padding-block: 0 clamp(28px, 2.8vw, 38px);
-}
-
 .project-case-page .project-case-description-panel {
   max-width: min(100%, 960px);
 }
@@ -1407,23 +1414,21 @@
   padding-block: 0 clamp(20px, 2.1vw, 28px);
 }
 
-.project-case-page .project-case-description-shell {
-  padding-block: 0 clamp(30px, 3vw, 42px);
-}
-
 .project-case-page .project-case-description-panel {
   max-width: min(100%, 760px);
-  gap: clamp(20px, 2.2vw, 28px);
-  padding: clamp(24px, 2.8vw, 34px);
-  border: 1px solid rgba(17, 19, 26, 0.08);
+  gap: clamp(16px, 1.8vw, 22px);
+  padding: clamp(18px, 2vw, 24px);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: clamp(28px, 3vw, 34px);
-  background: linear-gradient(155deg, rgba(255, 255, 255, 0.98) 0%, rgba(245, 248, 251, 0.96) 100%);
-  box-shadow: 0 26px 62px rgba(15, 23, 42, 0.08);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.62) 0%, rgba(245, 248, 251, 0.36) 100%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 22px 52px rgba(15, 23, 42, 0.12);
 }
 
 .project-case-page .project-case-description-lead {
   max-width: 28ch;
-  font-size: clamp(23px, 2.2vw, 33px);
+  font-size: clamp(21px, 2vw, 29px);
 }
 
 .project-case-page .project-case-description-grid {
@@ -1431,10 +1436,11 @@
 }
 
 .project-case-page .project-case-description-card {
-  gap: 10px;
-  padding: 18px 20px;
+  gap: 8px;
+  padding: 15px 17px;
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.28);
 }
 
 .project-case-page .project-case-gallery-layout {
@@ -1602,32 +1608,45 @@
 
 .project-case-page .project-case-description-panel {
   width: 100%;
-  max-width: min(100%, 1180px);
-  grid-template-columns: minmax(0, 1.04fr) minmax(420px, 0.96fr);
-  align-items: start;
-  gap: clamp(18px, 1.8vw, 24px);
-  padding: clamp(20px, 2vw, 26px);
-  border-radius: clamp(24px, 2.5vw, 30px);
-  box-shadow: 0 18px 46px rgba(15, 23, 42, 0.07);
+  max-width: none;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
 }
 
 .project-case-page .project-case-description-lead {
-  max-width: 22ch;
-  font-size: clamp(21px, 1.9vw, 30px);
-  line-height: 1.06;
+  max-width: 26ch;
+  font-size: clamp(20px, 1.75vw, 26px);
+  line-height: 1.08;
   letter-spacing: -0.035em;
 }
 
 .project-case-page .project-case-description-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(280px, 1.28fr);
+  gap: 0;
   align-content: start;
+  grid-auto-rows: 1fr;
+  align-items: stretch;
 }
 
 .project-case-page .project-case-description-card {
-  gap: 8px;
-  padding: 16px 18px;
-  border-radius: 20px;
+  gap: 6px;
+  min-height: 0;
+  padding: clamp(14px, 1.1vw, 18px) clamp(18px, 1.35vw, 24px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.project-case-page .project-case-description-card:not(:first-child) {
+  border-left: 1px solid rgba(17, 19, 26, 0.08);
 }
 
 .project-case-page .project-case-description-label {
@@ -1636,18 +1655,20 @@
 }
 
 .project-case-page .project-case-description-value {
-  font-size: clamp(19px, 1.3vw, 24px);
-  line-height: 1.08;
+  font-size: clamp(18px, 1.2vw, 22px);
+  line-height: 1.12;
 }
 
 .project-case-page .project-case-description-card-address {
-  grid-column: 1 / -1;
+  grid-column: auto;
 }
 
 .project-case-page .project-case-description-card-address .project-case-description-value {
   max-width: none;
-  font-size: clamp(15px, 0.95vw, 18px);
-  line-height: 1.38;
+  font-size: clamp(18px, 1.2vw, 22px);
+  line-height: 1.2;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .project-case-page .project-case-gallery-layout {
@@ -1709,11 +1730,6 @@
 }
 
 @media (max-width: 1100px) {
-  .project-case-page .project-case-description-panel {
-    max-width: min(100%, 820px);
-    grid-template-columns: 1fr;
-  }
-
   .project-case-page .project-case-description-lead {
     max-width: 28ch;
   }
@@ -1721,13 +1737,31 @@
   .project-case-page .project-case-description-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .project-case-page .project-case-description-card:not(:first-child) {
+    border-left: 0;
+  }
+
+  .project-case-page .project-case-description-card {
+    padding: 16px 18px;
+  }
+
+  .project-case-page .project-case-description-card:nth-child(2n) {
+    border-left: 1px solid rgba(17, 19, 26, 0.08);
+  }
+
+  .project-case-page .project-case-description-card:nth-child(n + 3) {
+    border-top: 1px solid rgba(17, 19, 26, 0.08);
+  }
+
+  .project-case-page .project-case-description-card-address {
+    grid-column: auto;
+  }
 }
 
 @media (max-width: 760px) {
   .project-case-page .project-case-description-panel {
-    padding: 18px;
-    gap: 16px;
-    border-radius: 22px;
+    padding: 0;
   }
 
   .project-case-page .project-case-description-grid,
@@ -1736,8 +1770,19 @@
   }
 
   .project-case-page .project-case-description-card {
-    padding: 15px 16px;
-    border-radius: 18px;
+    padding: 14px 0;
+  }
+
+  .project-case-page .project-case-description-card:nth-child(2n) {
+    border-left: 0;
+  }
+
+  .project-case-page .project-case-description-card:nth-child(n + 3) {
+    border-top: 0;
+  }
+
+  .project-case-page .project-case-description-card + .project-case-description-card {
+    border-top: 1px solid rgba(17, 19, 26, 0.08);
   }
 
   .project-case-page .project-case-description-card-address,

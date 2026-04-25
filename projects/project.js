@@ -577,7 +577,6 @@
   const galleryGridSection = document.getElementById("project-case-gallery-grid-section");
   const galleryReview = document.getElementById("project-case-gallery-review");
   const galleryStream = document.getElementById("project-case-gallery-stream");
-  const descriptionLead = document.getElementById("project-case-description-lead");
   const yearBadge = document.getElementById("project-case-year");
   const dateStartCard = document.getElementById("project-case-date-start-card");
   const dateStartLabel = document.getElementById("project-case-date-start-label");
@@ -650,10 +649,6 @@
     galleryIndex: index
   }));
   const clientFeatureItem = galleryItems[Math.min(1, galleryItems.length - 1)] || galleryItems[0];
-
-  if (descriptionLead) {
-    descriptionLead.textContent = project.descriptionLead || project.workScope || project.summary || "";
-  }
 
   if (dateStartLabel && dateStartValue) {
     if (project.startDate) {
