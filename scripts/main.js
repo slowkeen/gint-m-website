@@ -565,22 +565,39 @@ const initSite = () => {
     return Math.max(Math.round(firstItemWidth + gap), viewportStep);
   };
 
+  const getAwardsTimelineBounds = () => {
+    if (!awardsTimelineStage) {
+      return {
+        maxScrollLeft: 0,
+        isScrollable: false,
+        atStart: true,
+        atEnd: true
+      };
+    }
+
+    const maxScrollLeft = Math.max(0, awardsTimelineStage.scrollWidth - awardsTimelineStage.clientWidth);
+
+    return {
+      maxScrollLeft,
+      isScrollable: maxScrollLeft > 4,
+      atStart: awardsTimelineStage.scrollLeft <= 4,
+      atEnd: maxScrollLeft - awardsTimelineStage.scrollLeft <= 4
+    };
+  };
+
   const syncAwardsTimelineButtons = () => {
     if (!awardsTimelineStage) {
       return;
     }
 
-    const maxScrollLeft = Math.max(0, awardsTimelineStage.scrollWidth - awardsTimelineStage.clientWidth);
-    const isScrollable = maxScrollLeft > 4;
-    const atStart = awardsTimelineStage.scrollLeft <= 4;
-    const atEnd = maxScrollLeft - awardsTimelineStage.scrollLeft <= 4;
+    const { isScrollable } = getAwardsTimelineBounds();
 
     if (awardsTimelinePrevButton) {
-      awardsTimelinePrevButton.disabled = !isScrollable || atStart;
+      awardsTimelinePrevButton.disabled = !isScrollable;
     }
 
     if (awardsTimelineNextButton) {
-      awardsTimelineNextButton.disabled = !isScrollable || atEnd;
+      awardsTimelineNextButton.disabled = !isScrollable;
     }
   };
 
@@ -595,6 +612,19 @@ const initSite = () => {
     });
   };
 
+  const resetAwardsTimelinePosition = () => {
+    if (!awardsTimelineStage) {
+      return;
+    }
+
+    awardsTimelineStage.scrollTo({
+      left: 0,
+      behavior: "auto"
+    });
+
+    requestAwardsTimelineSync();
+  };
+
   const shiftAwardsTimeline = (direction) => {
     if (!awardsTimelineStage) {
       return;
@@ -606,7 +636,31 @@ const initSite = () => {
       return;
     }
 
-    const maxScrollLeft = Math.max(0, awardsTimelineStage.scrollWidth - awardsTimelineStage.clientWidth);
+    const {
+      maxScrollLeft,
+      isScrollable,
+      atStart,
+      atEnd
+    } = getAwardsTimelineBounds();
+
+    if (!isScrollable) {
+      return;
+    }
+
+    if (direction > 0 && atEnd) {
+      resetAwardsTimelinePosition();
+      return;
+    }
+
+    if (direction < 0 && atStart) {
+      awardsTimelineStage.scrollTo({
+        left: maxScrollLeft,
+        behavior: "auto"
+      });
+      requestAwardsTimelineSync();
+      return;
+    }
+
     const nextLeft = Math.min(
       maxScrollLeft,
       Math.max(0, awardsTimelineStage.scrollLeft + (step * direction))
@@ -634,19 +688,14 @@ const initSite = () => {
       return;
     }
 
-    const maxScrollLeft = Math.max(0, awardsTimelineStage.scrollWidth - awardsTimelineStage.clientWidth);
-    const atEnd = maxScrollLeft - awardsTimelineStage.scrollLeft <= 4;
+    const { isScrollable, atEnd } = getAwardsTimelineBounds();
 
-    if (maxScrollLeft <= 4) {
+    if (!isScrollable) {
       return;
     }
 
     if (atEnd) {
-      awardsTimelineStage.scrollTo({
-        left: 0,
-        behavior: "auto"
-      });
-      requestAwardsTimelineSync();
+      resetAwardsTimelinePosition();
       return;
     }
 
@@ -660,9 +709,9 @@ const initSite = () => {
       return;
     }
 
-    const maxScrollLeft = Math.max(0, awardsTimelineStage.scrollWidth - awardsTimelineStage.clientWidth);
+    const { isScrollable } = getAwardsTimelineBounds();
 
-    if (maxScrollLeft <= 4) {
+    if (!isScrollable) {
       return;
     }
 
@@ -672,7 +721,9 @@ const initSite = () => {
   };
 
   if (awardsTimelineStage) {
-    syncAwardsTimelineButtons();
+    awardsTimelineStage.style.overflowAnchor = "none";
+    resetAwardsTimelinePosition();
+    window.requestAnimationFrame(resetAwardsTimelinePosition);
     awardsTimelineStage.addEventListener("scroll", requestAwardsTimelineSync, { passive: true });
 
     if (awardsTimelineNextButton) {
@@ -724,7 +775,7 @@ const initSite = () => {
       });
     }
 
-    window.addEventListener("load", requestAwardsTimelineSync, { once: true });
+    window.addEventListener("load", resetAwardsTimelinePosition, { once: true });
     window.addEventListener("resize", requestAwardsTimelineSync);
     window.addEventListener("resize", startAwardsTimelineAutoplay);
     startAwardsTimelineAutoplay();
