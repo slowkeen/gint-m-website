@@ -205,6 +205,134 @@ const bindImageFallbacks = (root = document) => {
   });
 };
 
+const COOKIE_CONSENT_STORAGE_KEY = "gintm-cookie-consent";
+const COOKIE_CONSENT_STATES = new Set(["accepted", "dismissed"]);
+
+const readCookieConsentState = () => {
+  try {
+    const value = window.localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY);
+    return COOKIE_CONSENT_STATES.has(value) ? value : null;
+  } catch {
+    return null;
+  }
+};
+
+const writeCookieConsentState = (value) => {
+  if (!COOKIE_CONSENT_STATES.has(value)) {
+    return null;
+  }
+
+  try {
+    window.localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, value);
+  } catch {
+    // Ignore storage failures and continue with in-memory state only.
+  }
+
+  document.documentElement.dataset.cookieConsent = value;
+  window.dispatchEvent(new CustomEvent("site:cookie-consent-changed", {
+    detail: {
+      state: value
+    }
+  }));
+
+  return value;
+};
+
+const syncCookieConsentDataset = () => {
+  const state = readCookieConsentState();
+  document.documentElement.dataset.cookieConsent = state || "pending";
+  return state;
+};
+
+const createCookieConsentBanner = () => {
+  const banner = document.createElement("section");
+  banner.className = "cookie-consent";
+  banner.hidden = true;
+  banner.setAttribute("aria-hidden", "true");
+  banner.setAttribute("role", "dialog");
+  banner.setAttribute("aria-label", "Уведомление об использовании cookie");
+  banner.setAttribute("aria-live", "polite");
+
+  /*
+  banner.innerHTML = `
+    <button class="cookie-consent-close" type="button" aria-label="Закрыть уведомление о cookie">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h2 class="cookie-consent-title" id="cookie-consent-title">Мы используем cookie</h2>
+    <p class="cookie-consent-text">
+      Сайт использует cookie и технические данные браузера для корректной работы страниц,
+      запоминания вашего выбора и улучшения сервиса.
+    </p>
+    <div class="cookie-consent-actions">
+      <a class="cookie-consent-link" href="${resolveSitePath("/privacy/")}">Подробнее</a>
+      <button class="cookie-consent-accept" type="button">Принять</button>
+    </div>
+  `;
+  */
+
+  banner.innerHTML = `
+    <p class="cookie-consent-text">
+      Мы обрабатываем cookies, чтобы сделать наш сайт удобнее и персонализированнее для вас.
+      Подробнее:
+      <a class="cookie-consent-link" href="${resolveSitePath("/privacy/")}#cookies">политика использования cookies</a>
+      и
+      <a class="cookie-consent-link" href="${resolveSitePath("/privacy/")}#data">защита данных</a>.
+    </p>
+    <button class="cookie-consent-accept" type="button">Принять</button>
+  `;
+
+  return banner;
+};
+
+const initCookieConsent = () => {
+  if (!document.body || document.documentElement.dataset.cookieConsentInit === "true") {
+    syncCookieConsentDataset();
+    return;
+  }
+
+  document.documentElement.dataset.cookieConsentInit = "true";
+  const currentState = syncCookieConsentDataset();
+
+  window.siteCookieConsent = {
+    getState: () => readCookieConsentState(),
+    hasAccepted: () => readCookieConsentState() === "accepted"
+  };
+
+  if (currentState) {
+    return;
+  }
+
+  const banner = createCookieConsentBanner();
+  const acceptButton = banner.querySelector(".cookie-consent-accept");
+
+  const hideBanner = (nextState) => {
+    if (nextState) {
+      writeCookieConsentState(nextState);
+    }
+
+    banner.classList.remove("is-visible");
+    banner.setAttribute("aria-hidden", "true");
+
+    window.setTimeout(() => {
+      banner.hidden = true;
+    }, 220);
+  };
+
+  acceptButton?.addEventListener("click", () => {
+    hideBanner("accepted");
+  });
+
+  document.body.appendChild(banner);
+
+  window.requestAnimationFrame(() => {
+    banner.hidden = false;
+    banner.setAttribute("aria-hidden", "false");
+    window.requestAnimationFrame(() => {
+      banner.classList.add("is-visible");
+    });
+  });
+};
+
 const loadPartials = async () => {
   const partialPlaceholders = Array.from(document.querySelectorAll("[data-site-partial]"));
 
@@ -247,3 +375,10 @@ window.sharedPartialsReady = loadPartials().then(() => {
 window.sharedPartialsReady.catch((error) => {
   console.error("Shared partials failed to load.", error);
 });
+window.sharedPartialsReady
+  .then(() => {
+    initCookieConsent();
+  })
+  .catch(() => {
+    initCookieConsent();
+  });
