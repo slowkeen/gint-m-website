@@ -4,11 +4,6 @@
     : (value) => value;
   const heroMenuMediaQuery = window.matchMedia("(max-width: 980px)");
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const featuredAwardIds = new Set([
-    "award-2025-natsproektstroy",
-    "award-2021-avito-client-service",
-    "award-2014-baring-vostok"
-  ]);
 
   const normalizePath = (value) => {
     if (!value) {
@@ -181,10 +176,6 @@
       yearBlock.querySelectorAll(".awards-page-card").forEach((card) => {
         const media = card.querySelector(".awards-page-card-media");
         const bodyChildren = Array.from(card.children).filter((child) => !child.classList.contains("awards-page-card-media"));
-
-        if (featuredAwardIds.has(card.id)) {
-          card.classList.add("is-featured");
-        }
 
         if (year) {
           card.dataset.awardYear = year;

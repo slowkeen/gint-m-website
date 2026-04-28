@@ -57,6 +57,7 @@
 }
 
 .news-feed-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
 }
 
@@ -72,10 +73,6 @@
 
 .news-feed-card .trust-journal-card-meta {
   max-width: 34ch;
-}
-
-.news-feed-card.trust-journal-card-featured .trust-journal-card-meta {
-  max-width: 46ch;
 }
 
 .news-feed-card .trust-journal-card-link {
@@ -110,6 +107,10 @@
   .news-page-main {
     padding-top: 112px;
   }
+
+  .news-feed-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
@@ -123,6 +124,10 @@
 
   .news-feed-head {
     align-items: flex-start;
+  }
+
+  .news-feed-grid {
+    grid-template-columns: 1fr;
   }
 }
 
