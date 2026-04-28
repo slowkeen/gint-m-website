@@ -1036,10 +1036,15 @@ const initSite = () => {
   ]);
   const projectSortOrder = new Map(orderedProjectSlugs.map((slug, index) => [slug, index]));
   const PROJECTS_INITIAL_VISIBLE = 16;
+  const PROJECT_CTA_ANCHOR_SLUG = "bnp-paribas";
+  const PROJECT_CTA_YEAR = 2020;
+  const PROJECT_CTA_SORT_ORDER = (projectSortOrder.get(PROJECT_CTA_ANCHOR_SLUG) ?? Number.MAX_SAFE_INTEGER) + 0.5;
   let hiddenProjectCards = [];
   const revealElements = [];
   let projectMasonryFrame = null;
   let lastProjectMasonryWidth = 0;
+
+  const isProjectCtaCard = (card) => card.hasAttribute("data-project-cta");
 
   const getProjectSlug = (card) => {
     const link = card.querySelector(".project-photo-link");
@@ -1110,17 +1115,22 @@ const initSite = () => {
 
     const orderedCards = projectCards
       .map((card, index) => {
-        const slug = getProjectSlug(card);
-        const year = projectYearBySlug.get(slug) || "";
-        const yearValue = Number.parseInt(year, 10) || 0;
+        const isCtaCard = isProjectCtaCard(card);
+        const slug = isCtaCard ? "" : getProjectSlug(card);
+        const year = isCtaCard ? "" : projectYearBySlug.get(slug) || "";
+        const yearValue = isCtaCard ? PROJECT_CTA_YEAR : Number.parseInt(year, 10) || 0;
 
-        ensureProjectYearBadge(card, year);
+        if (!isCtaCard) {
+          ensureProjectYearBadge(card, year);
+        }
 
         return {
           card,
           index,
           yearValue,
-          sortIndex: projectSortOrder.get(slug) ?? Number.MAX_SAFE_INTEGER
+          sortIndex: isCtaCard
+            ? PROJECT_CTA_SORT_ORDER
+            : projectSortOrder.get(slug) ?? Number.MAX_SAFE_INTEGER
         };
       })
       .sort((left, right) => (
@@ -1138,15 +1148,24 @@ const initSite = () => {
 
   const syncInitialProjectVisibility = () => {
     hiddenProjectCards = [];
+    let visibleProjectCount = 0;
 
-    projectCards.forEach((card, index) => {
-      const shouldHide = index >= PROJECTS_INITIAL_VISIBLE;
+    projectCards.forEach((card) => {
+      if (isProjectCtaCard(card)) {
+        card.hidden = false;
+        return;
+      }
+
+      const shouldHide = visibleProjectCount >= PROJECTS_INITIAL_VISIBLE;
 
       card.hidden = shouldHide;
 
       if (shouldHide) {
         hiddenProjectCards.push(card);
+        return;
       }
+
+      visibleProjectCount += 1;
     });
   };
 
