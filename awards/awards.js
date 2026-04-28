@@ -169,40 +169,316 @@
     updateStickyHeader();
   };
 
+  const shuffleItems = (items) => {
+    const shuffled = [...items];
+
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    }
+
+    return shuffled;
+  };
+
+  const archiveReviewCards = [
+    {
+      id: "review-align",
+      modalId: "testimonial-align-modal",
+      logoSrc: "../logos/clients/color/Align-logo.svg",
+      logoAlt: "Align Technology",
+      quote:
+        "Компания Align Technology Inc. благодарит команду «Гинт-М» за реализацию офисного проекта компании, расположенного в БЦ «Даниловская Мануфактура». «Гинт-М» в роли генерального подрядчика выполнила рабочее проектирование, демонтаж, весь комплекс общестроительных, инженерных, а также пусконаладочных работ.",
+      reviewHref: "../reviews/Align/rekomendatel_noe_pis_mo_align_red_1_page-0001.jpg"
+    },
+    {
+      id: "review-dell",
+      modalId: "testimonial-dell-modal",
+      logoSrc: "../logos/clients/color/Dell-logo.svg",
+      logoAlt: "Dell Technologies",
+      quote:
+        "Команда держала график и соблюдала все сроки без компромиссов по качеству работ. Gint-M уверенно управляет всем комплексом инженерных и строительных задач, необходимых для качественной реализации проекта, и выдерживает заявленные сроки без потери качества.",
+      reviewHref: "../reviews/Dell/rekomendatel_noe_pis_mo_dell_page-0001.jpg"
+    },
+    {
+      id: "review-winline",
+      modalId: "testimonial-winline-modal",
+      logoSrc: "../logos/clients/color/winline-logo.svg",
+      logoAlt: "Winline",
+      quote:
+        "Компания Winline благодарит строительную компанию «Гинт-М» за реализацию корпоративного офисного проекта. Команда выступила в проекте в роли генерального подрядчика, осуществив полный комплекс общестроительных, отделочных и инженерных работ, а также рабочее проектирование.",
+      reviewHref: "../reviews/Winline/rek_pis_mo_gint-m_rus-1.png"
+    }
+  ];
+
+  const createArchiveReviewCard = (review) => {
+    const card = document.createElement("article");
+    const body = document.createElement("div");
+    const top = document.createElement("div");
+    const quoteMark = document.createElement("span");
+    const brand = document.createElement("span");
+    const logo = document.createElement("img");
+    const reviewText = document.createElement("blockquote");
+    const reviewParagraph = document.createElement("p");
+    const footer = document.createElement("footer");
+    const readMore = document.createElement("a");
+
+    card.id = review.id;
+    card.className = "awards-page-card awards-page-card-review";
+    card.dataset.cardType = "review";
+    card.dataset.cardLabel = "";
+
+    body.className = "awards-page-card-body awards-page-review-layout";
+
+    top.className = "awards-page-review-top";
+
+    quoteMark.className = "awards-page-review-mark";
+    quoteMark.setAttribute("aria-hidden", "true");
+    quoteMark.textContent = "«";
+
+    brand.className = "awards-page-review-brand";
+
+    logo.className = `testimonial-brand-logo${review.logoAlt === "Align Technology" ? " testimonial-brand-logo-align" : ""}`;
+    logo.src = resolveSitePath(review.logoSrc);
+    logo.alt = review.logoAlt;
+    logo.loading = "lazy";
+    logo.decoding = "async";
+
+    reviewText.className = "awards-page-review-text";
+    reviewParagraph.textContent = review.quote;
+
+    footer.className = "awards-page-review-footer";
+
+    readMore.className = "awards-page-review-link";
+    readMore.href = resolveSitePath(review.reviewHref);
+    readMore.dataset.modalOpen = review.modalId;
+    readMore.textContent = "Читать отзыв полностью";
+
+    brand.append(logo);
+    top.append(quoteMark, brand);
+    reviewText.append(reviewParagraph);
+    footer.append(readMore);
+    body.append(top, reviewText, footer);
+    card.append(body);
+
+    return card;
+  };
+
+  const initTestimonialModals = () => {
+    const testimonialLetters = document.querySelectorAll(".testimonial-modal .testimonial-letter");
+    const contactModals = document.querySelectorAll(".contact-modal");
+    const modalClosers = document.querySelectorAll("[data-modal-close]");
+    const testimonialUiText = document.documentElement.lang === "en"
+      ? {
+        testimonialScan: "Scan",
+        testimonialText: "Text version"
+      }
+      : {
+        testimonialScan: "Скан",
+        testimonialText: "Текстовый вариант"
+      };
+
+    if (contactModals.length === 0) {
+      return;
+    }
+
+    const setTestimonialView = (letter, view) => {
+      if (!letter) {
+        return;
+      }
+
+      const previewPanel = letter.querySelector("[data-testimonial-panel='scan']");
+      const textPanel = letter.querySelector("[data-testimonial-panel='text']");
+      const toggle = letter.querySelector("[data-testimonial-toggle]");
+      const isTextView = view === "text";
+
+      letter.dataset.testimonialView = isTextView ? "text" : "scan";
+
+      if (previewPanel) {
+        previewPanel.hidden = isTextView;
+      }
+
+      if (textPanel) {
+        textPanel.hidden = !isTextView;
+      }
+
+      if (toggle) {
+        toggle.textContent = isTextView ? testimonialUiText.testimonialScan : testimonialUiText.testimonialText;
+        toggle.setAttribute("aria-pressed", String(isTextView));
+      }
+    };
+
+    const resetTestimonialViews = (scope = document) => {
+      scope.querySelectorAll(".testimonial-letter[data-testimonial-view]").forEach((letter) => {
+        setTestimonialView(letter, "scan");
+      });
+    };
+
+    const syncModalOpenState = () => {
+      const hasVisibleModal = Array.from(contactModals).some((modal) => !modal.hidden);
+      document.body.classList.toggle("modal-open", hasVisibleModal);
+    };
+
+    const closeModal = (modal) => {
+      if (!modal) {
+        return;
+      }
+
+      modal.hidden = true;
+      resetTestimonialViews(modal);
+      syncModalOpenState();
+    };
+
+    const closeAllModals = () => {
+      contactModals.forEach((modal) => {
+        modal.hidden = true;
+        resetTestimonialViews(modal);
+      });
+      syncModalOpenState();
+    };
+
+    const openModal = (modal) => {
+      if (!modal) {
+        return;
+      }
+
+      closeAllModals();
+      modal.hidden = false;
+      resetTestimonialViews(modal);
+      syncModalOpenState();
+      modal.querySelector(".contact-modal-close")?.focus({ preventScroll: true });
+    };
+
+    testimonialLetters.forEach((letter) => {
+      const previewPanel = letter.querySelector(".testimonial-letter-preview");
+      const textPanel = letter.querySelector(".testimonial-letter-body");
+
+      if (!previewPanel || !textPanel) {
+        return;
+      }
+
+      previewPanel.classList.add("testimonial-letter-panel");
+      previewPanel.dataset.testimonialPanel = "scan";
+      textPanel.classList.add("testimonial-letter-panel");
+      textPanel.dataset.testimonialPanel = "text";
+      textPanel.hidden = true;
+      letter.dataset.testimonialView = "scan";
+
+      if (!letter.querySelector("[data-testimonial-toggle]")) {
+        const actions = document.createElement("div");
+        actions.className = "testimonial-letter-actions";
+
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "testimonial-letter-toggle testimonial-action testimonial-action-secondary";
+        toggle.dataset.testimonialToggle = "";
+        toggle.setAttribute("aria-pressed", "false");
+        toggle.textContent = testimonialUiText.testimonialText;
+
+        toggle.addEventListener("click", () => {
+          const nextView = letter.dataset.testimonialView === "text" ? "scan" : "text";
+          setTestimonialView(letter, nextView);
+        });
+
+        actions.append(toggle);
+        letter.append(actions);
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-modal-open]");
+
+      if (!trigger) {
+        return;
+      }
+
+      event.preventDefault();
+      openModal(document.getElementById(trigger.dataset.modalOpen));
+    });
+
+    modalClosers.forEach((closer) => {
+      closer.addEventListener("click", () => {
+        closeModal(document.getElementById(closer.dataset.modalClose));
+      });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeAllModals();
+      }
+    });
+
+    syncModalOpenState();
+  };
+
+  const decorateArchiveCard = (card) => {
+    const media = card.querySelector(".awards-page-card-media");
+    const bodyChildren = Array.from(card.children).filter(
+      (child) => !child.classList.contains("awards-page-card-media") && !child.classList.contains("awards-page-card-body")
+    );
+    const primaryChipText = card.dataset.cardLabel || (card.dataset.cardType === "review" ? "Отзыв" : "Награда");
+    const secondaryChipText = card.dataset.cardSecondary || card.dataset.awardYear || "";
+
+    if (media && primaryChipText && !media.querySelector(".awards-page-card-badges")) {
+      const badges = document.createElement("div");
+      const primaryChip = document.createElement("span");
+
+      badges.className = "awards-page-card-badges";
+      primaryChip.className = "awards-page-card-chip";
+      primaryChip.textContent = primaryChipText;
+      badges.append(primaryChip);
+
+      if (secondaryChipText) {
+        const secondaryChip = document.createElement("span");
+        secondaryChip.className = "awards-page-card-chip";
+        secondaryChip.textContent = secondaryChipText;
+        badges.append(secondaryChip);
+      }
+
+      media.append(badges);
+    }
+
+    if (bodyChildren.length > 0 && !card.querySelector(".awards-page-card-body")) {
+      const body = document.createElement("div");
+      body.className = "awards-page-card-body";
+      bodyChildren.forEach((child) => body.appendChild(child));
+      card.appendChild(body);
+    }
+  };
+
   const enhanceAwardsArchive = () => {
+    const awardsArchiveList = document.querySelector(".awards-page-list");
+
+    if (!awardsArchiveList || awardsArchiveList.dataset.archiveMixed === "true") {
+      return;
+    }
+
     document.querySelectorAll(".awards-page-year").forEach((yearBlock) => {
       const year = yearBlock.querySelector(".awards-page-year-label")?.textContent?.trim();
 
       yearBlock.querySelectorAll(".awards-page-card").forEach((card) => {
-        const media = card.querySelector(".awards-page-card-media");
-        const bodyChildren = Array.from(card.children).filter((child) => !child.classList.contains("awards-page-card-media"));
-
         if (year) {
           card.dataset.awardYear = year;
         }
-
-        if (media && year && !media.querySelector(".awards-page-card-badges")) {
-          const badges = document.createElement("div");
-          const typeChip = document.createElement("span");
-          const yearChip = document.createElement("span");
-
-          badges.className = "awards-page-card-badges";
-          typeChip.className = "awards-page-card-chip";
-          yearChip.className = "awards-page-card-chip";
-          typeChip.textContent = "Награда";
-          yearChip.textContent = year;
-          badges.append(typeChip, yearChip);
-          media.append(badges);
-        }
-
-        if (bodyChildren.length > 0 && !card.querySelector(".awards-page-card-body")) {
-          const body = document.createElement("div");
-          body.className = "awards-page-card-body";
-          bodyChildren.forEach((child) => body.appendChild(child));
-          card.appendChild(body);
-        }
+        card.dataset.cardType = "award";
+        card.dataset.cardLabel = "Награда";
       });
     });
+
+    const mixedCards = [
+      ...Array.from(awardsArchiveList.querySelectorAll(".awards-page-card")),
+      ...archiveReviewCards.map(createArchiveReviewCard)
+    ];
+
+    mixedCards.forEach((card) => {
+      decorateArchiveCard(card);
+      awardsArchiveList.append(card);
+    });
+
+    shuffleItems(mixedCards).forEach((card) => {
+      awardsArchiveList.append(card);
+    });
+
+    awardsArchiveList.dataset.archiveMixed = "true";
   };
 
   const initAwardsTimeline = () => {
@@ -452,8 +728,11 @@
       return;
     }
 
+    const yearValue = rawTarget.matches(".awards-page-year")
+      ? rawTarget.querySelector(".awards-page-year-label")?.textContent?.trim()
+      : "";
     const target = rawTarget.matches(".awards-page-year")
-      ? rawTarget.querySelector(".awards-page-card") || rawTarget
+      ? document.querySelector(`.awards-page-card[data-award-year="${yearValue}"]`) || rawTarget.querySelector(".awards-page-card") || rawTarget
       : rawTarget;
 
     window.requestAnimationFrame(() => {
@@ -468,6 +747,7 @@
     initSharedHeader();
     initAwardsTimeline();
     enhanceAwardsArchive();
+    initTestimonialModals();
     scrollToHashTarget();
   };
 
