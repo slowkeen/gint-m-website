@@ -237,6 +237,9 @@
       area: "1100 м²",
       year: "2025",
       address: "Россия, Москва, проезд Бумажный, д. 19, помещ. 9/1С",
+      workType: "Генеральный подрядчик",
+      projectClient: "Кит Мед",
+      status: "Завершено 100%",
       summary: "Офис «Кит Мед» в STONE TOWERS — рабочее и обучающее пространство для команды, гостей и профессионального развития специалистов.",
       about: [
         "Проект реализован для компании «Кит Мед» в бизнес-центре класса A STONE TOWERS, башня C. Пространство задумывалось не только как повседневный офис, но и как среда, совмещающая рабочие процессы, прием гостей и обучающую функцию.",
@@ -308,7 +311,10 @@
       reviewAddress: "",
       reviewBody: [],
       clientPersonName: "",
-      clientPersonRole: ""
+      clientPersonRole: "",
+      workType: "",
+      projectClient: "",
+      status: ""
     }))
     .map((project) => ({
       ...project,
@@ -621,11 +627,14 @@
   const headlineSummary = document.getElementById("project-case-summary");
   const headlineReadMore = document.getElementById("project-case-summary-read-more");
   const descriptionLayout = document.getElementById("project-case-description-layout");
-  const dateStartCard = document.getElementById("project-case-date-start-card");
-  const dateStartLabel = document.getElementById("project-case-date-start-label");
-  const dateStartValue = document.getElementById("project-case-date-start");
-  const dateEndCard = document.getElementById("project-case-date-end-card");
-  const dateEndValue = document.getElementById("project-case-date-end");
+  const factsList = document.getElementById("project-case-facts-list");
+  const workScopeRow = document.getElementById("project-case-work-scope-row");
+  const areaRow = document.getElementById("project-case-area-row");
+  const addressRow = document.getElementById("project-case-address-row");
+  const workTypeRow = document.getElementById("project-case-work-type-row");
+  const projectClientRow = document.getElementById("project-case-client-row");
+  const durationRow = document.getElementById("project-case-duration-row");
+  const statusRow = document.getElementById("project-case-status-row");
   const awardCard = document.getElementById("project-case-award");
   const awardImage = document.getElementById("project-case-award-image");
   const awardTitle = document.getElementById("project-case-award-title");
@@ -693,8 +702,52 @@
   if (breadcrumbCurrent) {
     breadcrumbCurrent.textContent = project.title;
   }
-  setText("project-case-area", project.area);
-  setText("project-case-address", project.address);
+
+  const workScopeText = firstText(project.workScope, project.descriptionLead);
+  const areaText = firstText(project.area);
+  const addressText = firstText(project.address);
+  const workTypeText = firstText(project.workType);
+  const projectClientText = firstText(project.projectClient);
+  const durationText = project.startDate && project.endDate
+    ? `начало - ${project.startDate}, окончание - ${project.endDate}`
+    : project.startDate
+      ? `начало - ${project.startDate}`
+      : project.endDate
+        ? `окончание - ${project.endDate}`
+        : firstText(project.duration);
+  const statusText = firstText(project.status);
+
+  const syncFactRow = (row, valueId, value) => {
+    if (!row) {
+      return;
+    }
+
+    row.hidden = !value;
+
+    if (value) {
+      setText(valueId, value);
+    }
+  };
+
+  syncFactRow(workScopeRow, "project-case-work-scope", workScopeText);
+  syncFactRow(areaRow, "project-case-area", areaText);
+  syncFactRow(workTypeRow, "project-case-work-type", workTypeText);
+  syncFactRow(addressRow, "project-case-address", addressText);
+  syncFactRow(projectClientRow, "project-case-client", projectClientText);
+  syncFactRow(durationRow, "project-case-duration", durationText);
+  syncFactRow(statusRow, "project-case-status", statusText);
+
+  if (factsList) {
+    factsList.hidden = ![
+      workScopeText,
+      areaText,
+      workTypeText,
+      addressText,
+      projectClientText,
+      durationText,
+      statusText
+    ].some(Boolean);
+  }
 
   const hasProjectAward = Boolean(
     project.award
@@ -712,22 +765,22 @@
     descriptionLayout.classList.toggle("project-case-description-layout-has-award", hasProjectAward);
   }
 
-  const descriptionGrid = descriptionLayout?.querySelector(".project-case-description-grid");
+  const factsBlock = descriptionLayout?.querySelector(".project-case-facts-list");
   let descriptionMain = descriptionLayout?.querySelector(".project-case-description-main");
 
-  if (descriptionLayout && descriptionGrid) {
+  if (descriptionLayout && factsBlock) {
     if (!descriptionMain) {
       descriptionMain = document.createElement("div");
       descriptionMain.className = "project-case-description-main";
-      descriptionLayout.insertBefore(descriptionMain, descriptionGrid);
+      descriptionLayout.insertBefore(descriptionMain, factsBlock);
     }
 
     if (headlineCopy && !descriptionMain.contains(headlineCopy)) {
       descriptionMain.append(headlineCopy);
     }
 
-    if (!descriptionMain.contains(descriptionGrid)) {
-      descriptionMain.append(descriptionGrid);
+    if (!descriptionMain.contains(factsBlock)) {
+      descriptionMain.append(factsBlock);
     }
   }
 
@@ -760,26 +813,7 @@
   }));
   const clientFeatureItem = galleryItems[Math.min(1, galleryItems.length - 1)] || galleryItems[0];
 
-  if (dateStartLabel && dateStartValue) {
-    if (project.startDate) {
-      dateStartLabel.textContent = "Начало";
-      dateStartValue.textContent = project.startDate;
-    } else {
-      dateStartLabel.textContent = "Срок реализации";
-      dateStartValue.textContent = project.duration || "—";
-    }
-  }
-
-  if (dateEndCard && dateEndValue) {
-    if (project.endDate) {
-      dateEndCard.hidden = false;
-      dateEndValue.textContent = project.endDate;
-    } else {
-      dateEndCard.hidden = true;
-    }
-  }
-
-  const summaryText = firstText(project.summary, project.descriptionLead, project.workScope);
+  const summaryText = firstText(project.summary);
   const detailsLeadText = firstText(project.descriptionLead, project.workScope, project.summary);
   const aboutParagraphs = toParagraphs(project.about);
   const roleParagraphs = toParagraphs(project.role);
