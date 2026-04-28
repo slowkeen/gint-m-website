@@ -131,6 +131,10 @@
   cursor: pointer;
 }
 
+.projects-page .projects-masonry {
+  --projects-gap: clamp(24px, 2vw, 30px);
+}
+
 .projects-page-next {
   padding-bottom: 0;
 }
@@ -264,6 +268,10 @@
     padding-top: 96px;
   }
 
+  .projects-page .projects-masonry {
+    --projects-gap: clamp(18px, 2.4vw, 24px);
+  }
+
   .projects-page-next-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -280,6 +288,10 @@
     overflow-x: auto;
     padding-bottom: 4px;
     scrollbar-width: none;
+  }
+
+  .projects-page .projects-masonry {
+    --projects-gap: 16px;
   }
 
   .projects-page-filters::-webkit-scrollbar {
