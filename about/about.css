@@ -813,13 +813,27 @@
   gap: 28px;
 }
 
-body[data-about-route="company"] #organization-chart .about-section-head {
-  display: none;
-}
-
 body[data-about-route="company"] #organization-chart .about-structure-aside-note,
 body[data-about-route="company"] #organization-chart .about-structure-support {
   display: none;
+}
+
+body[data-about-route="company"] #organization-chart .about-section-head {
+  grid-template-columns: minmax(0, 0.96fr) minmax(720px, 1.04fr);
+}
+
+body[data-about-route="company"] #organization-chart .about-section-lead {
+  justify-self: end;
+  max-width: 54ch;
+}
+
+body[data-about-route="company"] .about-certificates-section .about-section-head {
+  grid-template-columns: minmax(0, 0.96fr) minmax(720px, 1.04fr);
+}
+
+body[data-about-route="company"] .about-certificates-section .about-section-lead {
+  justify-self: end;
+  max-width: 54ch;
 }
 
 .about-detail-card,
@@ -1610,6 +1624,11 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
     justify-content: flex-start;
   }
 
+  body[data-about-route="company"] #organization-chart .about-section-head,
+  body[data-about-route="company"] .about-certificates-section .about-section-head {
+    grid-template-columns: 1fr;
+  }
+
   .about-clients-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -2191,7 +2210,7 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
 
 .about-structure-story-title {
   margin: 0;
-  max-width: 16ch;
+  max-width: none;
   color: var(--text-strong);
   font-family: var(--font-heading);
   font-size: clamp(28px, 3.2vw, 44px);
@@ -2199,7 +2218,7 @@ body[data-about-route="company"] #organization-chart .about-structure-support {
   line-height: 0.98;
   letter-spacing: var(--heading-tracking);
   text-align: center;
-  text-wrap: balance;
+  white-space: nowrap;
 }
 
 .about-structure-columns {

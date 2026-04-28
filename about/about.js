@@ -15,7 +15,7 @@
       sectionId: "organization-chart",
       title: "ГИНТ-М — Структура компании",
       description: "Организационная структура ГИНТ-М: управляющий партнер, департаменты и ключевые подразделения компании.",
-      label: "Структура"
+      label: "Структура компании"
     },
     "quality-control": {
       path: resolveSitePath("/about/quality-control/"),
