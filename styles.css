@@ -1289,11 +1289,11 @@ body.menu-open {
   border-radius: 0;
   background: none;
   font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   line-height: 1.15;
   letter-spacing: 0.12em;
-  color: rgba(17, 19, 26, 0.46);
+  color: rgba(17, 19, 26, 0.68);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   transition: color 260ms var(--ease-out-soft);
@@ -1321,7 +1321,7 @@ body.menu-open {
 
 .project-photo-link:hover .project-photo-year,
 .project-photo-link:focus-visible .project-photo-year {
-  color: rgba(17, 19, 26, 0.66);
+  color: rgba(17, 19, 26, 0.82);
 }
 
 .company-head {
@@ -5841,7 +5841,7 @@ tr:last-child td {
 .project-photo-year {
   min-height: auto;
   padding-inline: 0;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.1em;
 }
 
