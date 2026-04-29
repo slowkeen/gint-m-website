@@ -191,8 +191,7 @@
     const motionTargets = [
       ...document.querySelectorAll(".contacts-page-breadcrumbs, .contacts-page-title"),
       ...document.querySelectorAll(".contacts-page-card"),
-      ...document.querySelectorAll(".contacts-page-map-head, .contacts-page-map-frame"),
-      ...document.querySelectorAll(".page-next-title, .page-next-link")
+      ...document.querySelectorAll(".contacts-page-map-head, .contacts-page-map-frame")
     ];
 
     if (motionTargets.length === 0) {

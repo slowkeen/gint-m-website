@@ -486,8 +486,7 @@
     const initProjectsPageMotion = () => {
       const motionTargets = [
         ...document.querySelectorAll(".projects-page-breadcrumbs, .projects-page-title, .projects-page-controls"),
-        ...projectCards,
-        ...document.querySelectorAll(".projects-page-next-title, .projects-page-next-link")
+        ...projectCards
       ];
 
       if (motionTargets.length === 0) {

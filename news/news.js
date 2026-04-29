@@ -207,8 +207,7 @@
       ]
       : [
         ...document.querySelectorAll(".news-page-breadcrumbs, .news-page-title"),
-        ...document.querySelectorAll(".news-feed-card"),
-        ...document.querySelectorAll(".page-next-title, .page-next-link")
+        ...document.querySelectorAll(".news-feed-card")
       ];
 
     if (motionTargets.length === 0) {
