@@ -229,9 +229,51 @@
     });
   };
 
+  const initFeedbackForm = () => {
+    const form = document.querySelector("[data-feedback-form]");
+    const status = document.querySelector("[data-feedback-status]");
+
+    if (!form) {
+      return;
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      const formData = new FormData(form);
+      const name = String(formData.get("name") || "").trim();
+      const phone = String(formData.get("phone") || "").trim();
+      const contactMethod = String(formData.get("contact_method") || "").trim();
+      const subject = "Заявка с сайта ГИНТ-М";
+
+      const bodyLines = [
+        `Имя: ${name}`,
+        `Телефон: ${phone}`
+      ];
+
+      if (contactMethod) {
+        bodyLines.push(`Удобный способ связи: ${contactMethod}`);
+      }
+
+      const body = bodyLines.join("\n");
+
+      window.location.href = `mailto:info@gint-m.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      if (status) {
+        status.hidden = false;
+        status.textContent = "Откроется почтовый клиент с заполненным письмом на info@gint-m.ru.";
+      }
+    });
+  };
+
   const init = () => {
     initSharedHeader();
     initContactsMotion();
+    initFeedbackForm();
     scrollToHashTarget();
   };
 

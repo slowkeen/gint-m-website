@@ -10,7 +10,7 @@
   />
   <link rel="icon" href="../logo/Frame%20109.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../styles.css?v=20260426-cookie-1" />
-  <link rel="stylesheet" href="./contacts.css?v=20260426-contacts-motion-7" />
+  <link rel="stylesheet" href="./contacts.css?v=20260429-feedback-3" />
 </head>
 <body class="page-font-sf-pro contacts-page">
   <div data-site-partial="../partials/header.ru.html"></div>
@@ -56,6 +56,56 @@
       </div>
     </section>
 
+    <section class="contacts-feedback-section" aria-labelledby="contacts-feedback-title">
+      <div class="contacts-page-shell">
+        <div class="contacts-feedback">
+          <div class="contacts-feedback-copy">
+            <p class="contacts-feedback-eyebrow">Обратная связь</p>
+            <h2 class="contacts-feedback-title" id="contacts-feedback-title">Оставьте заявку</h2>
+            <p class="contacts-feedback-text">
+              Оставьте контакт. Команда ГИНТ-М свяжется с вами, чтобы уточнить вводные и следующий шаг.
+            </p>
+          </div>
+
+          <form class="contacts-feedback-form" action="mailto:info@gint-m.ru" method="post" enctype="text/plain" data-feedback-form>
+            <div class="contacts-feedback-form-grid">
+              <label class="contact-field">
+                <span>Имя</span>
+                <input type="text" name="name" autocomplete="name" placeholder="Как к вам обращаться" maxlength="80" required />
+              </label>
+
+              <label class="contact-field">
+                <span>Телефон</span>
+                <input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" maxlength="32" required />
+              </label>
+
+              <fieldset class="contact-contact-methods contacts-feedback-methods">
+                <legend>Как удобнее связаться</legend>
+                <label class="contact-method-chip">
+                  <input type="radio" name="contact_method" value="Телефон" checked />
+                  <span>Телефон</span>
+                </label>
+                <label class="contact-method-chip">
+                  <input type="radio" name="contact_method" value="Telegram" />
+                  <span>Telegram</span>
+                </label>
+              </fieldset>
+            </div>
+
+            <div class="contacts-feedback-footer">
+              <label class="contact-cta-consent contacts-feedback-consent">
+                <input type="checkbox" name="privacy" required />
+                <span>Согласен на обработку персональных данных и принимаю <a href="/privacy/">политику конфиденциальности</a>.</span>
+              </label>
+
+              <button class="contact-cta-submit contacts-feedback-submit" type="submit">Отправить заявку</button>
+              <p class="contacts-feedback-status" role="status" aria-live="polite" data-feedback-status hidden></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <section class="contacts-page-map" aria-labelledby="contacts-map-title">
       <div class="contacts-page-shell">
         <div class="contacts-page-map-card">
@@ -76,6 +126,6 @@
 
   <div data-site-partial="../partials/footer.ru.html"></div>
   <script src="../scripts/shared-partials.js?v=20260426-cookie-1"></script>
-  <script src="./contacts.js?v=20260426-contacts-motion-3"></script>
+  <script src="./contacts.js?v=20260429-feedback-2"></script>
 </body>
 </html>
