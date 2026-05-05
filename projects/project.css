@@ -2241,6 +2241,10 @@
   color: #11131a;
 }
 
+.project-case-page #project-case-duration {
+  white-space: pre-line;
+}
+
 .project-case-page #project-case-work-scope-row .project-case-fact-label {
   color: #11131a;
   font-size: clamp(14px, 0.92vw, 16px);

@@ -719,7 +719,7 @@
   const workTypeText = firstText(project.workType);
   const projectClientText = firstText(project.projectClient);
   const durationText = project.startDate && project.endDate
-    ? `начало - ${project.startDate}, окончание - ${project.endDate}`
+    ? `начало - ${project.startDate}\nокончание - ${project.endDate}`
     : project.startDate
       ? `начало - ${project.startDate}`
       : project.endDate
