@@ -925,7 +925,7 @@ const initSite = () => {
 
     companyLogoAutoplayId = window.setInterval(() => {
       showCompanyLogoPage(1);
-    }, 3000);
+    }, 2000);
   };
 
   const shiftCompanyLogoPage = (direction) => {

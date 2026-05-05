@@ -478,7 +478,7 @@
 
       autoplayId = window.setInterval(() => {
         showPage(1);
-      }, 3000);
+      }, 2000);
     };
 
     const shiftPage = (direction) => {
