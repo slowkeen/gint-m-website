@@ -240,6 +240,9 @@
       workType: "Генеральный подрядчик",
       projectClient: "Кит Мед",
       status: "Завершено 100%",
+      clientHeroLogoSrc: "../logos/clients/color/kit-med-logo.svg",
+      clientHeroLogoWidth: 239,
+      clientHeroLogoHeight: 155,
       summary: "Офис «Кит Мед» в STONE TOWERS — рабочее и обучающее пространство для команды, гостей и профессионального развития специалистов.",
       about: [
         "Проект реализован для компании «Кит Мед» в бизнес-центре класса A STONE TOWERS, башня C. Пространство задумывалось не только как повседневный офис, но и как среда, совмещающая рабочие процессы, прием гостей и обучающую функцию.",
@@ -304,6 +307,10 @@
       clientLogoAlt: "",
       clientLogoWidth: 220,
       clientLogoHeight: 72,
+      clientHeroLogoSrc: "",
+      clientHeroLogoAlt: "",
+      clientHeroLogoWidth: 239,
+      clientHeroLogoHeight: 155,
       reviewPreviewImage: "",
       reviewPreviewAlt: "",
       reviewPreviewWidth: 1241,
@@ -636,8 +643,11 @@
   const durationRow = document.getElementById("project-case-duration-row");
   const statusRow = document.getElementById("project-case-status-row");
   const awardCard = document.getElementById("project-case-award");
+  const awardInnerCard = awardCard?.querySelector(".project-case-award-card");
   const awardImage = document.getElementById("project-case-award-image");
   const awardTitle = document.getElementById("project-case-award-title");
+  const heroClientLogo = document.getElementById("project-case-client-logo-mark");
+  const heroClientLogoImage = document.getElementById("project-case-client-logo-mark-image");
   const clientCard = document.getElementById("project-case-client-card");
   const clientBrand = document.getElementById("project-case-client-brand");
   const clientLogo = document.getElementById("project-client-logo");
@@ -755,6 +765,8 @@
     && project.award.imageSrc
     && project.award.title
   );
+  const hasHeroClientLogo = Boolean(project.clientHeroLogoSrc && project.clientHeroLogoSrc.trim());
+  const hasProjectSideRail = hasProjectAward || hasHeroClientLogo;
 
   if (yearBadge) {
     yearBadge.hidden = !project.year;
@@ -762,7 +774,8 @@
   }
 
   if (descriptionLayout) {
-    descriptionLayout.classList.toggle("project-case-description-layout-has-award", hasProjectAward);
+    descriptionLayout.classList.toggle("project-case-description-layout-has-award", hasProjectSideRail);
+    descriptionLayout.classList.toggle("project-case-description-layout-has-client-logo", hasHeroClientLogo);
   }
 
   const factsBlock = descriptionLayout?.querySelector(".project-case-facts-list");
@@ -785,7 +798,27 @@
   }
 
   if (awardCard) {
-    awardCard.hidden = !hasProjectAward;
+    awardCard.hidden = !hasProjectSideRail;
+  }
+
+  if (awardInnerCard) {
+    awardInnerCard.hidden = !hasProjectAward;
+  }
+
+  if (heroClientLogo) {
+    heroClientLogo.hidden = !hasHeroClientLogo;
+  }
+
+  if (heroClientLogoImage) {
+    if (hasHeroClientLogo) {
+      heroClientLogoImage.src = project.clientHeroLogoSrc;
+      heroClientLogoImage.alt = project.clientHeroLogoAlt || project.clientName || "Client logo";
+      heroClientLogoImage.width = project.clientHeroLogoWidth || 239;
+      heroClientLogoImage.height = project.clientHeroLogoHeight || 155;
+    } else {
+      heroClientLogoImage.src = transparentPixel;
+      heroClientLogoImage.alt = "";
+    }
   }
 
   if (awardImage) {

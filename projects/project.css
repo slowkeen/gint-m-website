@@ -2257,7 +2257,40 @@
 }
 
 .project-case-page .project-case-award {
+  display: grid;
+  gap: clamp(14px, 1.4vw, 18px);
+  align-content: start;
   height: 100%;
+}
+
+.project-case-page .project-case-hero-shell {
+  position: relative;
+}
+
+.project-case-page .project-case-client-logo-mark {
+  position: absolute;
+  top: clamp(8px, 1vw, 14px);
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: min(228px, 18vw);
+  min-height: clamp(58px, 6vw, 86px);
+  pointer-events: none;
+}
+
+.project-case-page .project-case-client-logo-mark[hidden] {
+  display: none !important;
+}
+
+.project-case-page .project-case-client-logo-mark-image {
+  display: block;
+  width: auto;
+  max-width: min(100%, 156px);
+  max-height: clamp(58px, 5.4vw, 78px);
+  object-fit: contain;
+  object-position: right center;
 }
 
 .project-case-page .project-case-award-card {
@@ -2265,6 +2298,11 @@
   grid-template-rows: minmax(0, 1fr) auto;
   align-content: stretch;
   padding: clamp(14px, 1.2vw, 18px);
+}
+
+.project-case-page .project-case-description-layout-has-client-logo .project-case-award-card {
+  height: auto;
+  min-height: clamp(330px, 31vw, 390px);
 }
 
 .project-case-page .project-case-award-media {
@@ -2283,6 +2321,15 @@
 }
 
 @media (max-width: 1180px) {
+  .project-case-page .project-case-description-layout.project-case-description-layout-has-award {
+    grid-template-columns: 1fr;
+  }
+
+  .project-case-page .project-case-award {
+    max-width: min(100%, 260px);
+    height: auto;
+  }
+
   .project-case-page .project-case-facts-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2290,9 +2337,26 @@
   .project-case-page #project-case-work-scope-row {
     grid-column: 1 / -1;
   }
+
+  .project-case-page .project-case-client-logo-mark {
+    position: static;
+    justify-content: flex-start;
+    width: fit-content;
+    min-height: auto;
+    margin-bottom: 12px;
+    pointer-events: auto;
+  }
+
+  .project-case-page .project-case-client-logo-mark-image {
+    max-height: 68px;
+  }
 }
 
 @media (max-width: 760px) {
+  .project-case-page .project-case-award {
+    max-width: none;
+  }
+
   .project-case-page .project-case-description-main {
     gap: 18px;
   }
@@ -2315,5 +2379,14 @@
     grid-template-columns: 1fr;
     gap: 8px;
     padding: 0 0 14px;
+  }
+
+  .project-case-page .project-case-client-logo-mark-image {
+    max-width: 132px;
+    max-height: 56px;
+  }
+
+  .project-case-page .project-case-description-layout-has-client-logo .project-case-award-card {
+    min-height: 0;
   }
 }
