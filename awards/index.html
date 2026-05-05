@@ -10,7 +10,7 @@
   />
   <link rel="icon" href="../logo/Frame%20109.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../styles.css?v=20260426-cookie-1" />
-  <link rel="stylesheet" href="./awards.css?v=20260428-awards-reviews-5" />
+  <link rel="stylesheet" href="./awards.css?v=20260505-awards-filter-2" />
 </head>
 <body class="page-font-sf-pro awards-page">
   <div data-site-partial="../partials/header.ru.html"></div>
@@ -297,6 +297,12 @@
           <p class="awards-page-intro">
             В архиве собраны награды и отзывы клиентов. Карточки перемешаны в общей витрине, а ссылки из таймлайна по-прежнему ведут к нужной награде.
           </p>
+        </div>
+
+        <div class="awards-page-filters" role="group" aria-label="Фильтрация архива" data-awards-filter>
+          <button class="awards-page-filter-button is-active" type="button" data-awards-filter-button="all" aria-pressed="true">Все</button>
+          <button class="awards-page-filter-button" type="button" data-awards-filter-button="award" aria-pressed="false">Награды</button>
+          <button class="awards-page-filter-button" type="button" data-awards-filter-button="review" aria-pressed="false">Отзывы</button>
         </div>
 
         <div class="awards-page-list">
@@ -829,6 +835,6 @@
 
   <div data-site-partial="../partials/footer.ru.html"></div>
   <script src="../scripts/shared-partials.js?v=20260426-cookie-1"></script>
-  <script src="./awards.js?v=20260428-awards-reviews-2"></script>
+  <script src="./awards.js?v=20260505-awards-filter-2"></script>
 </body>
 </html>

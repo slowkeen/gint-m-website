@@ -481,6 +481,60 @@
     awardsArchiveList.dataset.archiveMixed = "true";
   };
 
+  const initAwardsArchiveFilters = () => {
+    const filterGroup = document.querySelector("[data-awards-filter]");
+    const awardsArchiveList = document.querySelector(".awards-page-list");
+
+    if (!filterGroup || !awardsArchiveList) {
+      return;
+    }
+
+    const filterButtons = Array.from(filterGroup.querySelectorAll("[data-awards-filter-button]"));
+
+    if (filterButtons.length === 0) {
+      return;
+    }
+
+    const getArchiveCards = () => Array.from(awardsArchiveList.querySelectorAll(".awards-page-card"));
+
+    const getCardType = (card) => {
+      if (!card.dataset.cardType) {
+        card.dataset.cardType = card.classList.contains("awards-page-card-review") ? "review" : "award";
+      }
+
+      return card.dataset.cardType;
+    };
+
+    const setActiveFilter = (filterValue) => {
+      filterButtons.forEach((button) => {
+        const isActive = button.dataset.awardsFilterButton === filterValue;
+
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+
+      getArchiveCards().forEach((card) => {
+        const shouldShow = filterValue === "all" || getCardType(card) === filterValue;
+
+        card.hidden = !shouldShow;
+        card.classList.toggle("is-filter-hidden", !shouldShow);
+        card.setAttribute("aria-hidden", String(!shouldShow));
+      });
+    };
+
+    filterGroup.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-awards-filter-button]");
+
+      if (!button || !filterGroup.contains(button)) {
+        return;
+      }
+
+      setActiveFilter(button.dataset.awardsFilterButton || "all");
+    });
+
+    setActiveFilter(filterGroup.querySelector(".is-active")?.dataset.awardsFilterButton || "all");
+  };
+
   const initAwardsTimeline = () => {
     const awardsTimeline = document.querySelector("[data-awards-timeline]");
     const awardsTimelineStage = awardsTimeline ? awardsTimeline.querySelector("[data-awards-timeline-stage]") : null;
@@ -747,6 +801,7 @@
     initSharedHeader();
     initAwardsTimeline();
     enhanceAwardsArchive();
+    initAwardsArchiveFilters();
     initTestimonialModals();
     scrollToHashTarget();
   };
