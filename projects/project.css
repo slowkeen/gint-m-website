@@ -2278,7 +2278,7 @@
   z-index: 2;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   width: min(228px, 18vw);
   min-height: clamp(58px, 6vw, 86px);
   pointer-events: none;
@@ -2294,7 +2294,7 @@
   max-width: min(100%, 156px);
   max-height: clamp(58px, 5.4vw, 78px);
   object-fit: contain;
-  object-position: right center;
+  object-position: center;
 }
 
 .project-case-page .project-case-award-card {
