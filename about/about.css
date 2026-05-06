@@ -2,6 +2,7 @@
   --about-header-offset: 94px;
   --about-nav-offset: 78px;
   --about-block-space: calc(var(--section-space-y) * 2);
+  --about-overview-stack-gap: clamp(64px, 6vw, 96px);
   color: var(--text-strong);
   background: #ffffff;
 }
@@ -301,7 +302,7 @@
 
 .about-overview-layout {
   display: grid;
-  gap: var(--about-block-space);
+  gap: var(--about-overview-stack-gap);
 }
 
 .about-overview-intro {
