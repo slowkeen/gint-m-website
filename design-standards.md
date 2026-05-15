@@ -25,6 +25,15 @@ These defaults come from the current homepage and are the baseline for all new i
 - Major section title scale: `clamp(30px, 3.8vw, 56px)`
 - Secondary card / subsection title scale: `clamp(24px, 2vw, 32px)`
 
+### Mobile Typography
+
+- Mobile hero H1: `var(--type-mobile-hero-title-size)` = `clamp(34px, 11vw, 54px)`
+- Mobile page / major section titles: `var(--type-mobile-page-title-size)` or `var(--type-mobile-section-title-size)` = `clamp(28px, 8vw, 38px)`
+- Mobile card / secondary titles: `var(--type-mobile-card-title-size)` = `clamp(24px, 7vw, 30px)`
+- Mobile compact titles: `var(--type-mobile-subtitle-size)` = `clamp(20px, 5.8vw, 24px)`
+- Mobile lead copy: `var(--type-mobile-lead-size)` = `clamp(16px, 4.8vw, 18px)`
+- Local page CSS must use these tokens in mobile breakpoints instead of hard-coded one-off title sizes.
+
 ## Working Rule
 
 - Start from shared homepage tokens and title scales first.

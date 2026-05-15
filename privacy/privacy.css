@@ -177,3 +177,22 @@
     font-size: 20px;
   }
 }
+
+@media (max-width: 767px) {
+  .privacy-article .news-article-lead {
+    font-size: var(--type-mobile-lead-size);
+    line-height: var(--type-mobile-copy-line);
+  }
+
+  .privacy-article-prose h2 {
+    font-size: var(--type-mobile-card-title-size);
+    line-height: var(--type-mobile-card-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .privacy-article-contact-card strong {
+    font-size: var(--type-mobile-compact-title-size);
+    line-height: 1.16;
+    letter-spacing: -0.03em;
+  }
+}

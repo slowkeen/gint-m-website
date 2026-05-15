@@ -152,3 +152,11 @@
 .news-page-breadcrumbs a:focus-visible {
   color: #172E6E;
 }
+
+@media (max-width: 767px) {
+  .news-page-title {
+    font-size: var(--type-mobile-page-title-size);
+    line-height: var(--type-mobile-heading-line);
+    letter-spacing: var(--heading-tracking);
+  }
+}

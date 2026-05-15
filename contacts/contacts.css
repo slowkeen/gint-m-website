@@ -492,3 +492,23 @@ a.contacts-page-card:active {
     left: 18px;
   }
 }
+
+@media (max-width: 767px) {
+  .contacts-page-title,
+  .contacts-feedback-title {
+    font-size: var(--type-mobile-page-title-size);
+    line-height: var(--type-mobile-heading-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .contacts-page-map-title {
+    font-size: var(--type-mobile-card-title-size);
+    line-height: var(--type-mobile-card-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .contacts-feedback-text {
+    font-size: var(--type-mobile-lead-size);
+    line-height: var(--type-mobile-copy-line);
+  }
+}

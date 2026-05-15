@@ -162,3 +162,16 @@
     line-height: 1.8;
   }
 }
+
+@media (max-width: 767px) {
+  .news-article-title {
+    font-size: var(--type-mobile-page-title-size);
+    line-height: var(--type-mobile-heading-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .news-article-lead {
+    font-size: var(--type-mobile-lead-size);
+    line-height: var(--type-mobile-copy-line);
+  }
+}

@@ -203,3 +203,11 @@
     font-size: 13px;
   }
 }
+
+@media (max-width: 767px) {
+  .projects-page-title {
+    font-size: var(--type-mobile-page-title-size);
+    line-height: var(--type-mobile-heading-line);
+    letter-spacing: var(--heading-tracking);
+  }
+}

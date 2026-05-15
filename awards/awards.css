@@ -553,3 +553,24 @@
     font-size: 14px;
   }
 }
+
+@media (max-width: 767px) {
+  .awards-page-title,
+  .awards-page-section-title {
+    font-size: var(--type-mobile-page-title-size);
+    line-height: var(--type-mobile-heading-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .awards-page-year-title,
+  .awards-page-card-title {
+    font-size: var(--type-mobile-card-title-size);
+    line-height: var(--type-mobile-card-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .awards-page-intro {
+    font-size: var(--type-mobile-lead-size);
+    line-height: var(--type-mobile-copy-line);
+  }
+}

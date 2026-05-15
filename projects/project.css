@@ -2394,3 +2394,38 @@
     min-height: 0;
   }
 }
+
+@media (max-width: 767px) {
+  .project-case-title,
+  .project-case-page .project-case-title {
+    font-size: var(--type-mobile-page-title-size);
+    line-height: var(--type-mobile-heading-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .project-case-section-title,
+  .project-case-page .project-case-details-title,
+  .project-case-next-card-title,
+  .project-case-page .project-case-client-title,
+  .project-case-page .project-case-client-name,
+  .project-case-page .project-case-gallery-review .project-case-client-name {
+    font-size: var(--type-mobile-card-title-size);
+    line-height: var(--type-mobile-card-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .project-case-page .project-case-year,
+  .project-case-gallery-count,
+  .project-case-page .project-case-description-lead,
+  .project-case-page .project-case-details-lead {
+    font-size: var(--type-mobile-subtitle-size);
+    line-height: 1.14;
+    letter-spacing: -0.03em;
+  }
+
+  .project-case-summary,
+  .project-case-page .project-case-summary {
+    font-size: var(--type-mobile-lead-size);
+    line-height: var(--type-mobile-copy-line);
+  }
+}

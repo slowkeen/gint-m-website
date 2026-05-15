@@ -2652,3 +2652,48 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
     gap: 10px;
   }
 }
+
+@media (max-width: 767px) {
+  .about-hero-title,
+  .about-overview-title {
+    font-size: var(--type-mobile-page-title-size);
+    line-height: var(--type-mobile-heading-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .about-overview-points-title,
+  .about-overview-story .about-overview-points-title,
+  .about-clients-title,
+  .about-section-title,
+  .about-ecology-display {
+    font-size: var(--type-mobile-section-title-size);
+    line-height: var(--type-mobile-heading-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .about-subtitle,
+  .about-timeline-title,
+  .about-certificate-card-title,
+  .about-structure-story-title {
+    font-size: var(--type-mobile-card-title-size);
+    line-height: var(--type-mobile-card-line);
+    letter-spacing: var(--heading-tracking);
+  }
+
+  .about-overview-point-title,
+  .about-overview-story-point .about-overview-point-title,
+  .about-structure-column-title,
+  .about-ecology-panel-lead {
+    font-size: var(--type-mobile-subtitle-size);
+    line-height: 1.14;
+    letter-spacing: -0.03em;
+  }
+
+  .about-hero-note,
+  .about-overview-intro-page .about-overview-lead,
+  .about-section-lead,
+  .about-ecology-panel-note {
+    font-size: var(--type-mobile-lead-size);
+    line-height: var(--type-mobile-copy-line);
+  }
+}
