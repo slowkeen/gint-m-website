@@ -2621,11 +2621,21 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
 
   .about-structure-story-title {
     max-width: 100%;
-    font-size: clamp(20px, 5.2vw, 24px);
+    font-size: clamp(21px, 5.8vw, 22px);
     line-height: 1.14;
     text-align: left;
     white-space: normal;
     text-wrap: balance;
+  }
+
+  .about-structure-column-title {
+    font-size: clamp(17px, 4.6vw, 18px);
+    line-height: 1.22;
+  }
+
+  .about-structure-column-list li {
+    font-size: 14px;
+    line-height: 1.48;
   }
 }
 
