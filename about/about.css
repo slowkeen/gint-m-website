@@ -2545,3 +2545,93 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
     padding: 17px 0 19px;
   }
 }
+
+@media (max-width: 767px) {
+  .about-page {
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  .about-page .page-shell,
+  .about-page .hero-top.is-sticky:not(.is-menu-open) {
+    width: calc(100vw - (var(--page-gutter) * 2));
+    max-width: calc(100vw - (var(--page-gutter) * 2));
+    min-width: 0;
+  }
+
+  .about-page .hero-top.is-sticky:not(.is-menu-open) .hero-logo img {
+    max-width: calc(100vw - (var(--page-gutter) * 2) - 76px);
+  }
+
+  .about-page-main,
+  .about-overview-shell,
+  .about-overview-layout,
+  .about-overview-story,
+  .about-overview-story .about-overview-points-grid,
+  .about-clients-block,
+  .about-clients-slider,
+  .about-clients-stage,
+  .about-clients-track,
+  .about-clients-page,
+  .about-clients-grid,
+  .about-section-grid,
+  .about-section-body,
+  .about-structure-story,
+  .about-structure-board,
+  .about-structure-columns,
+  .about-certificates-list {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .about-overview-story .about-overview-points-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-overview-story-point,
+  .about-overview-story-point .about-overview-point-title,
+  .about-overview-story-point p,
+  .about-clients-title,
+  .about-section-title,
+  .about-section-lead,
+  .about-certificate-card-title,
+  .about-certificate-summary {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .about-clients-grid {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .about-clients-grid .company-logo-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .about-clients-grid .company-logo-card img {
+    max-width: 100%;
+  }
+
+  .about-structure-story-title {
+    max-width: 100%;
+    white-space: normal;
+    text-wrap: balance;
+  }
+}
+
+@media (max-width: 420px) {
+  .about-page {
+    --page-gutter: 24px;
+  }
+
+  .about-overview-story-point {
+    grid-template-columns: 28px minmax(0, 1fr);
+  }
+
+  .about-clients-grid {
+    gap: 10px;
+  }
+}
