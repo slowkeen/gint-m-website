@@ -2615,8 +2615,15 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
     max-width: 100%;
   }
 
+  .about-structure-board-head {
+    justify-items: start;
+  }
+
   .about-structure-story-title {
     max-width: 100%;
+    font-size: clamp(20px, 5.2vw, 24px);
+    line-height: 1.14;
+    text-align: left;
     white-space: normal;
     text-wrap: balance;
   }
