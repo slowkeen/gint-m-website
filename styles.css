@@ -7502,6 +7502,34 @@ img {
   }
 }
 
+@media (max-width: 767px) {
+  .awards-timeline-head,
+  .awards-timeline-actions {
+    display: contents;
+  }
+
+  .awards-timeline-copy {
+    order: 1;
+  }
+
+  .awards-timeline-nav {
+    order: 2;
+    justify-self: start;
+  }
+
+  .awards-timeline-stage {
+    order: 3;
+  }
+
+  .awards-timeline-link {
+    order: 4;
+    justify-self: center;
+    width: fit-content;
+    max-width: 100%;
+    margin-top: 2px;
+  }
+}
+
 /* Airier page rhythm */
 @media (min-width: 768px) {
   :root {
@@ -7862,8 +7890,22 @@ img {
 }
 
 @media (max-width: 767px) {
-.hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-menu-toggle {
+  .hero-block .hero-top:not(.is-sticky):not(.is-menu-open) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: clamp(10px, 3vw, 16px);
+  }
+
+  .hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-logo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-menu-toggle {
+    grid-column: 2;
+    grid-row: 1;
     display: inline-flex;
+    align-self: center;
   }
 
   .hero-block .hero-content {
@@ -7878,6 +7920,7 @@ img {
 @media (max-width: 640px) {
   .hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-logo img {
     width: clamp(216px, 66vw, 273px);
+    max-width: calc(100vw - (var(--page-gutter) * 2) - 60px);
   }
 }
 
