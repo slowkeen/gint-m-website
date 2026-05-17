@@ -476,9 +476,11 @@ const initSite = () => {
     }
   };
 
+  const getTestimonialDefaultView = () => mobileContentMediaQuery.matches ? "text" : "scan";
+
   const resetTestimonialViews = (scope = document) => {
     scope.querySelectorAll(".testimonial-letter[data-testimonial-view]").forEach((letter) => {
-      setTestimonialView(letter, "scan");
+      setTestimonialView(letter, getTestimonialDefaultView());
     });
   };
 
@@ -492,10 +494,12 @@ const initSite = () => {
 
     previewPanel.classList.add("testimonial-letter-panel");
     previewPanel.dataset.testimonialPanel = "scan";
+    previewPanel.querySelectorAll("img[loading='lazy']").forEach((image) => {
+      image.loading = "eager";
+    });
     textPanel.classList.add("testimonial-letter-panel");
     textPanel.dataset.testimonialPanel = "text";
-    textPanel.hidden = true;
-    letter.dataset.testimonialView = "scan";
+    letter.dataset.testimonialView = getTestimonialDefaultView();
 
     if (!letter.querySelector("[data-testimonial-toggle]")) {
       const actions = document.createElement("div");
@@ -516,6 +520,8 @@ const initSite = () => {
       actions.append(toggle);
       letter.append(actions);
     }
+
+    setTestimonialView(letter, getTestimonialDefaultView());
   });
   if (testimonialLoadButton) {
     testimonialLoadButton.addEventListener("click", () => {

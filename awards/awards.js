@@ -3,6 +3,7 @@
     ? window.resolveSitePath
     : (value) => value;
   const heroMenuMediaQuery = window.matchMedia("(max-width: 980px)");
+  const mobileContentMediaQuery = window.matchMedia("(max-width: 767px)");
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const normalizePath = (value) => {
@@ -309,7 +310,7 @@
 
     const resetTestimonialViews = (scope = document) => {
       scope.querySelectorAll(".testimonial-letter[data-testimonial-view]").forEach((letter) => {
-        setTestimonialView(letter, "scan");
+        setTestimonialView(letter, mobileContentMediaQuery.matches ? "text" : "scan");
       });
     };
 
@@ -358,10 +359,12 @@
 
       previewPanel.classList.add("testimonial-letter-panel");
       previewPanel.dataset.testimonialPanel = "scan";
+      previewPanel.querySelectorAll("img[loading='lazy']").forEach((image) => {
+        image.loading = "eager";
+      });
       textPanel.classList.add("testimonial-letter-panel");
       textPanel.dataset.testimonialPanel = "text";
-      textPanel.hidden = true;
-      letter.dataset.testimonialView = "scan";
+      letter.dataset.testimonialView = mobileContentMediaQuery.matches ? "text" : "scan";
 
       if (!letter.querySelector("[data-testimonial-toggle]")) {
         const actions = document.createElement("div");
@@ -382,6 +385,8 @@
         actions.append(toggle);
         letter.append(actions);
       }
+
+      setTestimonialView(letter, mobileContentMediaQuery.matches ? "text" : "scan");
     });
 
     document.addEventListener("click", (event) => {
