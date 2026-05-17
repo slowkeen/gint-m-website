@@ -8651,3 +8651,185 @@ img {
     transform: none;
   }
 }
+
+/* Mobile density pass: keep trust sections short without changing desktop composition. */
+@media (max-width: 767px) {
+  :root {
+    --section-space-y: 52px;
+    --section-space-y-mobile: 44px;
+  }
+
+  .hero-block {
+    padding-bottom: 38px;
+  }
+
+  .company-shell {
+    gap: 18px;
+  }
+
+  .company-title {
+    max-width: 18ch;
+    font-size: clamp(24px, 7vw, 32px);
+    line-height: 1.04;
+  }
+
+  .company-logos {
+    display: contents;
+  }
+
+  .company-logos-stage {
+    order: 4;
+    width: 100%;
+  }
+
+  .company-logos-footer {
+    display: contents;
+  }
+
+  .company-partners-link {
+    order: 3;
+    align-self: flex-start;
+    margin-top: -2px;
+  }
+
+  .company-logos-nav {
+    order: 5;
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .company-lead {
+    gap: 16px;
+    padding-top: 0;
+  }
+
+  .company-lead > .company-intro {
+    padding-bottom: 0;
+    font-size: clamp(15px, 4.1vw, 17px);
+    line-height: 1.48;
+  }
+
+  .company-about-link-row {
+    padding-top: 0;
+  }
+
+  .company-stats {
+    margin-top: 0;
+  }
+
+  .company-advantages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .company-advantages li {
+    min-height: 106px;
+    padding: 14px 12px 12px;
+    gap: 10px;
+  }
+
+  .company-stats .hero-adv-value {
+    font-size: clamp(26px, 7.4vw, 34px);
+    line-height: 0.9;
+  }
+
+  .company-stats .hero-adv-label {
+    max-width: 11ch;
+    font-size: 12px;
+    line-height: 1.22;
+  }
+
+  .company-logos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 68px;
+    gap: 8px;
+  }
+
+  .company-logos-page .company-logo-card:nth-child(n + 11) {
+    display: none;
+  }
+
+  .company-logo-card,
+  .company-logo-card.logo-microsoft,
+  .company-logo-card.logo-samsung {
+    min-width: 0;
+    min-height: 68px;
+    padding: 8px 10px;
+    border-radius: 12px;
+  }
+
+  .company-logo-card img {
+    width: var(--company-logo-box-width);
+    height: 34px;
+    max-width: 82%;
+    max-height: 38px;
+    transform: none;
+  }
+
+  .company-logo-card img[src*="total-logo.svg" i],
+  .company-logo-card img[src*="align-logo.svg" i] {
+    width: min(100%, 104px);
+    height: 34px;
+  }
+
+  .company-logo-card img[src*="winline-logo.svg" i] {
+    width: min(100%, 108px);
+    height: 34px;
+  }
+
+  .company-logo-card img[src*="bmw-logo.svg" i],
+  .company-logo-card img[src*="dell-logo.svg" i] {
+    width: min(100%, 42px);
+    height: 42px;
+  }
+
+  .company-logo-card img[src*="microsoft-logo.svg" i],
+  .company-logo-card img[src*="samsung-logo.svg" i],
+  .company-logo-card img[src*="skolkovo-logo.svg" i] {
+    height: 36px;
+    max-height: 36px;
+    transform: none;
+  }
+
+  .company-logos-nav-button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .trust-journal-grid-news .trust-journal-card-news:nth-of-type(n + 4):not(.trust-journal-card-cta) {
+    display: none;
+  }
+
+  .trust-journal-grid-news .trust-journal-card-meta {
+    display: none;
+  }
+
+  .trust-journal-grid-news .trust-journal-card-body {
+    gap: 0;
+    padding: 16px;
+  }
+
+  .trust-journal-grid-news .trust-journal-card-cta-link {
+    min-height: 136px;
+    padding: 18px;
+  }
+
+  .testimonials-panel {
+    padding-top: 32px;
+    padding-bottom: 24px;
+  }
+
+  .testimonial-review-quote p {
+    -webkit-line-clamp: 2;
+  }
+}
+
+@media (max-width: 420px) {
+  .company-advantages li {
+    padding-inline: 10px;
+  }
+
+  .company-stats .hero-adv-value {
+    font-size: clamp(23px, 7vw, 30px);
+  }
+}

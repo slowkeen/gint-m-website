@@ -6,6 +6,7 @@ const initSite = () => {
   const heroTopNav = document.querySelector(".hero-top-nav");
   const heroTopControls = document.querySelector(".hero-top-controls");
   const heroMenuMediaQuery = window.matchMedia("(max-width: 980px)");
+  const mobileContentMediaQuery = window.matchMedia("(max-width: 767px)");
   const modalClosers = document.querySelectorAll("[data-modal-close]");
   const contactModals = document.querySelectorAll(".contact-modal");
   const testimonialLetters = document.querySelectorAll(".testimonial-modal .testimonial-letter");
@@ -15,13 +16,25 @@ const initSite = () => {
     const parsed = Number.parseInt(value ?? "", 10);
     return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
   };
-  const TESTIMONIALS_INITIAL_VISIBLE = parsePositiveInt(
+  const parseResponsivePositiveInt = (desktopValue, mobileValue, desktopFallback, mobileFallback = desktopFallback) => {
+    const isMobileContent = mobileContentMediaQuery.matches;
+
+    return parsePositiveInt(
+      isMobileContent ? mobileValue : desktopValue,
+      isMobileContent ? mobileFallback : desktopFallback
+    );
+  };
+  const TESTIMONIALS_INITIAL_VISIBLE = parseResponsivePositiveInt(
     testimonialsGrid?.dataset.testimonialsInitialVisible || testimonialLoadButton?.dataset.testimonialsInitialVisible,
-    15
+    testimonialsGrid?.dataset.testimonialsMobileInitialVisible || testimonialLoadButton?.dataset.testimonialsMobileInitialVisible,
+    15,
+    3
   );
-  const TESTIMONIALS_BATCH_SIZE = parsePositiveInt(
+  const TESTIMONIALS_BATCH_SIZE = parseResponsivePositiveInt(
     testimonialsGrid?.dataset.testimonialsBatchSize || testimonialLoadButton?.dataset.testimonialsBatchSize,
-    15
+    testimonialsGrid?.dataset.testimonialsMobileBatchSize || testimonialLoadButton?.dataset.testimonialsMobileBatchSize,
+    15,
+    3
   );
   const pageLanguage = document.documentElement.lang?.toLowerCase().startsWith("en") ? "en" : "ru";
   const uiText = pageLanguage === "en"
@@ -1035,7 +1048,7 @@ const initSite = () => {
     ["samsung", "2018"]
   ]);
   const projectSortOrder = new Map(orderedProjectSlugs.map((slug, index) => [slug, index]));
-  const PROJECTS_INITIAL_VISIBLE = 16;
+  const getInitialProjectVisibleCount = () => (mobileContentMediaQuery.matches ? 6 : 16);
   const PROJECT_CTA_ANCHOR_SLUG = "bnp-paribas";
   const PROJECT_CTA_YEAR = 2020;
   const PROJECT_CTA_SORT_ORDER = (projectSortOrder.get(PROJECT_CTA_ANCHOR_SLUG) ?? Number.MAX_SAFE_INTEGER) + 0.5;
@@ -1149,6 +1162,7 @@ const initSite = () => {
   const syncInitialProjectVisibility = () => {
     hiddenProjectCards = [];
     let visibleProjectCount = 0;
+    const initialProjectVisibleCount = getInitialProjectVisibleCount();
 
     projectCards.forEach((card) => {
       if (isProjectCtaCard(card)) {
@@ -1156,7 +1170,7 @@ const initSite = () => {
         return;
       }
 
-      const shouldHide = visibleProjectCount >= PROJECTS_INITIAL_VISIBLE;
+      const shouldHide = visibleProjectCount >= initialProjectVisibleCount;
 
       card.hidden = shouldHide;
 
