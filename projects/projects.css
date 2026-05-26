@@ -135,6 +135,66 @@
   --projects-gap: clamp(24px, 2vw, 30px);
 }
 
+.projects-clients[hidden] {
+  display: none !important;
+}
+
+.projects-clients-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(12px, 1.2vw, 18px);
+}
+
+.projects-client-logo-card {
+  min-width: 0;
+  min-height: clamp(78px, 5.8vw, 98px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 1.2vw, 20px);
+  border: 1px solid rgba(17, 19, 26, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.74);
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.projects-client-logo-card img {
+  display: block;
+  width: min(72%, 172px);
+  height: 52px;
+  object-fit: contain;
+}
+
+.projects-client-logo-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(23, 46, 110, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 14px 32px rgba(15, 23, 42, 0.06);
+}
+
+.projects-client-logo-card img[src*="bmw-logo.svg" i],
+.projects-client-logo-card img[src*="Dell-logo.svg" i],
+.projects-client-logo-card img[src*="honda-logo.svg" i] {
+  width: 58px;
+  height: 58px;
+}
+
+.projects-client-logo-card img[src*="microsoft-logo.svg" i],
+.projects-client-logo-card img[src*="samsung-logo.svg" i],
+.projects-client-logo-card img[src*="Skolkovo-logo.svg" i] {
+  height: 48px;
+}
+
+.projects-client-logo-card img[src*="kit-med-logo.svg" i] {
+  width: 96px;
+  height: 58px;
+}
+
 .projects-page-reveal {
   opacity: 0;
   transform: translateY(18px);
@@ -176,6 +236,10 @@
   .projects-page .projects-masonry {
     --projects-gap: clamp(18px, 2.4vw, 24px);
   }
+
+  .projects-clients-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
@@ -192,6 +256,22 @@
 
   .projects-page .projects-masonry {
     --projects-gap: 16px;
+  }
+
+  .projects-clients-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .projects-client-logo-card {
+    min-height: 72px;
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .projects-client-logo-card img {
+    width: min(78%, 128px);
+    height: 38px;
   }
 
   .projects-page-filters::-webkit-scrollbar {

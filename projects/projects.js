@@ -233,6 +233,7 @@
     ]);
     const projectSortOrder = new Map(orderedProjectSlugs.map((slug, index) => [slug, index]));
     const projectFilterButtons = Array.from(document.querySelectorAll("[data-project-filter]"));
+    const projectClients = document.querySelector("[data-project-clients]");
     const projectCategoryBySlug = new Map([
       ["kit-med", ["office"]],
       ["skolkovo-park", ["office"]],
@@ -555,6 +556,31 @@
 
     const applyProjectFilter = (nextFilter, { updateHistory = true } = {}) => {
       activeProjectFilter = getSafeProjectFilter(nextFilter);
+      const isClientsFilter = activeProjectFilter === "clients";
+
+      projectsMasonry.hidden = isClientsFilter;
+      setElementHiddenState(projectsMasonry, isClientsFilter);
+
+      if (projectClients) {
+        projectClients.hidden = !isClientsFilter;
+        setElementHiddenState(projectClients, !isClientsFilter);
+      }
+
+      if (isClientsFilter) {
+        projectCards.forEach((card) => {
+          card.hidden = true;
+          card.setAttribute("aria-hidden", "true");
+        });
+
+        disableProjectMasonry();
+        updateProjectFilterButtons();
+
+        if (updateHistory) {
+          syncProjectFilterUrl();
+        }
+
+        return;
+      }
 
       projectCards.forEach((card) => {
         const categories = card.dataset.projectCategories

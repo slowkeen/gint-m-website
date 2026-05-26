@@ -1054,7 +1054,7 @@ const initSite = () => {
     ["samsung", "2018"]
   ]);
   const projectSortOrder = new Map(orderedProjectSlugs.map((slug, index) => [slug, index]));
-  const getInitialProjectVisibleCount = () => (mobileContentMediaQuery.matches ? 6 : 16);
+  const getInitialProjectVisibleCount = () => 5;
   const PROJECT_CTA_ANCHOR_SLUG = "bnp-paribas";
   const PROJECT_CTA_YEAR = 2020;
   const PROJECT_CTA_SORT_ORDER = (projectSortOrder.get(PROJECT_CTA_ANCHOR_SLUG) ?? Number.MAX_SAFE_INTEGER) + 0.5;
@@ -1294,8 +1294,16 @@ const initSite = () => {
       card.style.width = `${columnWidth}px`;
     });
 
+    const placementCards = [...visibleCards];
+    const ctaCardIndex = placementCards.findIndex(isProjectCtaCard);
+
+    if (columnCount >= 3 && ctaCardIndex > 0) {
+      const [ctaCard] = placementCards.splice(ctaCardIndex, 1);
+      placementCards.splice(ctaCardIndex - 1, 0, ctaCard);
+    }
+
     // Place each card into the currently shortest column to avoid row gaps.
-    visibleCards.forEach((card) => {
+    placementCards.forEach((card) => {
       let targetColumn = 0;
 
       for (let index = 1; index < columnHeights.length; index += 1) {
