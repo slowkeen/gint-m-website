@@ -15,8 +15,8 @@
 }
 
 .contacts-page-shell {
-  width: calc(100% - (var(--page-gutter) * 2));
-  max-width: none;
+  width: min(var(--content-width), calc(100% - (var(--content-edge) * 2)));
+  max-width: var(--content-width);
   margin: 0 auto;
 }
 

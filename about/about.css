@@ -17,7 +17,8 @@
 }
 
 .about-page .page-shell {
-  width: calc(100% - (var(--page-gutter) * 2));
+  width: min(var(--content-width), calc(100% - (var(--content-edge) * 2)));
+  max-width: var(--content-width);
   margin-inline: auto;
 }
 
@@ -50,7 +51,8 @@
 }
 
 .about-hero-block .hero-top:not(.is-sticky):not(.is-menu-open) {
-  width: calc(100% - (var(--page-gutter) * 2));
+  width: min(var(--content-width), calc(100% - (var(--content-edge) * 2)));
+  max-width: var(--content-width);
   margin-inline: auto;
 }
 
@@ -2553,6 +2555,7 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
   }
 
   .about-page .page-shell,
+  .about-hero-block .hero-top:not(.is-sticky):not(.is-menu-open),
   .about-page .hero-top.is-sticky:not(.is-menu-open) {
     width: calc(100vw - (var(--page-gutter) * 2));
     max-width: calc(100vw - (var(--page-gutter) * 2));
