@@ -1966,13 +1966,42 @@ body.menu-open {
   }
 }
 
-.hero-video {
+.hero-media,
+.hero-slide-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-media {
+  z-index: 0;
+}
+
+.hero-slide-media {
+  opacity: 0;
+  transform: scale(1.018);
+  transition:
+    opacity 900ms ease,
+    transform 1800ms var(--ease-out-soft);
+}
+
+.hero-slide-media.is-active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+.hero-video,
+.hero-slide-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 0;
+}
+
+.hero-slide-image {
+  display: block;
 }
 
 .hero-overlay {
@@ -2271,6 +2300,110 @@ body.menu-open {
   transform: translateY(-2px);
 }
 
+.hero-slider-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(16px, 2vh, 22px);
+}
+
+.hero-slider-arrow,
+.hero-slider-dot {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease,
+    transform 220ms ease;
+}
+
+.hero-slider-arrow {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.hero-slider-arrow:hover,
+.hero-slider-arrow:focus-visible {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.66);
+  transform: translateY(-1px);
+}
+
+.hero-slider-arrow-icon {
+  display: block;
+  width: 11px;
+  height: 11px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+}
+
+.hero-slider-arrow-icon-prev {
+  transform: translateX(2px) rotate(-135deg);
+}
+
+.hero-slider-arrow-icon-next {
+  transform: translateX(-2px) rotate(45deg);
+}
+
+.hero-slider-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero-slider-dot {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.hero-slider-dot::before {
+  content: "";
+  width: 18px;
+  height: 3px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.42;
+  transition:
+    width 220ms ease,
+    opacity 220ms ease;
+}
+
+.hero-slider-dot:hover::before,
+.hero-slider-dot:focus-visible::before {
+  opacity: 0.72;
+}
+
+.hero-slider-dot.is-active::before {
+  width: 28px;
+  opacity: 1;
+}
+
+.hero-main.is-slide-changing .hero-title,
+.hero-main.is-slide-changing .hero-actions {
+  animation: hero-copy-swap 520ms var(--ease-out-soft) both;
+}
+
+.hero-main.is-slide-changing .hero-actions {
+  animation-delay: 45ms;
+}
+
 .hero-advantages {
   list-style: none;
   margin: 0;
@@ -2326,6 +2459,18 @@ body.menu-open {
   from {
     opacity: 0;
     transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-copy-swap {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
 
   to {
@@ -5533,6 +5678,11 @@ img {
   box-shadow: var(--focus-ring);
 }
 
+:is(.hero-slider-arrow, .hero-slider-dot):focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
 .hero-top-nav a {
   min-height: 42px;
   padding: 0 16px;
@@ -7069,6 +7219,17 @@ img {
     justify-content: center;
   }
 
+  .hero-slider-controls {
+    width: 100%;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .hero-slider-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
   .contact-cta-shell,
   .contact-cta-form {
     padding: 20px 18px;
@@ -8586,7 +8747,9 @@ img {
   .testimonials-nav-button,
   .awards-timeline-nav-button,
   .contact-modal-close,
-  .hero-menu-toggle
+  .hero-menu-toggle,
+  .hero-slider-arrow,
+  .hero-slider-dot
 ):active {
   transform: scale(0.97);
 }
@@ -8707,11 +8870,14 @@ img {
 
   .hero-content,
   .hero-advantages li,
-  .hero-top.is-sticky {
+  .hero-top.is-sticky,
+  .hero-main.is-slide-changing .hero-title,
+  .hero-main.is-slide-changing .hero-actions {
     animation: none !important;
   }
 
   .company-logos-track,
+  .hero-slide-media,
   .micro-sheen::after {
     transition-duration: 0ms !important;
   }
@@ -8738,6 +8904,8 @@ img {
     .awards-timeline-nav-button,
     .contact-modal-close,
     .hero-menu-toggle,
+    .hero-slider-arrow,
+    .hero-slider-dot,
     .hero-top-nav a,
     .hero-lang-link,
     .footer-meta-policy,
@@ -8769,6 +8937,8 @@ img {
     .testimonials-nav-button,
     .awards-timeline-nav-button,
     .contact-modal-close,
+    .hero-slider-arrow,
+    .hero-slider-dot,
     .hero-top-nav a,
     .hero-lang-link,
     .site-footer-menu a,
