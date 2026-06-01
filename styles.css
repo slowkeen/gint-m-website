@@ -64,7 +64,7 @@
 :root {
   --font-heading: "Manrope", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Golos Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --content-width: 1600px;
+  --content-width: 1200px;
   --content-edge: clamp(24px, 1.5vw, 48px);
   --page-gutter: clamp(72px, 12vw, 224px);
   --dark-bg: #0f1117;
@@ -136,6 +136,12 @@
   --type-mobile-heading-line: 1.06;
   --type-mobile-card-line: 1.08;
   --type-mobile-copy-line: 1.58;
+}
+
+@media (min-width: 1601px) {
+  :root {
+    --content-width: 1600px;
+  }
 }
 
 body.page-font-sf-pro {
