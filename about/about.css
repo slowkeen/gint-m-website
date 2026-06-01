@@ -2700,3 +2700,38 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
     line-height: var(--type-mobile-copy-line);
   }
 }
+
+/* Unified button hover state */
+@media (hover: hover) and (pointer: fine) {
+  .about-certificate-link:not(:disabled):hover {
+    transform: var(--button-hover-transform);
+    border-color: var(--button-hover-border);
+    background: var(--button-hover-bg);
+    color: var(--button-hover-color);
+    box-shadow: var(--button-hover-shadow);
+  }
+}
+
+.about-certificate-link:not(:disabled):focus-visible {
+  outline: none;
+  transform: var(--button-hover-transform);
+  border-color: var(--button-hover-border);
+  background: var(--button-hover-bg);
+  color: var(--button-hover-color);
+  box-shadow: var(--button-hover-shadow), var(--focus-ring);
+}
+
+.about-certificate-link:not(:disabled):active {
+  transform: var(--button-active-transform);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-certificate-link {
+    transition-duration: 120ms;
+  }
+
+  .about-certificate-link:not(:disabled):hover,
+  .about-certificate-link:not(:disabled):focus-visible {
+    transform: none;
+  }
+}

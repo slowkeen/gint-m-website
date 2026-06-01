@@ -2429,3 +2429,110 @@
     line-height: var(--type-mobile-copy-line);
   }
 }
+
+/* Unified button hover state */
+@media (hover: hover) and (pointer: fine) {
+  :is(
+    .project-case-nav-button,
+    .project-case-back-link,
+    .project-gallery-close,
+    .project-case-page .project-case-client-read-more,
+    .project-case-page .project-case-intro-read-more
+  ):not(:disabled):hover {
+    transform: var(--button-hover-transform);
+    border-color: var(--button-hover-border);
+    background: var(--button-hover-bg);
+    color: var(--button-hover-color);
+    box-shadow: var(--button-hover-shadow);
+  }
+
+  .project-gallery-lightbox-nav:not(:disabled):hover {
+    transform: translateY(calc(-50% - 2px));
+    border-color: var(--button-hover-border);
+    background: var(--button-hover-bg);
+    color: var(--button-hover-color);
+    box-shadow: var(--button-hover-shadow);
+  }
+}
+
+:is(
+  .project-case-nav-button,
+  .project-case-back-link,
+  .project-gallery-close,
+  .project-case-page .project-case-client-read-more,
+  .project-case-page .project-case-intro-read-more
+):not(:disabled):focus-visible {
+  outline: none;
+  transform: var(--button-hover-transform);
+  border-color: var(--button-hover-border);
+  background: var(--button-hover-bg);
+  color: var(--button-hover-color);
+  box-shadow: var(--button-hover-shadow), var(--focus-ring);
+}
+
+.project-gallery-lightbox-nav:not(:disabled):focus-visible {
+  outline: none;
+  transform: translateY(calc(-50% - 2px));
+  border-color: var(--button-hover-border);
+  background: var(--button-hover-bg);
+  color: var(--button-hover-color);
+  box-shadow: var(--button-hover-shadow), var(--focus-ring);
+}
+
+:is(
+  .project-case-nav-button,
+  .project-case-back-link,
+  .project-gallery-close,
+  .project-case-page .project-case-client-read-more,
+  .project-case-page .project-case-intro-read-more
+):not(:disabled):active {
+  transform: var(--button-active-transform);
+}
+
+.project-gallery-lightbox-nav:not(:disabled):active {
+  transform: translateY(-50%) scale(0.985);
+}
+
+:is(.project-case-nav-button, .project-gallery-lightbox-nav):disabled {
+  transform: none;
+  box-shadow: none;
+}
+
+.project-gallery-lightbox-nav:disabled {
+  transform: translateY(-50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .project-case-nav-button,
+    .project-case-back-link,
+    .project-gallery-close,
+    .project-gallery-lightbox-nav,
+    .project-case-page .project-case-client-read-more,
+    .project-case-page .project-case-intro-read-more
+  ) {
+    transition-duration: 120ms;
+  }
+
+  :is(
+    .project-case-nav-button,
+    .project-case-back-link,
+    .project-gallery-close,
+    .project-case-page .project-case-client-read-more,
+    .project-case-page .project-case-intro-read-more
+  ):not(:disabled):hover,
+  :is(
+    .project-case-nav-button,
+    .project-case-back-link,
+    .project-gallery-close,
+    .project-case-page .project-case-client-read-more,
+    .project-case-page .project-case-intro-read-more
+  ):not(:disabled):focus-visible {
+    transform: none;
+  }
+
+  .project-gallery-lightbox-nav:not(:disabled):hover,
+  .project-gallery-lightbox-nav:not(:disabled):focus-visible {
+    transform: translateY(-50%);
+  }
+}

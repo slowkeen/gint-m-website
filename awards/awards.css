@@ -574,3 +574,64 @@
     line-height: var(--type-mobile-copy-line);
   }
 }
+
+/* Unified button hover state */
+.awards-page-review-link {
+  justify-content: center;
+  min-height: var(--button-height-compact);
+  padding: 0 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--text-strong);
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.awards-page-filter-button, .awards-page-review-link):not(:disabled):hover {
+    transform: var(--button-hover-transform);
+    border-color: var(--button-hover-border);
+    background: var(--button-hover-bg);
+    color: var(--button-hover-color);
+    box-shadow: var(--button-hover-shadow);
+  }
+}
+
+:is(.awards-page-filter-button, .awards-page-review-link):not(:disabled):focus-visible {
+  outline: none;
+  transform: var(--button-hover-transform);
+  border-color: var(--button-hover-border);
+  background: var(--button-hover-bg);
+  color: var(--button-hover-color);
+  box-shadow: var(--button-hover-shadow), var(--focus-ring);
+}
+
+:is(.awards-page-filter-button, .awards-page-review-link):not(:disabled):active {
+  transform: var(--button-active-transform);
+}
+
+.awards-page-filter-button.is-active,
+.awards-page-filter-button.is-active:hover,
+.awards-page-filter-button.is-active:focus-visible {
+  border-color: var(--button-hover-border);
+  background: var(--button-hover-bg);
+  color: var(--button-hover-color);
+  box-shadow: var(--button-hover-shadow);
+}
+
+.awards-page-filter-button.is-active:focus-visible {
+  box-shadow: var(--button-hover-shadow), var(--focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.awards-page-filter-button, .awards-page-review-link) {
+    transition-duration: 120ms;
+  }
+
+  :is(.awards-page-filter-button, .awards-page-review-link):not(:disabled):hover,
+  :is(.awards-page-filter-button, .awards-page-review-link):not(:disabled):focus-visible {
+    transform: none;
+  }
+}

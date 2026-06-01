@@ -291,3 +291,51 @@
     letter-spacing: var(--heading-tracking);
   }
 }
+
+/* Unified button hover state */
+@media (hover: hover) and (pointer: fine) {
+  .projects-page-filter:not(:disabled):hover {
+    transform: var(--button-hover-transform);
+    border-color: var(--button-hover-border);
+    background: var(--button-hover-bg);
+    color: var(--button-hover-color);
+    box-shadow: var(--button-hover-shadow);
+  }
+}
+
+.projects-page-filter:not(:disabled):focus-visible {
+  outline: none;
+  transform: var(--button-hover-transform);
+  border-color: var(--button-hover-border);
+  background: var(--button-hover-bg);
+  color: var(--button-hover-color);
+  box-shadow: var(--button-hover-shadow), var(--focus-ring);
+}
+
+.projects-page-filter:not(:disabled):active {
+  transform: var(--button-active-transform);
+}
+
+.projects-page-filter.is-active,
+.projects-page-filter.is-active:hover,
+.projects-page-filter.is-active:focus-visible {
+  border-color: var(--button-hover-border);
+  background: var(--button-hover-bg);
+  color: var(--button-hover-color);
+  box-shadow: var(--button-hover-shadow);
+}
+
+.projects-page-filter.is-active:focus-visible {
+  box-shadow: var(--button-hover-shadow), var(--focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-page-filter {
+    transition-duration: 120ms;
+  }
+
+  .projects-page-filter:not(:disabled):hover,
+  .projects-page-filter:not(:disabled):focus-visible {
+    transform: none;
+  }
+}

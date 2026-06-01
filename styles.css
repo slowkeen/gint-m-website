@@ -115,6 +115,12 @@
   --button-height-compact: 46px;
   --button-padding-x: 24px;
   --button-gap: 12px;
+  --button-hover-bg: var(--hover);
+  --button-hover-border: var(--hover);
+  --button-hover-color: #f8f8f6;
+  --button-hover-shadow: 0 18px 34px rgba(23, 46, 110, 0.2);
+  --button-hover-transform: translateY(-2px);
+  --button-active-transform: translateY(0) scale(0.985);
   --eyebrow-size: 12px;
   --eyebrow-tracking: 0.16em;
   --body-copy-size: clamp(17px, 1.08vw, 20px);
@@ -9287,6 +9293,262 @@ img {
 .testimonials-block,
 .site-footer {
   background: transparent;
+}
+
+/* Unified button hover state */
+:is(
+  .hero-btn-primary,
+  .contact-cta-submit,
+  .hero-top-cta,
+  .trust-journal-link-primary,
+  .projects-link,
+  .projects-load-more,
+  .news-button,
+  .company-link-text,
+  .company-partners-link,
+  .trust-journal-link-secondary,
+  .award-card-link,
+  .awards-link,
+  .testimonial-action,
+  .testimonial-read-more,
+  .cookie-consent-accept,
+  .contact-form-channel,
+  .company-logos-nav-button,
+  .testimonials-nav-button,
+  .awards-timeline-nav-button,
+  .contact-modal-close,
+  .hero-menu-toggle,
+  .hero-slider-arrow,
+  .hero-slider-dot
+) {
+  transition:
+    transform 220ms var(--ease-out-soft),
+    background-color 220ms var(--ease-out-soft),
+    border-color 220ms var(--ease-out-soft),
+    color 220ms var(--ease-out-soft),
+    box-shadow 220ms var(--ease-out-soft);
+}
+
+.testimonial-read-more {
+  justify-content: center;
+  min-height: var(--button-height-compact);
+  padding: 0 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--text-strong);
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(
+    .hero-btn-primary,
+    .contact-cta-submit,
+    .hero-top-cta,
+    .trust-journal-link-primary,
+    .projects-link,
+    .projects-load-more,
+    .news-button,
+    .company-link-text,
+    .company-partners-link,
+    .trust-journal-link-secondary,
+    .award-card-link,
+    .awards-link,
+    .testimonial-action,
+    .testimonial-read-more,
+    .cookie-consent-accept,
+    .contact-form-channel,
+    .company-logos-nav-button,
+    .testimonials-nav-button,
+    .awards-timeline-nav-button,
+    .contact-modal-close,
+    .hero-menu-toggle,
+    .hero-slider-arrow,
+    .hero-slider-dot
+  ):not(:disabled):hover {
+    transform: var(--button-hover-transform);
+    border-color: var(--button-hover-border);
+    background: var(--button-hover-bg);
+    color: var(--button-hover-color);
+    box-shadow: var(--button-hover-shadow);
+  }
+
+  .contact-method-chip:hover span {
+    transform: var(--button-hover-transform);
+    border-color: var(--button-hover-border);
+    background: var(--button-hover-bg);
+    color: var(--button-hover-color);
+    box-shadow: var(--button-hover-shadow);
+  }
+}
+
+:is(
+  .hero-btn-primary,
+  .contact-cta-submit,
+  .hero-top-cta,
+  .trust-journal-link-primary,
+  .projects-link,
+  .projects-load-more,
+  .news-button,
+  .company-link-text,
+  .company-partners-link,
+  .trust-journal-link-secondary,
+  .award-card-link,
+  .awards-link,
+  .testimonial-action,
+  .testimonial-read-more,
+  .cookie-consent-accept,
+  .contact-form-channel,
+  .company-logos-nav-button,
+  .testimonials-nav-button,
+  .awards-timeline-nav-button,
+  .contact-modal-close,
+  .hero-menu-toggle,
+  .hero-slider-arrow,
+  .hero-slider-dot
+):not(:disabled):focus-visible {
+  outline: none;
+  transform: var(--button-hover-transform);
+  border-color: var(--button-hover-border);
+  background: var(--button-hover-bg);
+  color: var(--button-hover-color);
+  box-shadow: var(--button-hover-shadow), var(--focus-ring);
+}
+
+.contact-method-chip input:focus-visible + span {
+  outline: none;
+  transform: var(--button-hover-transform);
+  border-color: var(--button-hover-border);
+  background: var(--button-hover-bg);
+  color: var(--button-hover-color);
+  box-shadow: var(--button-hover-shadow), var(--focus-ring);
+}
+
+:is(
+  .hero-btn-primary,
+  .contact-cta-submit,
+  .hero-top-cta,
+  .trust-journal-link-primary,
+  .projects-link,
+  .projects-load-more,
+  .news-button,
+  .company-link-text,
+  .company-partners-link,
+  .trust-journal-link-secondary,
+  .award-card-link,
+  .awards-link,
+  .testimonial-action,
+  .testimonial-read-more,
+  .cookie-consent-accept,
+  .contact-form-channel,
+  .company-logos-nav-button,
+  .testimonials-nav-button,
+  .awards-timeline-nav-button,
+  .contact-modal-close,
+  .hero-menu-toggle,
+  .hero-slider-arrow,
+  .hero-slider-dot
+):not(:disabled):active {
+  transform: var(--button-active-transform);
+}
+
+:is(
+  .company-logos-nav-button,
+  .testimonials-nav-button,
+  .awards-timeline-nav-button,
+  .contact-modal-close,
+  .hero-slider-arrow,
+  .hero-slider-dot
+):disabled {
+  transform: none;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .hero-btn-primary,
+    .contact-cta-submit,
+    .hero-top-cta,
+    .trust-journal-link-primary,
+    .projects-link,
+    .projects-load-more,
+    .news-button,
+    .company-link-text,
+    .company-partners-link,
+    .trust-journal-link-secondary,
+    .award-card-link,
+    .awards-link,
+    .testimonial-action,
+    .testimonial-read-more,
+    .cookie-consent-accept,
+    .contact-form-channel,
+    .company-logos-nav-button,
+    .testimonials-nav-button,
+    .awards-timeline-nav-button,
+    .contact-modal-close,
+    .hero-menu-toggle,
+    .hero-slider-arrow,
+    .hero-slider-dot
+  ) {
+    transition-duration: 120ms;
+  }
+
+  :is(
+    .hero-btn-primary,
+    .contact-cta-submit,
+    .hero-top-cta,
+    .trust-journal-link-primary,
+    .projects-link,
+    .projects-load-more,
+    .news-button,
+    .company-link-text,
+    .company-partners-link,
+    .trust-journal-link-secondary,
+    .award-card-link,
+    .awards-link,
+    .testimonial-action,
+    .testimonial-read-more,
+    .cookie-consent-accept,
+    .contact-form-channel,
+    .company-logos-nav-button,
+    .testimonials-nav-button,
+    .awards-timeline-nav-button,
+    .contact-modal-close,
+    .hero-menu-toggle,
+    .hero-slider-arrow,
+    .hero-slider-dot
+  ):not(:disabled):hover,
+  :is(
+    .hero-btn-primary,
+    .contact-cta-submit,
+    .hero-top-cta,
+    .trust-journal-link-primary,
+    .projects-link,
+    .projects-load-more,
+    .news-button,
+    .company-link-text,
+    .company-partners-link,
+    .trust-journal-link-secondary,
+    .award-card-link,
+    .awards-link,
+    .testimonial-action,
+    .testimonial-read-more,
+    .cookie-consent-accept,
+    .contact-form-channel,
+    .company-logos-nav-button,
+    .testimonials-nav-button,
+    .awards-timeline-nav-button,
+    .contact-modal-close,
+    .hero-menu-toggle,
+    .hero-slider-arrow,
+    .hero-slider-dot
+  ):not(:disabled):focus-visible,
+  .contact-method-chip:hover span,
+  .contact-method-chip input:focus-visible + span {
+    transform: none;
+  }
 }
 
 @media (max-width: 1024px) {
