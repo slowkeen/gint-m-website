@@ -272,11 +272,11 @@ const createCookieConsentBanner = () => {
 
   banner.innerHTML = `
     <p class="cookie-consent-text">
-      Мы обрабатываем cookies, чтобы сделать наш сайт удобнее и персонализированнее для вас.
-      Подробнее:
-      <a class="cookie-consent-link" href="${resolveSitePath("/privacy/")}#cookies">политика использования cookies</a>
+      Используем cookies для удобства сайта.
+      Подробнее:<br />
+      <a class="cookie-consent-link" href="${resolveSitePath("/privacy/")}#cookies">cookies</a>
       и
-      <a class="cookie-consent-link" href="${resolveSitePath("/privacy/")}#data">защита данных</a>.
+      <a class="cookie-consent-link" href="${resolveSitePath("/privacy/")}#data">данные</a>.
     </p>
     <button class="cookie-consent-accept" type="button">Принять</button>
   `;
