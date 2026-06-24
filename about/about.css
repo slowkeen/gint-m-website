@@ -1815,7 +1815,7 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
   .about-overview-intro,
   .about-overview-points,
   .about-clients-block {
-    gap: 24px;
+    gap: 18px;
   }
 
   .about-overview-statement {
@@ -2012,7 +2012,7 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
 
 @media (max-width: 640px) {
   .about-hero-block {
-    min-height: clamp(540px, 88svh, 720px);
+    min-height: clamp(500px, 80svh, 600px);
     height: auto;
   }
 
@@ -2025,7 +2025,7 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
   }
 
   .about-history-card {
-    padding: 20px;
+    padding: 16px;
   }
 
   .about-page .about-anchor-link {
@@ -2038,9 +2038,9 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
   }
 
   .about-ecology-showcase {
-    gap: 20px;
-    padding: 20px;
-    border-radius: 26px;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 20px;
   }
 
   .about-ecology-display {
@@ -2062,9 +2062,9 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
   }
 
   .about-ecology-panel {
-    gap: 16px;
-    padding: 22px 20px 20px;
-    border-radius: 24px;
+    gap: 12px;
+    padding: 18px 16px 16px;
+    border-radius: 20px;
   }
 
   .about-ecology-panel::before {
@@ -2524,7 +2524,7 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
 
 @media (max-width: 767px) {
   .about-page-main {
-    padding-top: clamp(92px, 16vw, 108px);
+    padding-top: clamp(76px, 14vw, 92px);
   }
 
   .about-overview-intro-page .about-overview-lead {
@@ -2532,7 +2532,7 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
   }
 
   .about-overview-story {
-    gap: 24px;
+    gap: 18px;
     padding: 0;
   }
 
@@ -2544,7 +2544,7 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
   .about-overview-story-point {
     grid-template-columns: 30px minmax(0, 1fr);
     gap: 6px 14px;
-    padding: 17px 0 19px;
+    padding: 14px 0 16px;
   }
 }
 
@@ -2644,7 +2644,7 @@ body[data-about-route="company"] .about-certificates-section .about-section-lead
 
 @media (max-width: 420px) {
   .about-page {
-    --page-gutter: 24px;
+    --page-gutter: 16px;
   }
 
   .about-overview-story-point {

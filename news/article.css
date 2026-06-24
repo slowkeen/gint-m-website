@@ -146,15 +146,15 @@
 
 @media (max-width: 640px) {
   .news-article-image-wrap {
-    border-radius: 24px;
+    border-radius: 20px;
   }
 
   .news-article-image-wrap-award {
-    padding: 16px;
+    padding: 14px;
   }
 
   .news-article-prose {
-    gap: 16px;
+    gap: 14px;
   }
 
   .news-article-prose p {

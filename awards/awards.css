@@ -470,7 +470,7 @@
 
 @media (max-width: 980px) {
   .awards-page-main {
-    padding-top: 112px;
+    padding-top: clamp(76px, 14vw, 92px);
   }
 
   .awards-page-timeline-nav {
@@ -504,7 +504,7 @@
 
   .awards-page-card-review .awards-page-card-body {
     gap: 10px;
-    padding: 18px 18px 20px;
+    padding: 16px;
   }
 
   .awards-page-card-chip {
@@ -514,7 +514,7 @@
 
   .awards-page-card-body {
     gap: 10px;
-    padding: 18px 18px 20px;
+    padding: 16px;
   }
 
   .awards-page-card-title {
@@ -522,7 +522,7 @@
   }
 
   .awards-page-review-layout {
-    min-height: 280px;
+    min-height: 230px;
   }
 
   .awards-page-review-top {

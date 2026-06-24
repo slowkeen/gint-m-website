@@ -105,7 +105,7 @@
 
 @media (max-width: 900px) {
   .news-page-main {
-    padding-top: 112px;
+    padding-top: clamp(76px, 14vw, 92px);
   }
 
   .news-feed-grid {
@@ -119,7 +119,7 @@
   }
 
   .news-feed-shell {
-    gap: 24px;
+    gap: 16px;
   }
 
   .news-feed-head {

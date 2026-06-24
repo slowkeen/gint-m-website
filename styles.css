@@ -132,13 +132,13 @@
   --type-card-title-size: clamp(24px, 2vw, 32px);
   --type-subtitle-size: clamp(20px, 1.5vw, 26px);
   --type-lead-size: clamp(17px, 1.24vw, 21px);
-  --type-mobile-hero-title-size: clamp(34px, 11vw, 54px);
-  --type-mobile-page-title-size: clamp(28px, 8vw, 38px);
-  --type-mobile-section-title-size: clamp(28px, 8vw, 38px);
-  --type-mobile-card-title-size: clamp(24px, 7vw, 30px);
+  --type-mobile-hero-title-size: clamp(30px, 9.2vw, 42px);
+  --type-mobile-page-title-size: clamp(24px, 6.8vw, 32px);
+  --type-mobile-section-title-size: clamp(24px, 7vw, 34px);
+  --type-mobile-card-title-size: clamp(20px, 5.8vw, 24px);
   --type-mobile-subtitle-size: clamp(20px, 5.8vw, 24px);
   --type-mobile-compact-title-size: clamp(18px, 5vw, 22px);
-  --type-mobile-lead-size: clamp(16px, 4.8vw, 18px);
+  --type-mobile-lead-size: clamp(15px, 4.2vw, 17px);
   --type-mobile-heading-line: 1.06;
   --type-mobile-card-line: 1.08;
   --type-mobile-copy-line: 1.58;
@@ -9619,5 +9619,392 @@ img {
 
   .trust-journal-grid-news .trust-journal-card-news:not(.trust-journal-card-cta) {
     aspect-ratio: 1 / 1;
+  }
+}
+
+/* Global mobile density pass: compact vertical layouts without changing desktop composition. */
+@media (max-width: 980px) {
+  :root {
+    --mobile-shell-edge: 20px;
+    --mobile-panel-padding: 14px;
+  }
+
+  .hero-block {
+    min-height: min(780px, 92svh);
+    height: auto;
+    padding-bottom: 24px;
+  }
+
+  .hero-top.is-sticky {
+    padding: 10px 12px;
+    border-radius: 20px;
+  }
+
+  .hero-top.is-sticky .hero-logo img {
+    width: clamp(104px, 28vw, 136px);
+  }
+
+  .hero-menu-toggle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .hero-menu-toggle-box {
+    width: 16px;
+    height: 12px;
+  }
+
+  .hero-menu-toggle-line:nth-child(2) {
+    top: 5px;
+  }
+
+  .hero-menu-toggle-line:nth-child(3) {
+    top: 10px;
+  }
+
+  .hero-top.is-menu-open {
+    gap: 14px;
+    padding: max(16px, env(safe-area-inset-top, 0px)) 16px calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .hero-top.is-menu-open .hero-logo img {
+    width: clamp(138px, 36vw, 180px);
+  }
+
+  .hero-top.is-menu-open .hero-top-nav {
+    gap: 10px;
+    padding-top: clamp(14px, 5vw, 24px);
+    padding-bottom: 20px;
+  }
+
+  .hero-top.is-menu-open .hero-top-nav a {
+    padding-bottom: 12px;
+    font-size: clamp(18px, 5vw, 24px);
+  }
+
+  .hero-top.is-menu-open .hero-top-controls {
+    gap: 14px;
+  }
+
+  .hero-top.is-menu-open .hero-top-cta {
+    min-height: 44px;
+    padding-inline: 18px;
+    font-size: 15px;
+  }
+
+  .company-shell,
+  .projects-shell,
+  .awards-shell,
+  .awards-timeline-shell,
+  .trust-journal-shell,
+  .testimonials-panel,
+  .site-footer-shell,
+  .contact-cta-shell,
+  .news-shell {
+    width: calc(100% - (var(--mobile-shell-edge) * 2));
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --page-gutter: 16px;
+    --section-space-y: 32px;
+    --section-space-y-mobile: 28px;
+    --mobile-shell-edge: 16px;
+    --mobile-panel-padding: 14px;
+    --button-height: 44px;
+    --button-height-compact: 42px;
+    --button-padding-x: 18px;
+    --button-gap: 10px;
+    --radius-md: 18px;
+    --radius-lg: 20px;
+    --radius-xl: 24px;
+  }
+
+  .hero-block {
+    min-height: clamp(520px, 82svh, 620px);
+    height: auto;
+    padding: 14px var(--page-gutter) 20px;
+  }
+
+  .hero-block .hero-content {
+    gap: 20px;
+  }
+
+  .hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-logo img {
+    width: clamp(168px, 52vw, 216px);
+  }
+
+  .hero-title {
+    max-width: 11ch;
+    margin-bottom: 18px;
+    font-size: var(--type-mobile-hero-title-size);
+  }
+
+  .hero-actions {
+    width: auto;
+    max-width: 100%;
+    gap: 12px;
+  }
+
+  .hero-btn {
+    width: auto;
+    min-width: min(100%, 220px);
+    min-height: 44px;
+    padding-inline: 18px;
+  }
+
+  html[data-cookie-consent="pending"] .hero-block .hero-actions {
+    margin-bottom: 58px;
+  }
+
+  .hero-top.is-sticky {
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 20px;
+  }
+
+  .company-shell,
+  .projects-shell,
+  .awards-shell,
+  .awards-timeline-shell,
+  .trust-journal-shell,
+  .testimonials-panel,
+  .site-footer-shell,
+  .contact-cta-shell,
+  .news-shell {
+    width: calc(100% - (var(--mobile-shell-edge) * 2));
+    gap: 16px;
+  }
+
+  .projects-masonry {
+    --projects-gap: 14px;
+  }
+
+  .projects-head,
+  .awards-timeline-head,
+  .testimonials-header,
+  .trust-journal-head,
+  .contact-cta-copy,
+  .contact-cta-form-grid,
+  .contact-cta-frame-channels {
+    gap: 14px;
+  }
+
+  .contact-cta-form,
+  .awards-timeline,
+  .awards-page-card,
+  .trust-journal-card,
+  .testimonial-review-card,
+  .project-photo,
+  .contact-form-channel {
+    border-radius: 18px;
+  }
+
+  .contact-cta-form,
+  .testimonial-review-card,
+  .awards-page-card-body,
+  .trust-journal-card-body,
+  .contact-form-channel {
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .contact-cta-consent {
+    min-height: 42px;
+  }
+
+  .trust-journal-card-body-featured,
+  .trust-journal-card-cta-link {
+    padding: 20px;
+  }
+
+  .company-advantages li {
+    min-height: 96px;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .awards-timeline {
+    gap: 12px;
+    padding: 16px var(--mobile-panel-padding) 18px;
+  }
+
+  .trust-journal-grid,
+  .testimonials-grid,
+  .site-footer-contact-links,
+  .footer-meta-row {
+    gap: 14px;
+  }
+
+  :is(.contact-field input, select, textarea) {
+    min-height: 48px;
+    padding-inline: 14px;
+    border-radius: 14px;
+  }
+
+  textarea {
+    min-height: 118px;
+    padding-block: 12px;
+  }
+
+  .contact-method-chip span {
+    min-height: 40px;
+    padding-inline: 14px;
+  }
+
+  .contact-cta-submit,
+  .projects-link,
+  .projects-load-more,
+  .news-button,
+  .company-link-text,
+  .company-partners-link,
+  .award-card-link,
+  .awards-link,
+  .testimonial-action,
+  .testimonial-read-more,
+  .awards-page-review-link {
+    min-height: 44px;
+  }
+
+  .cookie-consent {
+    right: 16px;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    left: 16px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    width: auto;
+    max-height: 96px;
+    padding: 8px 10px;
+    gap: 8px;
+    border-radius: 14px;
+  }
+
+  .cookie-consent-text {
+    display: -webkit-box;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .cookie-consent-accept {
+    width: auto;
+    min-width: 86px;
+    min-height: 40px;
+    padding-inline: 12px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --section-space-y: 28px;
+    --section-space-y-mobile: 24px;
+  }
+
+  .hero-block {
+    min-height: clamp(500px, 80svh, 600px);
+  }
+
+  .company-shell,
+  .projects-shell,
+  .awards-shell,
+  .awards-timeline-shell,
+  .trust-journal-shell,
+  .testimonials-panel,
+  .site-footer-shell,
+  .contact-cta-shell,
+  .news-shell {
+    gap: 14px;
+  }
+
+  .projects-masonry {
+    --projects-gap: 12px;
+  }
+
+  .contact-cta-shell,
+  .contact-cta-form {
+    padding: 16px;
+  }
+
+  .trust-journal-card-body,
+  .awards-page-card-body,
+  .testimonial-review-card {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --mobile-panel-padding: 12px;
+    --button-height: 42px;
+    --button-height-compact: 40px;
+  }
+
+  .hero-block {
+    min-height: clamp(460px, 78svh, 540px);
+  }
+
+  .hero-block .hero-top:not(.is-sticky):not(.is-menu-open) .hero-logo img {
+    width: clamp(150px, 48vw, 190px);
+  }
+
+  .hero-title {
+    font-size: clamp(28px, 8.8vw, 36px);
+  }
+
+  .hero-menu-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .hero-btn,
+  .hero-top.is-menu-open .hero-top-cta,
+  .contact-cta-submit,
+  .projects-link,
+  .projects-load-more,
+  .news-button,
+  .company-link-text,
+  .company-partners-link,
+  .award-card-link,
+  .awards-link,
+  .testimonial-action,
+  .testimonial-read-more,
+  .awards-page-review-link {
+    min-height: 42px;
+  }
+
+  .contact-cta-form,
+  .contact-cta-shell {
+    padding: 14px;
+  }
+
+  :is(.contact-field input, select, textarea) {
+    min-height: 46px;
+  }
+
+  textarea {
+    min-height: 110px;
+  }
+
+  .cookie-consent {
+    right: 10px;
+    left: 10px;
+    padding: 8px;
+  }
+
+  html[data-cookie-consent="pending"] .hero-block .hero-actions {
+    margin-bottom: 52px;
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --page-gutter: 14px;
   }
 }
