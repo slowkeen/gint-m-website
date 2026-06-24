@@ -9622,6 +9622,186 @@ img {
   }
 }
 
+/* Compact tablet / narrow desktop density pass. */
+@media (min-width: 981px) and (max-width: 1180px) {
+  :root {
+    --section-space-y: clamp(48px, 4.8vw, 58px);
+  }
+
+  .hero-content {
+    gap: clamp(24px, 2.6vw, 34px);
+  }
+
+  .hero-title {
+    margin-bottom: clamp(28px, 3.4vh, 44px);
+  }
+
+  .company-shell,
+  .projects-shell,
+  .awards-shell,
+  .awards-timeline-shell,
+  .trust-journal-shell,
+  .testimonials-panel {
+    gap: clamp(22px, 2.2vw, 30px);
+  }
+
+  .company-head,
+  .company-lead,
+  .projects-head-copy,
+  .projects-head-aside {
+    gap: clamp(12px, 1.4vw, 18px);
+  }
+
+  .company-lead,
+  .projects-head-aside {
+    padding-top: 0;
+  }
+
+  .company-lead > .company-intro {
+    padding-bottom: clamp(18px, 1.8vw, 22px);
+  }
+
+  .company-about-link-row {
+    padding-top: 0;
+  }
+
+  .company-stats {
+    margin-top: clamp(22px, 2.4vw, 28px);
+    min-height: 0;
+  }
+
+  .company-advantages {
+    border-radius: 20px;
+  }
+
+  .company-advantages li {
+    gap: 14px;
+    min-height: clamp(148px, 14vw, 168px);
+    padding: 20px 22px;
+  }
+
+  .company-stats .hero-adv-value {
+    font-size: clamp(32px, 3vw, 46px);
+  }
+
+  .company-stats .hero-adv-label {
+    font-size: clamp(13px, 1vw, 16px);
+    line-height: 1.24;
+  }
+
+  .company-logos {
+    padding-top: 6px;
+    gap: 14px;
+  }
+
+  .company-logos-grid {
+    grid-auto-rows: 74px;
+    gap: 12px 14px;
+  }
+
+  .company-logo-card,
+  .company-logo-card.logo-microsoft,
+  .company-logo-card.logo-samsung {
+    --ui-surface-radius: 18px;
+    --company-logo-box-width: min(100%, 140px);
+    --company-logo-box-height: 42px;
+    min-height: 74px;
+    padding-inline: 16px;
+    border-radius: 18px;
+  }
+
+  .company-logo-card img[src*="total-logo.svg" i],
+  .company-logo-card img[src*="align-logo.svg" i] {
+    width: min(100%, 138px);
+    height: 40px;
+  }
+
+  .company-logo-card img[src*="winline-logo.svg" i] {
+    width: min(100%, 154px);
+    height: 50px;
+  }
+
+  .company-logo-card img[src*="bmw-logo.svg" i],
+  .company-logo-card img[src*="dell-logo.svg" i] {
+    width: min(100%, 56px);
+    height: 56px;
+  }
+
+  .company-logo-card img[src*="cisco-logo.svg" i],
+  .company-logo-card img[src*="honda-logo.svg" i],
+  .company-logo-card img[src*="microsoft-logo.svg" i],
+  .company-logo-card img[src*="samsung-logo.svg" i],
+  .company-logo-card img[src*="skolkovo-logo.svg" i] {
+    height: 44px;
+  }
+
+  .company-logos-footer {
+    gap: 12px;
+    padding-top: 2px;
+  }
+
+  .company-logos-nav {
+    gap: 10px;
+  }
+
+  .company-logos-nav-button {
+    width: 46px;
+    height: 46px;
+  }
+
+  .company-link-text,
+  .projects-link,
+  .projects-load-more {
+    min-height: 46px;
+    padding-inline: 20px;
+  }
+
+  .projects-head {
+    gap: clamp(20px, 2.2vw, 28px);
+  }
+
+  .projects-title {
+    max-width: 22ch;
+    font-size: clamp(30px, 3.3vw, 44px);
+  }
+
+  .projects-masonry {
+    --projects-gap: clamp(20px, 2vw, 24px);
+  }
+
+  .project-photo-link {
+    gap: 12px;
+  }
+
+  .project-photo {
+    border-radius: 18px;
+  }
+
+  .project-photo-media {
+    height: clamp(228px, 25vw, 292px);
+    object-fit: cover;
+  }
+
+  .project-photo-cta {
+    aspect-ratio: 16 / 9;
+    padding: 22px;
+  }
+
+  .project-photo-caption,
+  .project-photo-heading {
+    gap: 4px;
+  }
+
+  .project-photo-year {
+    font-size: 12px;
+  }
+
+  .project-photo-name {
+    font-size: clamp(18px, 1.35vw, 22px);
+    line-height: 1.04;
+  }
+}
+
 /* Global mobile density pass: compact vertical layouts without changing desktop composition. */
 @media (max-width: 980px) {
   :root {
