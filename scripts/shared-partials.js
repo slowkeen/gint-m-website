@@ -253,23 +253,6 @@ const createCookieConsentBanner = () => {
   banner.setAttribute("aria-label", "Уведомление об использовании cookie");
   banner.setAttribute("aria-live", "polite");
 
-  /*
-  banner.innerHTML = `
-    <button class="cookie-consent-close" type="button" aria-label="Закрыть уведомление о cookie">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <h2 class="cookie-consent-title" id="cookie-consent-title">Мы используем cookie</h2>
-    <p class="cookie-consent-text">
-      Сайт использует cookie и технические данные браузера для корректной работы страниц,
-      запоминания вашего выбора и улучшения сервиса.
-    </p>
-    <div class="cookie-consent-actions">
-      <a class="cookie-consent-link" href="${resolveSitePath("/privacy/")}">Подробнее</a>
-      <button class="cookie-consent-accept" type="button">Принять</button>
-    </div>
-  `;
-  */
-
   banner.innerHTML = `
     <p class="cookie-consent-text">
       Используем cookies для удобства сайта.

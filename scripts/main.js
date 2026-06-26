@@ -1016,15 +1016,25 @@ const initSite = () => {
   }
 
   const companyLogosSlider = document.querySelector("[data-company-logos]");
+  const companyLogosStage = companyLogosSlider ? companyLogosSlider.querySelector(".company-logos-stage") : null;
   const companyLogosTrack = companyLogosSlider ? companyLogosSlider.querySelector("[data-company-logos-track]") : null;
   const companyLogoPages = companyLogosTrack ? Array.from(companyLogosTrack.querySelectorAll("[data-company-logos-page]")) : [];
   const companyLogoPrevButton = companyLogosSlider ? companyLogosSlider.querySelector('[data-company-logos-nav="prev"]') : null;
   const companyLogoNextButton = companyLogosSlider ? companyLogosSlider.querySelector('[data-company-logos-nav="next"]') : null;
   const companyLogoPageCount = companyLogoPages.length;
+  const companyLogosNarrowQuery = window.matchMedia ? window.matchMedia("(max-width: 1024px)") : null;
+  const getInitialCompanyLogoSlideIndex = () => {
+    return companyLogoPageCount < 2 ? 0 : 1;
+  };
   let companyLogoSlides = companyLogoPages;
-  let companyLogoSlideIndex = companyLogoPageCount > 1 ? 1 : 0;
+  let companyLogoSlideIndex = getInitialCompanyLogoSlideIndex();
   let companyLogoIsAnimating = false;
   let companyLogoAutoplayId = 0;
+  let companyLogoPointerId = null;
+  let companyLogoPointerStartX = 0;
+  let companyLogoPointerStartY = 0;
+  let companyLogoPointerDeltaX = 0;
+  let companyLogoPointerDeltaY = 0;
 
   if (companyLogosTrack && companyLogoPageCount > 1) {
     const firstClone = companyLogoPages[0].cloneNode(true);
@@ -1171,6 +1181,27 @@ const initSite = () => {
     startCompanyLogosAutoplay();
   };
 
+  const resetCompanyLogoSwipe = () => {
+    companyLogoPointerId = null;
+    companyLogoPointerStartX = 0;
+    companyLogoPointerStartY = 0;
+    companyLogoPointerDeltaX = 0;
+    companyLogoPointerDeltaY = 0;
+  };
+
+  const finishCompanyLogoSwipe = () => {
+    const absX = Math.abs(companyLogoPointerDeltaX);
+    const absY = Math.abs(companyLogoPointerDeltaY);
+    const hasSwipe = absX > 44 && absX > absY * 1.2;
+
+    if (hasSwipe) {
+      showCompanyLogoPage(companyLogoPointerDeltaX < 0 ? 1 : -1);
+    }
+
+    resetCompanyLogoSwipe();
+    startCompanyLogosAutoplay();
+  };
+
   syncCompanyLogoButtons();
   syncCompanyLogosSlider(false);
 
@@ -1196,6 +1227,51 @@ const initSite = () => {
     });
   }
 
+  if (companyLogosStage) {
+    companyLogosStage.addEventListener("pointerdown", (event) => {
+      if (companyLogoPageCount < 2 || (event.pointerType === "mouse" && event.button !== 0)) {
+        return;
+      }
+
+      companyLogoPointerId = event.pointerId;
+      companyLogoPointerStartX = event.clientX;
+      companyLogoPointerStartY = event.clientY;
+      companyLogoPointerDeltaX = 0;
+      companyLogoPointerDeltaY = 0;
+      stopCompanyLogosAutoplay();
+
+      if (typeof companyLogosStage.setPointerCapture === "function") {
+        companyLogosStage.setPointerCapture(event.pointerId);
+      }
+    });
+
+    companyLogosStage.addEventListener("pointermove", (event) => {
+      if (event.pointerId !== companyLogoPointerId) {
+        return;
+      }
+
+      companyLogoPointerDeltaX = event.clientX - companyLogoPointerStartX;
+      companyLogoPointerDeltaY = event.clientY - companyLogoPointerStartY;
+    });
+
+    companyLogosStage.addEventListener("pointerup", (event) => {
+      if (event.pointerId !== companyLogoPointerId) {
+        return;
+      }
+
+      finishCompanyLogoSwipe();
+    });
+
+    companyLogosStage.addEventListener("pointercancel", (event) => {
+      if (event.pointerId !== companyLogoPointerId) {
+        return;
+      }
+
+      resetCompanyLogoSwipe();
+      startCompanyLogosAutoplay();
+    });
+  }
+
   if (companyLogosSlider) {
     companyLogosSlider.addEventListener("pointerenter", stopCompanyLogosAutoplay);
     companyLogosSlider.addEventListener("pointerleave", startCompanyLogosAutoplay);
@@ -1214,10 +1290,18 @@ const initSite = () => {
 
       startCompanyLogosAutoplay();
     });
+
+    if (companyLogosNarrowQuery) {
+      companyLogosNarrowQuery.addEventListener("change", () => {
+        stopCompanyLogosAutoplay();
+        companyLogoSlideIndex = getInitialCompanyLogoSlideIndex();
+        syncCompanyLogosSlider(false);
+        startCompanyLogosAutoplay();
+      });
+    }
   }
 
   startCompanyLogosAutoplay();
-  const projectLoadButton = document.querySelector("[data-load-projects]");
   const projectsMasonry = document.querySelector(".projects-masonry");
   const projectCards = projectsMasonry ? Array.from(projectsMasonry.querySelectorAll(".project-photo-card")) : [];
   const orderedProjectSlugs = [
@@ -1225,55 +1309,19 @@ const initSite = () => {
     "skolkovo-park",
     "natsproektstroy",
     "restaurant-skolkovo-park",
-    "ab-development",
-    "krylatskie-holmy",
-    "winline",
-    "align",
-    "avito-spb",
-    "avito-spb-2021",
-    "avito-cks",
-    "international-bank",
-    "avito-spb-2020",
-    "snigeri-school",
-    "align-technology",
-    "bnp-paribas",
-    "dell",
-    "avito-moscow",
-    "s7-airlines",
-    "philip-morris",
-    "skolkovo-vet",
-    "samsung"
+    "ab-development"
   ];
   const projectYearBySlug = new Map([
     ["kit-med", "2025"],
     ["skolkovo-park", "2025"],
     ["natsproektstroy", "2024"],
     ["restaurant-skolkovo-park", "2024"],
-    ["ab-development", "2023"],
-    ["krylatskie-holmy", "2023"],
-    ["winline", "2022"],
-    ["align", "2022"],
-    ["avito-spb", "2021"],
-    ["avito-spb-2021", "2021"],
-    ["avito-cks", "2021"],
-    ["international-bank", "2021"],
-    ["avito-spb-2020", "2020"],
-    ["snigeri-school", "2020"],
-    ["align-technology", "2020"],
-    ["bnp-paribas", "2020"],
-    ["dell", "2020"],
-    ["avito-moscow", "2020"],
-    ["s7-airlines", "2019"],
-    ["philip-morris", "2019"],
-    ["skolkovo-vet", "2019"],
-    ["samsung", "2018"]
+    ["ab-development", "2023"]
   ]);
   const projectSortOrder = new Map(orderedProjectSlugs.map((slug, index) => [slug, index]));
-  const getInitialProjectVisibleCount = () => 5;
-  const PROJECT_CTA_ANCHOR_SLUG = "bnp-paribas";
-  const PROJECT_CTA_YEAR = 2020;
-  const PROJECT_CTA_SORT_ORDER = (projectSortOrder.get(PROJECT_CTA_ANCHOR_SLUG) ?? Number.MAX_SAFE_INTEGER) + 0.5;
-  let hiddenProjectCards = [];
+  const INITIAL_PROJECT_VISIBLE_COUNT = 5;
+  const PROJECT_CTA_YEAR = 0;
+  const PROJECT_CTA_SORT_ORDER = Number.MAX_SAFE_INTEGER;
   const revealElements = [];
   let projectMasonryFrame = null;
   let lastProjectMasonryWidth = 0;
@@ -1381,9 +1429,7 @@ const initSite = () => {
   };
 
   const syncInitialProjectVisibility = () => {
-    hiddenProjectCards = [];
     let visibleProjectCount = 0;
-    const initialProjectVisibleCount = getInitialProjectVisibleCount();
 
     projectCards.forEach((card) => {
       if (isProjectCtaCard(card)) {
@@ -1391,16 +1437,13 @@ const initSite = () => {
         return;
       }
 
-      const shouldHide = visibleProjectCount >= initialProjectVisibleCount;
+      const shouldHide = visibleProjectCount >= INITIAL_PROJECT_VISIBLE_COUNT;
 
       card.hidden = shouldHide;
 
-      if (shouldHide) {
-        hiddenProjectCards.push(card);
-        return;
+      if (!shouldHide) {
+        visibleProjectCount += 1;
       }
-
-      visibleProjectCount += 1;
     });
   };
 
@@ -1586,20 +1629,6 @@ const initSite = () => {
     }
   };
 
-  const enhanceProjectCard = (element, delay = 0) => {
-    if (!element) {
-      return;
-    }
-
-    element.classList.add("micro-float");
-    registerRevealElement(element, delay);
-    const media = element.querySelector(".project-photo");
-
-    if (media) {
-      media.classList.add("micro-media");
-    }
-  };
-
   const revealGroups = [
     [".company-head", 0],
     [".company-lead", 90],
@@ -1725,70 +1754,6 @@ const initSite = () => {
       revealObserver.observe(element);
     });
   }
-
-  const syncProjectLoadButtonState = () => {
-    if (!projectLoadButton) {
-      return;
-    }
-
-    projectLoadButton.hidden = hiddenProjectCards.length === 0;
-  };
-
-  const revealProjectBatch = () => {
-    const nextProjects = hiddenProjectCards.splice(0, hiddenProjectCards.length);
-
-    nextProjects.forEach((card, index) => {
-      card.hidden = false;
-      enhanceProjectCard(card, 80 + index * 70);
-    });
-
-    if (nextProjects.length > 0) {
-      requestProjectMasonryLayout();
-    }
-
-    syncProjectLoadButtonState();
-    return nextProjects.length > 0;
-  };
-
-  syncProjectLoadButtonState();
-
-  if (projectLoadButton && !projectLoadButton.hidden) {
-    projectLoadButton.addEventListener("click", () => {
-      revealProjectBatch();
-    });
-  }
-
-  document.addEventListener("click", (event) => {
-    const projectLink = event.target.closest("[data-project-target]");
-
-    if (!projectLink) {
-      return;
-    }
-
-    const targetId = projectLink.dataset.projectTarget;
-    const target = targetId ? document.getElementById(targetId) : null;
-
-    if (!target) {
-      return;
-    }
-
-    event.preventDefault();
-
-    if (target.hidden) {
-      revealProjectBatch();
-    }
-
-    requestProjectMasonryLayout();
-
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        target.scrollIntoView({
-          behavior: prefersReducedMotion ? "auto" : "smooth",
-          block: "center"
-        });
-      });
-    });
-  });
 
   if (heroHeader) {
     let wasStickyState = null;

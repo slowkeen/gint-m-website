@@ -8,6 +8,7 @@ $textExtensions = @(
 )
 $textNames = @('.editorconfig', '.gitattributes', '.gitignore', '.nojekyll')
 $mojibakePattern = '(?:[\u0420\u0421\u00D0\u00D1][^\s<>&;]){3,}|\uFFFD'
+$ignoredDirectoryPattern = '\\(\.git|backups|backup-[^\\]+|project-audit|\.edge-headless|\.edge-headless-test|\.edge-shot|\.edge-profile-debug|\.edge-profile-debug-cdp)(\\|$)'
 $utf8Strict = [System.Text.UTF8Encoding]::new($false, $true)
 $issues = [System.Collections.Generic.List[string]]::new()
 $checkedFiles = 0
@@ -37,8 +38,7 @@ function Get-EncodingKind {
 
 Get-ChildItem -Path $root -Recurse -File |
   Where-Object {
-    $_.FullName -notmatch '\\.git(\\|$)' -and
-    $_.FullName -notmatch '\\backups(\\|$)' -and
+    $_.FullName -notmatch $ignoredDirectoryPattern -and
     $_.Name -notlike '.codex_*'
   } |
   Sort-Object FullName |
